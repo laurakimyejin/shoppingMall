@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div>
+            <input type="text" name="UserId" placeholder="아이디" id="memberId">
+            <input type="password" name="memberPassword" placeholder="비밀번호" id="pass">
+            <input type="button" onclick="memberLogin()" value="로그인">
+    </div>
+
+
+</body>
+
+<script th:inline="javascript">
+    const memberLogin = () => {
+        const email = document.getElementById("memberId").value;
+        const pw = document.getElementById("pass").value;
+        $.ajax({
+            type:"post",
+            url:"/member/login",
+            data: {
+                UserId: email,
+                memberPassword: pw,
+            },
+            dataType:"text",
+            success : function (result){
+                if(result == "ok"){
+                    alert("로그인성공")
+                    location.href = "/";
+                }else{
+                    alert("아이디 또는 비밀번호를 다시 확인해주세요")
+                }
+            },
+            error : function (){
+                alert("아이디 또는 비밀번호를 다시 확인해주세요")
+            }
+        })
+    }
+    </script>
+
+
+</html>
