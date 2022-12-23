@@ -3,21 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>save</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <style>
+        #item_save_form{
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 100px;
+        }
+    </style>
 </head>
 <body>
-<div>
-    <form action="/item/save" method="post" class="">
-        <input type="text" name="itemName" placeholder="상품명">
-        <input type="text" name="itemPrice" placeholder="상품가격">
-        <textarea name="itemContents" cols="30" rows="10" placeholder="상품 설명"></textarea>
-        <input type="file" name="itemImage">
+<div class="container" id="item_save_form">
+    <form action="/item/save" method="post">
+        <input type="text" name="itemName" placeholder="상품명" class="form-control">
+        <input type="text" name="itemPrice" placeholder="상품가격" class="form-control">
+        <textarea name="itemContents" cols="30" rows="10" placeholder="상품 설명" class="form-control"></textarea>
+        <input type="file" name="itemImage" class="form-control">
         <select name="itemCategory" class="form-select" style="font-size: 12px; width: 200px; height: 35px">
             <option value="small" selected>소형 식물</option>
             <option value="middle">중형 식물</option>
             <option value="large">대형 식물</option>
         </select>
-        <input type="submit" value="저장">
+        <input type="submit" value="저장" class="btn btn-primary">
     </form>
 </div>
 </body>
