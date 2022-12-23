@@ -14,4 +14,3 @@ public class CartEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     }
-

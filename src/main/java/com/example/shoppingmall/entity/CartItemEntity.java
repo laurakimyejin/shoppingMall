@@ -20,3 +20,4 @@ public class CartItemEntity extends BaseEntity {
     @Column(nullable = false)
     private int cardCount;
 }
+
