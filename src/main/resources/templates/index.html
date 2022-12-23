@@ -1,11 +1,226 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0"/>
+    <title>도그쿡 | dogcook</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+    <!--    <link rel="stylesheet" th:href="@{/style/style1.css}" type="text/css">-->
+    <link rel="stylesheet" th:href="@{/style/style2.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/style/reset.css}" type="text/css">
+    <script th:src="@{/scripts/scripts.js}"></script>
+    <link th:href="@{https://fonts.googleapis.com/css?family=Nanum+Gothic}" rel="stylesheet" type="text/css"><!--폰트-->
+
 </head>
 <body>
+<a href="#" id="top"><img th:src="@{img/top_btn.png}" alt="top_btn"></a> <!--top버튼-->
+
+<div id="wrap">
+    <!--s:header-->
+    <div id="header_bg"> <!--#1366bf-->
+        <header><!--1400px-->
+            <div id="my_menu"><a href="#"><img th:src="@{/img/my_icon.png}" alt="my_menu"></a></div>
+            <ul><!--언어영역-->
+                <!--                   <div th:if ="${session.loginEmail} != null">-->
+                <!--                       <li><a href="/member/logout">로그아웃</a></li>-->
+                <li><a href="/member/myPage">마이페이지</a></li>
+                <li><a href="/cart/{id}">장바구니</a></li>
+                <!--                   </div>-->
+                <!--                   <div th:unless="${session.loginEmail}">-->
+                <li><a href="/member/login">로그인</a></li>
+                <li><a href="/member/save">회원가입</a></li>
+                <!--                   </div>-->
+                <li><a href="/question/list">고객센터</a></li>
+            </ul>
+            <div id="h_btm"> <!--로고부분헤더-->
+                <h1><a href="#"><img th:src="@{/img/mainlogo1.png}" alt="도그쿡"></a></h1>
+                <nav>
+                    <div id="all_menu">
+                        <a href="#"><img th:src="@{/img/allmenu_icon.png}" alt="menu"></a>
+                    </div>
+
+                    <ul>
+                        <li><a href="#">베스트</a></li>
+                        <li><a href="#">소형 식물</a></li>
+                        <li><a href="#">중형 식물</a></li>
+                        <li><a href="#">대형 식물</a></li>
+                        <li><a href="#">전체상품</a></li>
+
+                        <li id="search_icon2">
+                            <a href="/item/search">
+                                <img th:src="@{/img/icon_search.png}" alt=""></a>
+                        </li>
+
+                        <li>
+                            <form href="/item/search" method="post" id="search_form">
+
+                                <fieldset>
+                                    <legend>검색창</legend>
+                                    <p><input type="search" name="q" value="검색어를 입력하세요" ></p>
+                                    <p><input type="submit" value="검색" name="search_click"></p>
+
+                                </fieldset>
+                            </form>
+                        </li>
+
+                    </ul>
+
+                </nav>
+
+            </div>
+
+        </header>
+    </div>
+    <!--e:header-->
+
+
+    <!--        s:visual-->
+    <div id="visual_bg">
+        <div id="visual_txt">
+            <p></p>
+            <p>건강하고 맛있게 <br> <em>100%수제간식!</em></p>
+        </div>
+    </div>
+    <!--        e:visual-->
+
+    <!--s:section-->
+    <div id="contents">
+        <article>
+            <div id="what">
+                <h2>WHAT WE DO</h2>
+                <p>식물, 그들을 이해하고 아끼는 사람이 만듭니다. <br>
+                    안녕하세요 애견들의 행복한 입맛과 건강을 생각하는 “도그쿡”입니다. <br>
+                    항상 최선의 재료로 정성을 다하여 건강한 사료와 간식을
+                    만들도록 노력하겠습니다. <br>  무방부제,무첨가제! 수제간식이 더욱 보편화 되어 모든 반려견들이 건강한 간식을 먹도록<br>
+                    하는게 도그쿡의 목표입니다. <br>
+                    정직한재료,깨끗한조리시설로  인정받을 수 있는 수제간식 쇼핑몰이 되겠습니다.
+                </p>
+            </div>
+
+            <img th:src="@{/img/prd3.png}">
+
+        </article>
+
+        <div id="sequence" class="container">
+            <a href="/item/main/selling" class="btn btn-light">누적판매</a>
+            <a href="/item/main/recent" class="btn btn-light">최신순</a>
+            <a href="/item/main/lowPrice" class="btn btn-light">낮은가격순</a>
+
+            <select name="listCount" class="form-select" style="font-size: 12px; width: 130px; height: 35px; float: right">
+                <option value="20" selected>20개씩 보기</option>
+                <option value="40">40개씩 보기</option>
+                <option value="60">60개씩 보기</option>
+            </select>
+        </div>
+
+        <div id="intro_bg">
+            <section>
+                <h2>PLANT PRODUCT</h2>
+                <div id="pdt">
+                    <ul>
+                        <li><a href="#"><img th:src="@{/img/product/001.jpeg}" alt="소고기사료">
+                            <p><img th:src="@{/img/new.png}" alt="new">
+                                진백나무 <br>
+                                <em>13,000원</em>
+                            </p>
+
+                        </a>
+                        </li>
+                        <li><a href="#"><img th:src="@{/img/product/2.jpg}" alt="베리베리 굿 껌 100g">
+                            <p><img th:src="@{/img/new.png}" alt="new">베리베리 굿 껌 100g <br>
+                                <em>5,900원</em>
+                            </p>
+                        </a>
+                        </li>
+                        <li><a href="#"><img th:src="@{/img/product/3.jpg}" alt="쌀쭉이 껌 100g">
+                            <p>쌀쭉이 껌 100g <br>
+                                <em>5,900원</em>
+                            </p>
+                        </a>
+                        </li>
+                        <li><a href="#"><img th:src="@{/img/product/4.jpg}" alt="강냉이 칭찬볼 치즈맛 70g">
+                            <p><img th:src="@{/img/new.png}" alt="new">강냉이 칭찬볼 치즈맛 70g <br>
+                                <em>5,900원</em>
+                            </p>
+                        </a>
+                        </li>
+                        <li><a href="#"><img th:src="@{/img/product/5.jpg}" alt="오리날개뼈 껌 (4ea)">
+                            <p><img th:src="@{/img/md_icon.png}" alt="추천">오리날개뼈 껌 (4ea)<br>
+                                <em>4,900원</em>
+                            </p>
+                        </a>
+                        </li>
+                        <li><a href="#"><img th:src="@{/img/product/6.jpg}" alt="오리 울대 바삭이껌 20g">
+                            <p><img th:src="@{/img/md_icon.png}" alt="추천">오리 울대 바삭이껌 20g <br>
+                                <em>5,900원</em>
+                            </p>
+                        </a>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </section><!--px-->
+        </div>
+    </div>
+    <!--e:section-->
+
+    <!--s:footer-->
+    <footer>
+        <div id="f_top">
+            <div id="left">
+                <p>주소 : 01234 서울특별시 용산구  <br>
+                <address>전화 : 02-1234-1234 팩스 : 02-1234-1234</address>
+                <p>Contact kildong@naver.com for more information.</p>
+
+
+
+            </div>
+
+            <div id="tle_right">
+                <div id="right">
+                    <p><em>고객센터</em> <br>
+                        <span>02-1234-1234</span><br>
+                        평일 09:00-18:00, 점심 12:00-13:00<br>
+                        주말, 공휴일 휴무</p>
+                </div>
+
+                <div id="right2">
+                    <p><em>은행계좌</em> <br>
+                        <b>국민000000-01-123456</b> <br>
+                        예금주 : 홍길동</p>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+        <div id="f_btm_bg"></div>
+        <div></div>
+    </footer>
+    <!--e:footer-->
+
+</div>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
