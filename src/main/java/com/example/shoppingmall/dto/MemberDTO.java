@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @ToString
 public class MemberDTO {
     private Long id;
-    private String UserId;
+    private String userId;
     private String memberPassword;
     private String memberEmail;
     private String memberName;

@@ -16,7 +16,7 @@ public class MemberEntity extends BaseEntity {
     private Long id;
 
     @Column(length = 20, nullable = false, unique = true)
-    private String UserId;
+    private String userId;
 
     @Column(length = 30, nullable = false)
     private String memberPassword;
