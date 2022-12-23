@@ -6,6 +6,9 @@ import com.example.shoppingmall.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ItemService {
@@ -15,5 +18,14 @@ public class ItemService {
        ItemEntity itemEntity = ItemEntity.toItemSaveEntity(itemDTO);
        return itemRepository.save(itemEntity).getId();
 
+    }
+
+    public List<ItemDTO> findAll() {
+      List<ItemEntity> itemEntityList = itemRepository.findAll();
+      List<ItemDTO> itemDTOList = new ArrayList<>();
+      for(ItemEntity itemEntity : itemEntityList){
+          itemDTOList.add(ItemDTO.toItemDTO(itemEntity));
+      }
+      return itemDTOList;
     }
 }

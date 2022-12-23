@@ -3,6 +3,7 @@ package com.example.shoppingmall.entity;
 import com.example.shoppingmall.dto.ItemDTO;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,6 +27,10 @@ public class ItemEntity extends BaseEntity{
     @Column(length = 500)
     private String itemContents;
 
+    @Column
+    @ColumnDefault("0")
+    private int itemCount;
+
     @Column(length = 100)
     private String itemImage;
 
@@ -40,6 +45,7 @@ public class ItemEntity extends BaseEntity{
         itementity.setItemName(itemDTO.getItemName());
         itementity.setItemPrice(itemDTO.getItemPrice());
         itementity.setItemContents(itemDTO.getItemContents());
+        itementity.setItemCount(itemDTO.getItemCount());
         itementity.setItemImage(itemDTO.getItemImage());
         itementity.setItemCategory(itemDTO.getItemCategory());
         itementity.setFileAttachedItem(0);

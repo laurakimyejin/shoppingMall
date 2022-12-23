@@ -4,9 +4,12 @@ import com.example.shoppingmall.dto.ItemDTO;
 import com.example.shoppingmall.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,6 +24,12 @@ public class ItemController {
     @PostMapping("/item/save")
     public String save(@ModelAttribute ItemDTO itemDTO){
         itemService.save(itemDTO);
+        return "redirect:/item/main";
+    }
+    @GetMapping("/item/main")
+    public String findAll(Model model){
+        List<ItemDTO> itemDTOList = itemService.findAll();
+        model.addAttribute("itemList",itemDTOList);
         return "itemPages/itemMain";
     }
 }
