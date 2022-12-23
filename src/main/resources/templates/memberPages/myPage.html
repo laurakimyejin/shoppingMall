@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>update</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <style>
+    #update-form {
+      width: 800px;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="update-form">
+  <form action="/member/update" method="post" name="updateForm">
+    id: <input type="text" name="id" th:value="${session.member.userId}" class="form-control" readonly>
+    email: <input type="text" name="memberEmail" th:value="${session.member.memberEmail}" class="form-control" readonly>
+    password: <input type="password" name="memberPassword" id="memberPassword" class="form-control">
+    name: <input type="text" name="memberName" th:value="${session.member.memberName}" class="form-control">
+    phone: <input type="text" name="memberPhone" th:value="${session.member.memberMobile}" class="form-control">
+    <input type="button" value="수정" class="btn btn-warning" onclick="update()">
+  </form>
+</div>
+</body>
+<script th:inline="javascript">
+    const update = () => {
+        const memberPassword = [[${session.member.memberPassword}]];
+        const memberPassword2 = document.getElementById("memberPassword").value;
+        if (memberPassword == memberPassword2) {
+        document.updateForm.submit();
+        } else {
+        alert("비밀번호가 일치하지 않습니다.");
+        }
+
+    }
+
+
+</script>
+</html>
