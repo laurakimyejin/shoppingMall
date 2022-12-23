@@ -46,4 +46,5 @@ public class MemberController {
         return "/memberPages/myPage";
     }
 
+
 }
