@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <form action="/question/save" method="post" class="">
+            <input type="hidden" th:value="${session.member.userId}" readonly name="memberId">
+            <input type="text" th:value="${session.member.memberName}" readonly name="questionName">
+            <input type="text" name="questionTitle" placeholder="제목">
+            <textarea name="questionContents" cols="30" rows="10" placeholder="내용"></textarea>
+            <input type="submit" value="저장">
+        </form>
+    </div>
+
+
+</body>
+</html>

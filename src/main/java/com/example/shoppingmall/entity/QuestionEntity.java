@@ -1,5 +1,6 @@
 package com.example.shoppingmall.entity;
 
+import com.example.shoppingmall.dto.QuestionDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,4 +26,20 @@ public class QuestionEntity extends BaseEntity{
 
     @Column(length = 4, nullable = false)
     private String questionStatus;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
+
+    public static QuestionEntity toSaveEntity(QuestionDTO questionDTO , MemberEntity memberEntity){
+        QuestionEntity questionEntity = new QuestionEntity();
+        questionEntity.setQuestionName(questionDTO.getQuestionName());
+        questionEntity.setQuestionTitle(questionDTO.getQuestionTitle());
+        questionEntity.setQuestionContents(questionDTO.getQuestionContents());
+        questionEntity.setQuestionStatus(questionDTO.getQuestionStatus());
+        questionEntity.setMemberEntity(memberEntity);
+        return questionEntity;
+    }
+
+
 }
