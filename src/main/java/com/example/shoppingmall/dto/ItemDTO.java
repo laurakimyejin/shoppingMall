@@ -27,6 +27,7 @@ public class ItemDTO {
         itemDTO.setItemName(itemEntity.getItemName());
         itemDTO.setItemPrice(itemEntity.getItemPrice());
         itemDTO.setItemContents(itemEntity.getItemContents());
+        itemDTO.setItemCreatedDate(itemEntity.getCreatedTime());
         itemDTO.setItemCount(itemEntity.getItemCount());
         itemDTO.setItemCategory(itemEntity.getItemCategory());
         itemDTO.setItemImage(itemEntity.getItemImage());

@@ -20,4 +20,9 @@ public class ItemFileEntity extends BaseEntity{
     @Column(length = 100, nullable = false)
     private String storedFileNameItem;
 
+    //상품-상품이미지 연관관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private ItemEntity itemEntity;
+
 }

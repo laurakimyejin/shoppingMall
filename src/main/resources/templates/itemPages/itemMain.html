@@ -7,7 +7,6 @@
 
 </head>
 <body>
-<p>인덱스 가져오기</p>
 <a href="/item/main" class="btn-success">상품조회</a>
 <div class="container">
     <table class="table table-striped table-hover text-center mt-5">
@@ -25,6 +24,7 @@
             <td th:text="*{#temporals.format(item.itemCreatedDate,'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${item.itemCategory}"></td>
         </tr>
-
+    </table>
+</div>
 </body>
 </html>
