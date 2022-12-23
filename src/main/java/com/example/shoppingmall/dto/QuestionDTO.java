@@ -21,8 +21,8 @@ public class QuestionDTO {
     private String questionTitle;
     private String questionContents;
     private String questionStatus = "N";
-    private LocalDateTime memberCreatedTime;
-    private LocalDateTime memberUpdatedTime;
+    private LocalDateTime questionCreatedTime;
+    private LocalDateTime questionUpdatedTime;
     private Long memberId;
 
     public static QuestionDTO toDTO(QuestionEntity questionEntity) {
@@ -32,8 +32,8 @@ public class QuestionDTO {
         questionDTO.setQuestionTitle(questionEntity.getQuestionTitle());
         questionDTO.setQuestionContents(questionEntity.getQuestionContents());
         questionDTO.setQuestionStatus(questionEntity.getQuestionStatus());
-        questionDTO.setMemberCreatedTime(questionEntity.getCreatedTime());
-        questionDTO.setMemberUpdatedTime(questionEntity.getUpdatedTime());
+        questionDTO.setQuestionCreatedTime(questionEntity.getCreatedTime());
+        questionDTO.setQuestionUpdatedTime(questionEntity.getUpdatedTime());
         return questionDTO;
     }
 
