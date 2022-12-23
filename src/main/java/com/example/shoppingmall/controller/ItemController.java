@@ -21,6 +21,6 @@ public class ItemController {
     @PostMapping("/item/save")
     public String save(@ModelAttribute ItemDTO itemDTO){
         itemService.save(itemDTO);
-        return "itemPages/main";
+        return "itemPages/itemMain";
     }
 }

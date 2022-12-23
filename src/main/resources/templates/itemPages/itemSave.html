@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
 </head>
 <body>
-<div class="container">
+<div>
     <form action="/item/save" method="post">
         <input type="text" name="itemName" placeholder="상품명">
         <input type="text" name="itemPrice" placeholder="상품가격">
@@ -17,6 +17,7 @@
             <option value="middle">중형 식물</option>
             <option value="large">대형 식물</option>
         </select>
+        <input type="submit" value="저장">
     </form>
 </div>
 </body>
