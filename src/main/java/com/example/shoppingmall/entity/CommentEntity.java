@@ -22,5 +22,4 @@ public class CommentEntity extends BaseEntity {
 
     @Column(nullable = false)
     private int starCount;
-
 }

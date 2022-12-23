@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "question_answer_table")
-public class ReplyEntity extends BaseEntity {
+public class ReplyEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,5 +19,4 @@ public class ReplyEntity extends BaseEntity {
 
     @Column(length = 500)
     private String replyContents;
-
 }

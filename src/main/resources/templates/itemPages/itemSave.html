@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>save</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+</head>
+<body>
+<div>
+    <form action="/item/save" method="post">
+        <input type="text" name="itemName" placeholder="상품명">
+        <input type="text" name="itemPrice" placeholder="상품가격">
+        <textarea name="itemContents" cols="30" rows="10" placeholder="상품 설명"></textarea>
+        <input type="file" name="itemImage">
+        <select name="itemCategory" class="form-select" style="font-size: 12px; width: 200px; height: 35px">
+            <option value="small" selected>소형 식물</option>
+            <option value="middle">중형 식물</option>
+            <option value="large">대형 식물</option>
+        </select>
+        <input type="submit" value="저장">
+    </form>
+</div>
+</body>
+</html>
