@@ -14,11 +14,11 @@
 </head>
 <body>
 <div class="container" id="item_save_form">
-    <form action="/item/save" method="post">
+    <form action="/item/save" method="post" enctype="multipart/form-data">
         <input type="text" name="itemName" placeholder="상품명" class="form-control">
         <input type="text" name="itemPrice" placeholder="상품가격" class="form-control">
         <textarea name="itemContents" cols="30" rows="10" placeholder="상품 설명" class="form-control"></textarea>
-        <input type="file" name="itemImage" class="form-control">
+        <input type="file" name="itemFile" class="form-control" multiple>
         <select name="itemCategory" class="form-select" style="font-size: 12px; width: 200px; height: 35px">
             <option value="small" selected>소형 식물</option>
             <option value="middle">중형 식물</option>

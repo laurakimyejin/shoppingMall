@@ -25,4 +25,12 @@ public class ItemFileEntity extends BaseEntity{
     @JoinColumn(name = "item_id")
     private ItemEntity itemEntity;
 
+    public static ItemFileEntity toSaveItemFileEntity(ItemEntity entity, String originalFileNameItem, String storedFileNameItem){
+        ItemFileEntity itemFileEntity = new ItemFileEntity();
+        itemFileEntity.setOriginalFileNameItem(originalFileNameItem);
+        itemFileEntity.setStoredFileNameItem(storedFileNameItem);
+        itemFileEntity.setItemEntity(entity);
+        return itemFileEntity;
+    }
+
 }

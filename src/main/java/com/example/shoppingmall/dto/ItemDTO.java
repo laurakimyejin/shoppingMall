@@ -1,11 +1,15 @@
 package com.example.shoppingmall.dto;
 
 import com.example.shoppingmall.entity.ItemEntity;
+import com.example.shoppingmall.entity.ItemFileEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,6 +25,10 @@ public class ItemDTO {
     private String itemImage;
     private int fileAttachedItem;
 
+    private List<MultipartFile> itemFile;
+    private List<String> originalFileNameItem;
+    private List<String> storedFileNameItem;
+
     public static ItemDTO toItemDTO(ItemEntity itemEntity){
         ItemDTO itemDTO = new ItemDTO();
         itemDTO.setId(itemEntity.getId());
@@ -31,7 +39,19 @@ public class ItemDTO {
         itemDTO.setItemCount(itemEntity.getItemCount());
         itemDTO.setItemCategory(itemEntity.getItemCategory());
         itemDTO.setItemImage(itemEntity.getItemImage());
+        if(itemEntity.getFileAttachedItem()==1){
+            itemDTO.setFileAttachedItem(itemEntity.getFileAttachedItem());
+            List<String> originalFileNameList = new ArrayList<>();
+            List<String> storedFileNameList = new ArrayList<>();
+            for(ItemFileEntity itemFileEntity : itemEntity.getItemFileEntityList()){
+                originalFileNameList.add(itemFileEntity.getOriginalFileNameItem());
+                storedFileNameList.add(itemFileEntity.getStoredFileNameItem());
+            }
+            itemDTO.setOriginalFileNameItem(originalFileNameList);
+            itemDTO.setStoredFileNameItem(storedFileNameList);
+        }else{
+            itemDTO.setFileAttachedItem(itemEntity.getFileAttachedItem());
+        }
         return itemDTO;
     }
-
 }
