@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/style/style3.css}" type="text/css">
     <script th:src="@{/js/axios.min.js}"></script>
-<!--    시간설정-->
+    <!--    시간설정-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 </head>
 <body>
 <div class="container">
@@ -28,16 +28,18 @@
             </tr>
             <tr>
                 <th>가격</th>
-                <td><input type="text" name="itemPrice" th:value="${item.itemPrice}"  class="form-control" readonly></td>
+                <td><input type="text" name="itemPrice" th:value="${item.itemPrice}" class="form-control" readonly></td>
             </tr>
             <tr>
                 <th>설명</th>
-                <td><textarea name="itemContents" cols="30" rows="10" class="form-control" readonly th:value="${item.itemContents}">[[${item.itemContents}]]</textarea></td>
+                <td><textarea name="itemContents" cols="30" rows="10" class="form-control" readonly
+                              th:value="${item.itemContents}">[[${item.itemContents}]]</textarea></td>
             </tr>
             <tr>
                 <th>구매수량</th>
                 <td>
-                    <input type="number" id="itemCountInput" min="1" max="100" value="1" name="cartCount" onchange="total()">
+                    <input type="number" id="itemCountInput" min="1" max="100" value="1" name="cartCount"
+                           onchange="total()">
                 </td>
             <tr>
                 <th>가격</th>
@@ -113,8 +115,83 @@
         let itemPrice = itemPrice2;
         let totalPrice = oderCount * itemPrice;
         console.log(totalPrice);
-        document.getElementById("totalPrice").innerHTML = totalPrice+"₩"
+        document.getElementById("totalPrice").innerHTML = totalPrice + "₩"
     }
+
+
+    let stars = document.querySelectorAll(".star");
+    document.querySelector(".star-container").addEventListener("click", starRating);
+    let rating = document.querySelector(".rating");
+
+    function starRating(e) {
+        stars.forEach((star) => star.classList.remove("star__checked"));
+        const i = [...stars].indexOf(e.target);
+        if (i > -1) {
+            stars[i].classList.add("star__checked");
+            rating.textContent = `${stars.length - i}/5`;
+        } else {
+            rating.textContent = `${0}/5`;
+        }
+    }
+
+    const commentWrite = () => {
+        const writer = document.getElementById("commentWriter").value;
+        const contents = document.getElementById("commentContents").value;
+        const id = [[${item.id}]];
+        axios({
+            method: "post",
+            url: "/comment/save",
+            data: {
+                commentWriter: writer,
+                commentContents: contents,
+                itemId: id
+            }
+        }).then(res => {
+            console.log("성공");
+            console.log(res);
+            console.log(res.data);
+            const commentList = res.data;
+            console.log("commentList", commentList);
+            let output = "<table class='table'>";
+            output += "<tr><th>댓글번호</th>";
+            output += "<th>작성자</th>";
+            output += "<th>내용</th>";
+            output += "<th>작성시간</th>";
+            output += "<th>별점</th></tr>";
+            for (let i in commentList) {
+                output += "<tr>";
+                output += "<td>" + commentList[i].id + "</td>";
+                output += "<td>" + commentList[i].commentWriter + "</td>";
+                output += "<td>" + commentList[i].commentContents + "</td>";
+                output += "<td>" + moment(commentList[i].commentCreatedDate).format("YYYY-MM-DD HH:mm:ss") + "</td>";
+                output += "<td>" + commentList[i].starCount + "</td>";
+                output += "</tr>";
+            }
+            output += "</table>";
+            document.getElementById('comment-list').innerHTML = output;
+            document.getElementById('commentWriter').value = '';
+            document.getElementById('commentContents').value = '';
+        }).catch(res => {
+            console.log("실패");
+        })
+    }
+
+
+    const cart = () => {
+        const form = document.querySelector('form');
+        form.submit();
+    }
+
+    const total = () => {
+        const oderCount2 = document.getElementById('itemCountInput').value;
+        const itemPrice2 = [[${item.itemPrice}]];
+        let oderCount = oderCount2;
+        let itemPrice = itemPrice2;
+        let totalPrice = oderCount * itemPrice;
+        console.log(totalPrice);
+        document.getElementById("totalPrice").innerHTML = totalPrice + "₩"
+    }
+
 
 </script>
 </html>
