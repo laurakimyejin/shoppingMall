@@ -26,10 +26,12 @@
         <td><input type="text" name="itemName" th:value="${item.itemName}" class="form-control" readonly></td>
         <td><input type="text" name="itemPrice" th:value="${item.itemPrice}"  class="form-control" readonly></td>
         <td>
-          <input type="number" id="itemCountInput" min="1" max="100" value="1" name="oderCount" onchange="total()">
+          <input type="number" id="itemCountInput" min="1" max="100" th:value="${item.cartCount}" name="oderCount" onchange="total()">
         </td>
         <td th:text="${item.itemPrice}"></td>
-        <td id="totalPrice"></td>
+        <td id="totalPrice">
+          <th:text th:utext="${item.itemPrice * item.cartCount}"></th:text>
+        </td>
       </tr>
     </table>
   </form>
