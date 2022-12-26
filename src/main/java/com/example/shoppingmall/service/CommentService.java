@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,20 +32,10 @@ public class CommentService {
         Long id = commentRepository.save(commentEntity).getId();
         return id;
     }
-@Transactional
-    public List<CommentDTO> findAll(Long itemId) {
-        ItemEntity itemEntity = itemRepository.findById(itemId).get();
-        List<CommentEntity> commentEntities = itemEntity.getCommentEntityList();
-        List<CommentDTO> commentDTOList = new ArrayList<>();
-        for(CommentEntity commentEntity : commentEntities){
-            commentDTOList.add(CommentDTO.toCommentDTO(commentEntity));
-        }
-        return commentDTOList;
-    }
-@Transactional
-    public Page<CommentDTO> commentPaging(Long id, Pageable pageable) {
+    @Transactional
+    public Page<CommentDTO> findAll(Long itemId,Pageable pageable) {
         int page = pageable.getPageNumber()-1;
-        final int pageLimit = 10;
+        final int pageLimit = 5;
         Page<CommentEntity> commentEntities = commentRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
         Page<CommentDTO> commentDTOPage = commentEntities.map(
                 comment->new CommentDTO(
@@ -52,8 +43,15 @@ public class CommentService {
                         comment.getCommentContents(),
                         comment.getCreatedTime(),
                         comment.getStarCount()
-                        ));
+                ));
         return commentDTOPage;
+//        ItemEntity itemEntity = itemRepository.findById(itemId).get();
+//        List<CommentEntity> commentEntities = itemEntity.getCommentEntityList();
+//        List<CommentDTO> commentDTOList = new ArrayList<>();
+//        for(CommentEntity commentEntity : commentEntities){
+//            commentDTOList.add(CommentDTO.toCommentDTO(commentEntity));
+//        }
+//        return commentDTOList;
     }
 }
 
