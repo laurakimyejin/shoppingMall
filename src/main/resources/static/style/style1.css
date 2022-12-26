@@ -440,7 +440,7 @@ color: #c4c4c4;}
 /*섹션2끝*/
     
 /*섹션3시작*/
-    #wrap #contents #bnr_bg{width: 100%;height: }
+    #wrap #contents #bnr_bg{width: 100%;}
     #wrap #contents #bnr_bg div{/*background-color: coral;*/width: 98%;height:340px;}
     #wrap #contents #bnr_bg div section{
         width: 100%;
@@ -494,7 +494,7 @@ color: #c4c4c4;}
 /*섹션2끝*/
     
 /*섹션3시작*/
-    #wrap #contents #bnr_bg{width: 100%;height: }
+    #wrap #contents #bnr_bg{width: 100%;}
     #wrap #contents #bnr_bg div{/*background-color: coral;*/width: 98%;height:340px;}
     #wrap #contents #bnr_bg div section{
         width: 98%;
@@ -548,7 +548,7 @@ color: #c4c4c4;}
 #wrap footer #f_top div #right p em{font-size: 1.3em;}
 #wrap footer #f_top div #right2 p em{font-size: 1.3em;}
 #wrap footer #f_top div #right2 p span{font-size: 1.3em;}
-#wrap footer #f_top div #right2 p b{font-size: 1.3em;}
+#wrap footer #f_top div #right2 p b{font-size: 1.3em;}}
 
 /*푸터끝*/
 

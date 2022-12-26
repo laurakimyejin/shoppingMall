@@ -44,6 +44,10 @@ public class ItemEntity extends BaseEntity {
     @OneToMany(mappedBy = "itemEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ItemFileEntity> itemFileEntityList = new ArrayList<>();
 
+    //item(상품) : comment(후기) = 1 : M
+    @OneToMany(mappedBy = "itemEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
+
 
     public static ItemEntity toItemSaveEntity(ItemDTO itemDTO) {
         ItemEntity itementity = new ItemEntity();
