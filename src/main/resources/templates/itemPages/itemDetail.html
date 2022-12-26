@@ -12,26 +12,44 @@
 </head>
 <body>
 <div class="container">
-    <table class="table table-hover table-striped mt-5">
-        <tr th:if="${item.fileAttachedItem == 1}">
-            <th>파일</th>
-            <td th:each="fileName: ${item.storedFileNameItem}">
-                <img th:src="@{|/upload/${fileName}}" alt="" width="200" height="200"></td>
-        </tr>
-        <tr>
-            <th>상품명</th>
-            <td th:text="${item.itemName}"></td>
-        </tr>
-        <tr>
-            <th>내용</th>
-            <td th:text="${item.itemContents}"></td>
-        </tr>
-        <tr>
-            <th>수량</th>
-            <td th:text="${item.itemCount}"></td>
-        </tr>
-    </table>
-    <a href="/cart/save">장바구니</a>
+    <form action="/cart/save" method="post">
+        <table class="table table-hover table-striped mt-5">
+            <tr th:if="${item.fileAttachedItem == 1}">
+                <th>파일</th>
+                <td th:each="fileName: ${item.storedFileNameItem}">
+                    <img th:src="@{|/upload/${fileName}}" alt="" width="200" height="200"></td>
+                <input type="hidden" th:value="${item.storedFileNameItem.get(0)}" name="itemImage">
+            </tr>
+            <tr>
+                <th>상품명</th>
+                <input type="hidden" name="id" th:value="${item.id}">
+                <input type="hidden" name="userId" th:value="${session.member.userId}">
+                <td><input type="text" name="itemName" th:value="${item.itemName}" class="form-control" readonly></td>
+            </tr>
+            <tr>
+                <th>가격</th>
+                <td><input type="text" name="itemPrice" th:value="${item.itemPrice}"  class="form-control" readonly></td>
+            </tr>
+            <tr>
+                <th>설명</th>
+                <td><textarea name="itemContents" cols="30" rows="10" class="form-control" readonly th:value="${item.itemContents}">[[${item.itemContents}]]</textarea></td>
+            </tr>
+            <tr>
+                <th>구매수량</th>
+                <td>
+                    <input type="number" id="itemCountInput" min="1" max="100" value="1" name="cartCount" onchange="total()">
+                </td>
+            <tr>
+                <th>가격</th>
+                <td th:text="${item.itemPrice}"></td>
+            </tr>
+            <tr>
+                <th>총가격</th>
+                <td id="totalPrice"></td>
+            </tr>
+        </table>
+    </form>
+    <input type="button" value="장바구니" onclick="cart()">
     <a href="/order/save">바로구매</a>
 </div>
 <div class="container mt-5">
@@ -81,7 +99,23 @@
     </div>
 </div>
 </body>
+
 <script th:inline="javascript">
+    const cart = () => {
+        const form = document.querySelector('form');
+        form.submit();
+    }
+
+    const total = () => {
+        const oderCount2 = document.getElementById('itemCountInput').value;
+        const itemPrice2 = [[${item.itemPrice}]];
+        let oderCount = oderCount2;
+        let itemPrice = itemPrice2;
+        let totalPrice = oderCount * itemPrice;
+        console.log(totalPrice);
+        document.getElementById("totalPrice").innerHTML = totalPrice+"₩"
+    }
+
     let stars = document.querySelectorAll(".star");
     document.querySelector(".star-container").addEventListener("click", starRating);
     let rating = document.querySelector(".rating");

@@ -28,6 +28,9 @@ public class ItemDTO {
     private List<MultipartFile> itemFile;
     private List<String> originalFileNameItem;
     private List<String> storedFileNameItem;
+    private String itemImage;
+    private String userId;
+    private int cartCount;
 
     public static ItemDTO toItemDTO(ItemEntity itemEntity){
         ItemDTO itemDTO = new ItemDTO();

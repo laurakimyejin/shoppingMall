@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+    <form action="/oder/save" method="get">
+        <table class="table table-hover table-striped mt-5">
+            <tr>
+                <th>파일</th>
+                    <img th:src="@{|/upload/${item.storedFileNameItem}}" alt="" width="200" height="200"></td>
+            </tr>
+            <tr>
+                <th>상품명</th>
+                <input type="hidden" name="id" th:value="${item.id}">
+                <td><input type="text" name="itemName" th:value="${item.itemName}" class="form-control" readonly></td>
+            </tr>
+            <tr>
+                <th>가격</th>
+                <td><input type="text" name="itemPrice" th:value="${item.itemPrice}"  class="form-control" readonly></td>
+            </tr>
+            <tr>
+                <th>구매수량</th>
+                <td>
+                    <input type="number" id="itemCountInput" min="1" max="100" value="1" name="oderCount" onchange="total()">
+                </td>
+            <tr>
+                <th>가격</th>
+                <td th:text="${item.itemPrice}"></td>
+            </tr>
+            <tr>
+                <th>총가격</th>
+                <td id="totalPrice"></td>
+            </tr>
+        </table>
+    </form>
+    <a href="/cart/save">장바구니</a>
+    <a href="/order/save">바로구매</a>
+</div>
+
+
+
+
+</body>
+</html>

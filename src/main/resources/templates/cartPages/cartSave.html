@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+  <form action="/oder/save" method="get">
+    <table class="table table-hover table-striped mt-5">
+      <tr>
+        <th>파일</th>
+        <th>상품명</th>
+        <th>가격</th>
+        <th>구매수량</th>
+        <th>가격</th>
+        <th>총가격</th>
+      </tr>
+      <tr>
+        <input type="hidden" name="id" th:value="${item.id}">
+        <td>
+        <img th:src="@{|/upload/${item.itemImage}}" alt="" width="50" height="50">
+        </td>
+        <td><input type="text" name="itemName" th:value="${item.itemName}" class="form-control" readonly></td>
+        <td><input type="text" name="itemPrice" th:value="${item.itemPrice}"  class="form-control" readonly></td>
+        <td>
+          <input type="number" id="itemCountInput" min="1" max="100" th:value="${item.cartCount}" name="oderCount" onchange="total()">
+        </td>
+        <td th:text="${item.itemPrice}"></td>
+        <td id="totalPrice">
+          <th:text th:utext="${item.itemPrice * item.cartCount}"></th:text>
+        </td>
+      </tr>
+    </table>
+  </form>
+  <a href="/cart/save">장바구니</a>
+  <a href="/order/save">바로구매</a>
+</div>
+
+
+
+
+
+</body>
+
+<script th:inline="javascript">
+
+  const total = () => {
+    const oderCount2 = document.getElementById('itemCountInput').value;
+    const itemPrice2 = [[${item.itemPrice}]];
+    let oderCount = oderCount2;
+    let itemPrice = itemPrice2;
+    let totalPrice = oderCount * itemPrice;
+    console.log(totalPrice);
+    document.getElementById("totalPrice").innerHTML = totalPrice+"₩"
+  }
+
+</script>
+</html>
