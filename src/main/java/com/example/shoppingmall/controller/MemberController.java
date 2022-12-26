@@ -44,7 +44,7 @@ public class MemberController {
     public @ResponseBody String login(@ModelAttribute MemberDTO memberDTO, HttpSession session){
         MemberDTO result = memberService.memberLogin(memberDTO);
         if(result!=null){
-            session.setAttribute("member",result);
+            session.setAttribute("member",memberDTO.getUserId());
             return "ok";
         }else {
             return "no";

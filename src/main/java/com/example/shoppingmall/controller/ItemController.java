@@ -1,6 +1,8 @@
 package com.example.shoppingmall.controller;
 
+import com.example.shoppingmall.dto.CommentDTO;
 import com.example.shoppingmall.dto.ItemDTO;
+import com.example.shoppingmall.service.CommentService;
 import com.example.shoppingmall.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService itemService;
+    private final CommentService commentService;
 
     @GetMapping("/item/save")
     public String saveForm(){
@@ -39,6 +42,13 @@ public class ItemController {
     public String findById(@PathVariable Long id, Model model){
        ItemDTO itemDTO = itemService.findById(id);
        model.addAttribute("item",itemDTO);
+        List<CommentDTO> commentDTOList = commentService.findAll(id);
+        if (commentDTOList.size() > 0) {
+            model.addAttribute("commentList", commentDTOList);
+        }else {
+            model.addAttribute("commentList", "empty");
+        }
        return "itemPages/itemDetail";
     }
+
 }
