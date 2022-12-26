@@ -19,5 +19,14 @@ public class CartItemEntity extends BaseEntity {
 
     @Column(nullable = false)
     private int cardCount;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "item_id")
+    private ItemEntity itemEntity;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cart_id")
+    private CartEntity cartEntity;
+
 }
 

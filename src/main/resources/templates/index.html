@@ -25,6 +25,7 @@
                         <li><a href="/member/logout">로그아웃</a></li>
                         <li><a href="/member/myPage">마이페이지</a></li>
                         <li><a href="/cart/{id}">장바구니</a></li>
+                        <li><a href="/question/list">고객센터</a></li>
 
                     </div>
                     <div th:unless="${session.member}">
@@ -47,7 +48,7 @@
                         <li><a href="#">소형 식물</a></li>
                         <li><a href="#">중형 식물</a></li>
                         <li><a href="#">대형 식물</a></li>
-                        <li><a href="#">전체상품</a></li>
+                        <li><a href="/item/main">전체상품</a></li>
 
                         <!--                        <li id="search_icon2">-->
                         <!--                            <a href="/item/search">-->
