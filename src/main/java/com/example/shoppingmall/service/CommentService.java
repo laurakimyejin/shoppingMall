@@ -44,7 +44,8 @@ public class CommentService {
     public Page<CommentDTO> commentPaging(Long id, Pageable pageable) {
         int page = pageable.getPageNumber()-1;
         final int pageLimit = 10;
-        Page<CommentEntity> commentEntities = commentRepository.findAll(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")))
+//        Page<CommentEntity> commentEntities = commentRepository.findAll(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")))
+        return null;
     }
 }
 

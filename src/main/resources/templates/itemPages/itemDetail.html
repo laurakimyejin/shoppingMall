@@ -55,7 +55,7 @@
 <div class="container mt-5">
     <div id="comment-write" class="input-group" mb-3>
         <div class="form-floating">
-            <input type="text" id="commentWriter" th:value="${session.member}" class="form-control" readonly>
+            <input type="text" id="commentWriter" th:value="${session.member.userId}" class="form-control" readonly>
             <label for="commentWriter">작성자</label>
         </div>
         <div class="form-floating">
@@ -115,62 +115,6 @@
         console.log(totalPrice);
         document.getElementById("totalPrice").innerHTML = totalPrice+"₩"
     }
-
-    let stars = document.querySelectorAll(".star");
-    document.querySelector(".star-container").addEventListener("click", starRating);
-    let rating = document.querySelector(".rating");
-
-    function starRating(e) {
-        stars.forEach((star) => star.classList.remove("star__checked"));
-        const i = [...stars].indexOf(e.target);
-        if (i > -1) {
-            stars[i].classList.add("star__checked");
-            rating.textContent = `${stars.length - i}/5`;
-        } else {
-            rating.textContent = `${0}/5`;
-        }
-    }
-    const commentWrite = () => {
-            const writer = document.getElementById("commentWriter").value;
-            const contents = document.getElementById("commentContents").value;
-            const id = [[${item.id}]];
-            axios({
-                method: "post",
-                url: "/comment/save",
-                data: {
-                    commentWriter: writer,
-                    commentContents: contents,
-                    itemId: id
-                }
-            }).then(res => {
-                console.log("성공");
-                console.log(res);
-                console.log(res.data);
-                const commentList = res.data;
-                console.log("commentList", commentList);
-                let output = "<table class='table'>";
-                output += "<tr><th>댓글번호</th>";
-                output += "<th>작성자</th>";
-                output += "<th>내용</th>";
-                output += "<th>작성시간</th>";
-                output += "<th>별점</th></tr>";
-                for (let i in commentList) {
-                    output += "<tr>";
-                    output += "<td>" + commentList[i].id + "</td>";
-                    output += "<td>" + commentList[i].commentWriter + "</td>";
-                    output += "<td>" + commentList[i].commentContents + "</td>";
-                    output += "<td>" + moment(commentList[i].commentCreatedDate).format("YYYY-MM-DD HH:mm:ss") + "</td>";
-                    output += "<td>" + commentList[i].starCount + "</td>";
-                    output += "</tr>";
-                }
-                output += "</table>";
-                document.getElementById('comment-list').innerHTML = output;
-                document.getElementById('commentWriter').value = '';
-                document.getElementById('commentContents').value = '';
-            }).catch(res => {
-                console.log("실패");
-            })
-        }
 
 </script>
 </html>
