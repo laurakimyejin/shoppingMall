@@ -24,7 +24,11 @@
                     <div th:if="${session.member} != null">
                         <li><a href="/member/logout">로그아웃</a></li>
                         <li><a href="/member/myPage">마이페이지</a></li>
-                        <li><a href="/cart/{id}">장바구니</a></li>
+                        <li>
+                            <form action="/cart/save2" method="post">
+                                <input type="button" name="memberId" onclick="cart()">
+                            </form>
+                        </li>
                         <li><a href="/question/list">고객센터</a></li>
 
                     </div>
@@ -208,6 +212,12 @@
 </div>
 
 </body>
+<script th:inline="javascript">
+    const cart = () => {
+        const form = document.querySelector('form');
+        form.submit();
+    }
+</script>
 </html>
 
 
