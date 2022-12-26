@@ -5,10 +5,24 @@
     <title>Title</title>
   <link rel="stylesheet" th:href="@{/css/save.css}">
   <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+<!--ajax cdn-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+  <style>
+   .main{
+     position: absolute;
+     width: 1098px;
+     height: 909px;
+     left: 411px;
+     top: 85px;
+   }
+
+  </style>
 
 </head>
 <body>
 
+<div class="main">
 <header id="header">
   <h1 class="tit">회원가입</h1>
 </header>
@@ -25,7 +39,7 @@
       <input type="password" class="width-450 form-control" name="memberPassword" id="pwd">
       <span id="pwdError"></span>
       <label for="repwd">비밀번호 확인</label>
-      <input type="password" class="width-450 form-control" name="memberPassword2" id="repwd">
+      <input type="password" class="width-450 form-control" name="memberPassword2" id="repwd" onblur="check_pwd()">
       <span id="rePwderror"></span>
     </div>
     <div class=name-container>
@@ -51,8 +65,59 @@
     </div>
   </fieldset>
 </form>
+</div>
 </body>
 <script th:inline="javascript">
+const check_id = () => {
+  console.log("호출")
+  const id = document.getElementById("uid").value;
+  if (id == "") {
+    alert("아이디를 입력해주세요.");
+  } else {
+    $.ajax({
+      type: "post",
+      url: "/member/duplicate-check-userId",
+      data: {
+        userId: id
+      },
+      dataType: "text",
+      success: function (result) {
+        console.log("성공");
+        console.log(result);
+        if (result == "success") {
+          $("#joinBtn").removeAttr("disabled");
+          alert("회원가입가능")
+
+        } else {
+          $("#joinBtn").attr("disabled", "disabled");
+          alert("이미존재하는 이메일 입니다.")
+        }
+      },
+      error: function () {
+        console.log("실패")
+      }
+
+    })
+  }
+}
+
+  const check_pwd = () => {
+    const pwd = document.getElementById("pwd").value;
+    const repwd = document.getElementById("repwd").value;
+    if (pwd == "") {
+      alert("비밀번호를 입력해주세요.");
+    } else if (pwd != repwd) {
+      alert("비밀번호가 일치하지 않습니다.");
+      document.getElementById("pwdError").innerHTML = "비밀번호가 일치하지 않습니다.";
+      document.getElementById("pwdError").style.color = "red";
+    } else {
+      document.getElementById("pwdError").innerHTML = "비밀번호가 일치합니다.";
+      document.getElementById("pwdError").style.color = "blue";
+    }
+  }
+
+
+
 
 
 

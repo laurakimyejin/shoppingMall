@@ -19,6 +19,16 @@ public class MemberController {
         return "/memberPages/memberSave";
     }
 
+    @PostMapping("/duplicate-check-userId")
+    public @ResponseBody String emailDuplicateCheck(@RequestParam("userId") String userId) {
+        String checkResult = memberService.userIdDuplicateCheck(userId);
+        if (checkResult.equals("success")) {
+            return "success";
+        } else {
+            return "fail";
+        }
+    }
+
     @PostMapping("save")
     public String save(@ModelAttribute MemberDTO memberDTO){
         memberService.save(memberDTO);

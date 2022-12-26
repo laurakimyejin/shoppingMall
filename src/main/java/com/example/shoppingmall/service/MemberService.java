@@ -32,4 +32,13 @@ public class MemberService {
             return null;
         }
     }
+
+    public String userIdDuplicateCheck(String userId) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByUserId(userId);
+        if (optionalMemberEntity.isPresent()) {
+            return "fail";
+        } else {
+            return "success";
+        }
+    }
 }
