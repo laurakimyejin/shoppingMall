@@ -21,17 +21,17 @@
             <div id="my_menu"><a href="#"><img th:src="@{/img/my_icon.png}" alt="my_menu"></a></div>
             <ul><!--언어영역-->
                 <div>
-                <div th:if="${session.member} != null">
-                    <li><a href="/member/logout">로그아웃</a></li>
-                    <li><a href="/member/myPage">마이페이지</a></li>
-                    <li><a href="/cart/{id}">장바구니</a></li>
-                    <li><a href="/question/list">고객센터</a></li>
-                </div>
-                <div th:unless="${session.member}">
-                    <li><a href="/member/login">로그인</a></li>
-                    <li><a href="/member/save">회원가입</a></li>
-                    <li><a href="/question/list">고객센터</a></li>
-                </div>
+                    <div th:if="${session.member} != null">
+                        <li><a href="/member/logout">로그아웃</a></li>
+                        <li><a href="/member/myPage">마이페이지</a></li>
+                        <li><a href="/cart/{id}">장바구니</a></li>
+
+                    </div>
+                    <div th:unless="${session.member}">
+                        <li><a href="/member/login">로그인</a></li>
+                        <li><a href="/member/save">회원가입</a></li>
+                        <li><a href="/question/list">고객센터</a></li>
+                    </div>
                 </div>
             </ul>
 
@@ -43,8 +43,7 @@
                     </div>
 
                     <ul style="margin-left: 100px;">
-                        <li><a href="/item/save">상품등록</a></li>
-                        <li><a href="/item/main">베스트</a></li>
+
                         <li><a href="#">소형 식물</a></li>
                         <li><a href="#">중형 식물</a></li>
                         <li><a href="#">대형 식물</a></li>
