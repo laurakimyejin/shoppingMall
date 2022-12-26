@@ -9,6 +9,7 @@ import com.example.shoppingmall.repository.ItemRepository;
 import com.example.shoppingmall.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -40,12 +41,19 @@ public class CommentService {
         }
         return commentDTOList;
     }
-
+@Transactional
     public Page<CommentDTO> commentPaging(Long id, Pageable pageable) {
         int page = pageable.getPageNumber()-1;
         final int pageLimit = 10;
-//        Page<CommentEntity> commentEntities = commentRepository.findAll(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")))
-        return null;
+        Page<CommentEntity> commentEntities = commentRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
+        Page<CommentDTO> commentDTOPage = commentEntities.map(
+                comment->new CommentDTO(
+                        comment.getCommentWriter(),
+                        comment.getCommentContents(),
+                        comment.getCreatedTime(),
+                        comment.getStarCount()
+                        ));
+        return commentDTOPage;
     }
 }
 

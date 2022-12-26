@@ -28,8 +28,8 @@ public class CommentController {
         return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
     }
     @GetMapping("/comment/paging")
-    public String commentPaging(@PageableDefault(page = 1) Pageable pageable, @RequestBody CommentDTO commentDTO, Model model){
-       Page<CommentDTO> commentDTOS = commentService.commentPaging(commentDTO.getId(),pageable);
+    public String commentPaging(@PageableDefault(page = 1) Pageable pageable, Long id, Model model){
+       Page<CommentDTO> commentDTOS = commentService.commentPaging(id,pageable);
         int blockLimit = 3;
         //시작 페이지 값 계산
         int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
