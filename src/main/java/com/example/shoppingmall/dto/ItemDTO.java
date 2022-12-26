@@ -22,7 +22,7 @@ public class ItemDTO {
     private LocalDateTime itemCreatedDate;
     private int itemCount;
     private String itemCategory;
-    private String itemImage;
+//    private List<String> itemImage;
     private int fileAttachedItem;
 
     private List<MultipartFile> itemFile;
@@ -38,7 +38,7 @@ public class ItemDTO {
         itemDTO.setItemCreatedDate(itemEntity.getCreatedTime());
         itemDTO.setItemCount(itemEntity.getItemCount());
         itemDTO.setItemCategory(itemEntity.getItemCategory());
-        itemDTO.setItemImage(itemEntity.getItemImage());
+//        itemDTO.setItemImage(itemEntity.getItemImage());
         if(itemEntity.getFileAttachedItem()==1){
             itemDTO.setFileAttachedItem(itemEntity.getFileAttachedItem());
             List<String> originalFileNameList = new ArrayList<>();
@@ -49,6 +49,7 @@ public class ItemDTO {
             }
             itemDTO.setOriginalFileNameItem(originalFileNameList);
             itemDTO.setStoredFileNameItem(storedFileNameList);
+//            itemDTO.setItemImage(itemDTO.getStoredFileNameItem());
         }else{
             itemDTO.setFileAttachedItem(itemEntity.getFileAttachedItem());
         }

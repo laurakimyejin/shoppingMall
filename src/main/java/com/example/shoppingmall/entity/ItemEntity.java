@@ -31,8 +31,8 @@ public class ItemEntity extends BaseEntity {
     @Column
     private int itemCount = 0;
 
-    @Column(length = 100)
-    private String itemImage;
+//  @Column(length = 100)
+//  private String itemImage;
 
     @Column
     private int fileAttachedItem;
@@ -51,7 +51,7 @@ public class ItemEntity extends BaseEntity {
         itementity.setItemPrice(itemDTO.getItemPrice());
         itementity.setItemContents(itemDTO.getItemContents());
         itementity.setItemCount(itemDTO.getItemCount());
-        itementity.setItemImage(itemDTO.getItemImage());
+//        itementity.setItemImage(itemDTO.getItemImage());
         itementity.setItemCategory(itemDTO.getItemCategory());
         itementity.setFileAttachedItem(0);
         return itementity;
@@ -63,7 +63,7 @@ public class ItemEntity extends BaseEntity {
         itementity.setItemPrice(itemDTO.getItemPrice());
         itementity.setItemContents(itemDTO.getItemContents());
         itementity.setItemCount(itemDTO.getItemCount());
-        itementity.setItemImage(itemDTO.getItemImage());
+//        itementity.setItemImage(itemDTO.getItemImage());
         itementity.setItemCategory(itemDTO.getItemCategory());
         itementity.setFileAttachedItem(1);
         return itementity;

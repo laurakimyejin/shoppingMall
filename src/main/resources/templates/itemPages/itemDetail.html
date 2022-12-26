@@ -3,8 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>detail</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
-<p>상세페이지입니다</p>
+<div class="container">
+    <table class="table table-hover table-striped mt-5">
+        <tr th:if="${item.fileAttachedItem == 1}">
+            <th>파일</th>
+            <td th:each="fileName: ${item.storedFileNameItem}">
+                <img th:src="@{|/upload/${fileName}}" alt="" width="200" height="200"></td>
+        </tr>
+        <tr>
+            <th>상품명</th>
+            <td th:text="${item.itemName}"></td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td th:text="${item.itemContents}"></td>
+        </tr>
+        <tr>
+            <th>수량</th>
+            <td th:text="${item.itemCount}"></td>
+        </tr>
+    </table>
+    <a href="/cart/save">장바구니</a>
+    <a href="/order/save">바로구매</a>
+</div>
 </body>
 </html>
