@@ -2,18 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>detail</title>
+    <title>Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
+
 <div class="container">
-    <form action="/cart/save" method="get">
+    <form action="/oder/save" method="get">
         <table class="table table-hover table-striped mt-5">
-            <tr th:if="${item.fileAttachedItem == 1}">
+            <tr>
                 <th>파일</th>
-                <td th:each="fileName: ${item.storedFileNameItem}">
-                    <img th:src="@{|/upload/${fileName}}" alt="" width="200" height="200"></td>
-                <input type="hidden" th:value="${item.storedFileNameItem.get(0)}" name="itemImage">
+                    <img th:src="@{|/upload/${item.storedFileNameItem}}" alt="" width="200" height="200"></td>
             </tr>
             <tr>
                 <th>상품명</th>
@@ -23,10 +22,6 @@
             <tr>
                 <th>가격</th>
                 <td><input type="text" name="itemPrice" th:value="${item.itemPrice}"  class="form-control" readonly></td>
-            </tr>
-            <tr>
-                <th>설명</th>
-                <td><textarea name="itemContents" cols="30" rows="10" class="form-control" readonly th:value="${item.itemContents}">[[${item.itemContents}]]</textarea></td>
             </tr>
             <tr>
                 <th>구매수량</th>
@@ -43,28 +38,12 @@
             </tr>
         </table>
     </form>
-    <input type="button" value="장바구니" onclick="cart()">
+    <a href="/cart/save">장바구니</a>
     <a href="/order/save">바로구매</a>
 </div>
+
+
+
+
 </body>
-
-<script th:inline="javascript">
-    const cart = () => {
-        const form = document.querySelector('form');
-        form.submit();
-    }
-
-    const total = () => {
-        const oderCount2 = document.getElementById('itemCountInput').value;
-        const itemPrice2 = [[${item.itemPrice}]];
-        let oderCount = oderCount2;
-        let itemPrice = itemPrice2;
-        let totalPrice = oderCount * itemPrice;
-        console.log(totalPrice);
-        document.getElementById("totalPrice").innerHTML = totalPrice+"₩"
-    }
-
-
-
-</script>
 </html>

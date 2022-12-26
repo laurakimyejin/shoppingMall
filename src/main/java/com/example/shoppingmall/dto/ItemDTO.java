@@ -28,6 +28,7 @@ public class ItemDTO {
     private List<MultipartFile> itemFile;
     private List<String> originalFileNameItem;
     private List<String> storedFileNameItem;
+    private String itemImage;
 
     public static ItemDTO toItemDTO(ItemEntity itemEntity){
         ItemDTO itemDTO = new ItemDTO();
