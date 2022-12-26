@@ -20,47 +20,50 @@
         <header><!--1400px-->
             <div id="my_menu"><a href="#"><img th:src="@{/img/my_icon.png}" alt="my_menu"></a></div>
             <ul><!--언어영역-->
-                <!--                   <div th:if ="${session.loginEmail} != null">-->
-                <!--                       <li><a href="/member/logout">로그아웃</a></li>-->
-                <li><a href="/member/myPage">마이페이지</a></li>
-                <li><a href="/cart/{id}">장바구니</a></li>
-                <!--                   </div>-->
-                <!--                   <div th:unless="${session.loginEmail}">-->
-                <li><a href="/member/login">로그인</a></li>
-                <li><a href="/member/save">회원가입</a></li>
-                <!--                   </div>-->
-                <li><a href="/question/list">고객센터</a></li>
+                <div>
+                <div th:if="${session.member} != null">
+                    <li><a href="/member/logout">로그아웃</a></li>
+                    <li><a href="/member/myPage">마이페이지</a></li>
+                    <li><a href="/cart/{id}">장바구니</a></li>
+                </div>
+                <div th:unless="${session.member}">
+                    <li><a href="/member/login">로그인</a></li>
+                    <li><a href="/member/save">회원가입</a></li>
+                    <li><a href="/question/list">고객센터</a></li>
+                </div>
+                </div>
             </ul>
-            <div id="h_btm"> <!--로고부분헤더-->
+
+            <div id="h_btm" style="width: 950px"> <!--로고부분헤더-->
                 <h1><a href="#"><img th:src="@{/img/mainlogo1.png}" alt="도그쿡"></a></h1>
                 <nav>
                     <div id="all_menu">
                         <a href="#"><img th:src="@{/img/allmenu_icon.png}" alt="menu"></a>
                     </div>
 
-                    <ul>
+                    <ul style="margin-left: 100px;">
                         <li><a href="#">베스트</a></li>
                         <li><a href="#">소형 식물</a></li>
                         <li><a href="#">중형 식물</a></li>
                         <li><a href="#">대형 식물</a></li>
                         <li><a href="#">전체상품</a></li>
 
-                        <li id="search_icon2">
-                            <a href="/item/search">
-                                <img th:src="@{/img/icon_search.png}" alt=""></a>
-                        </li>
+                        <!--                        <li id="search_icon2">-->
+                        <!--                            <a href="/item/search">-->
+                        <!--                                <img th:src="@{/img/icon_search.png}" alt=""></a>-->
+                        <!--                        </li>-->
 
-                        <li>
-                            <form href="/item/search" method="post" id="search_form">
+                        <!--                        <li>-->
+                        <!--                            <form href="/item/search" method="post" id="search_form">-->
 
-                                <fieldset>
-                                    <legend>검색창</legend>
-                                    <p><input type="search" name="q" value="검색어를 입력하세요" ></p>
-                                    <p><input type="submit" value="검색" name="search_click"></p>
+                        <!--                                <fieldset>-->
+                        <!--                                    <legend>검색창</legend>-->
+                        <!--                                    <p><input type="search" name="q" value="검색어를 입력하세요" ></p>-->
+                        <!--                                    <p><input type="submit" value="검색" name="search_click"></p>-->
 
-                                </fieldset>
-                            </form>
-                        </li>
+                        <!--                                </fieldset>-->
+                        <!--                            </form>-->
+                        <!--                        </li>-->
 
                     </ul>
 
@@ -90,9 +93,9 @@
                 <p>식물, 그들을 이해하고 아끼는 사람이 만듭니다. <br>
                     안녕하세요 애견들의 행복한 입맛과 건강을 생각하는 “도그쿡”입니다. <br>
                     항상 최선의 재료로 정성을 다하여 건강한 사료와 간식을
-                    만들도록 노력하겠습니다. <br>  무방부제,무첨가제! 수제간식이 더욱 보편화 되어 모든 반려견들이 건강한 간식을 먹도록<br>
+                    만들도록 노력하겠습니다. <br> 무방부제,무첨가제! 수제간식이 더욱 보편화 되어 모든 반려견들이 건강한 간식을 먹도록<br>
                     하는게 도그쿡의 목표입니다. <br>
-                    정직한재료,깨끗한조리시설로  인정받을 수 있는 수제간식 쇼핑몰이 되겠습니다.
+                    정직한재료,깨끗한조리시설로 인정받을 수 있는 수제간식 쇼핑몰이 되겠습니다.
                 </p>
             </div>
 
@@ -105,7 +108,8 @@
             <a href="/item/main/recent" class="btn btn-light">최신순</a>
             <a href="/item/main/lowPrice" class="btn btn-light">낮은가격순</a>
 
-            <select name="listCount" class="form-select" style="font-size: 12px; width: 130px; height: 35px; float: right">
+            <select name="listCount" class="form-select"
+                    style="font-size: 12px; width: 130px; height: 35px; float: right">
                 <option value="20" selected>20개씩 보기</option>
                 <option value="40">40개씩 보기</option>
                 <option value="60">60개씩 보기</option>
@@ -168,10 +172,9 @@
     <footer>
         <div id="f_top">
             <div id="left">
-                <p>주소 : 01234 서울특별시 용산구  <br>
+                <p>주소 : 01234 서울특별시 용산구 <br>
                 <address>전화 : 02-1234-1234 팩스 : 02-1234-1234</address>
                 <p>Contact kildong@naver.com for more information.</p>
-
 
 
             </div>
@@ -193,7 +196,6 @@
 
 
         </div>
-
 
 
         <div id="f_btm_bg"></div>
