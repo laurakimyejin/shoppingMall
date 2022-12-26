@@ -177,21 +177,6 @@
     }
 
 
-    const cart = () => {
-        const form = document.querySelector('form');
-        form.submit();
-    }
-
-    const total = () => {
-        const oderCount2 = document.getElementById('itemCountInput').value;
-        const itemPrice2 = [[${item.itemPrice}]];
-        let oderCount = oderCount2;
-        let itemPrice = itemPrice2;
-        let totalPrice = oderCount * itemPrice;
-        console.log(totalPrice);
-        document.getElementById("totalPrice").innerHTML = totalPrice + "₩"
-    }
-
 
 </script>
 </html>
