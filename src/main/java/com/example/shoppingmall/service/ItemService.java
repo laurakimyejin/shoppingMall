@@ -1,11 +1,18 @@
 package com.example.shoppingmall.service;
 
+import com.example.shoppingmall.dto.CommentDTO;
 import com.example.shoppingmall.dto.ItemDTO;
+import com.example.shoppingmall.entity.CommentEntity;
 import com.example.shoppingmall.entity.ItemEntity;
 import com.example.shoppingmall.entity.ItemFileEntity;
+import com.example.shoppingmall.repository.CommentRepository;
 import com.example.shoppingmall.repository.ItemFileRepository;
 import com.example.shoppingmall.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +28,7 @@ import java.util.Optional;
 public class ItemService {
     private final ItemRepository itemRepository;
     private final ItemFileRepository itemFileRepository;
+    private final CommentRepository commentRepository;
 
     public Long save(ItemDTO itemDTO) throws IOException {
         if(itemDTO.getItemFile().get(0).isEmpty()){
@@ -61,4 +69,5 @@ public class ItemService {
         return null;
     }
     }
+
 }

@@ -24,22 +24,7 @@ public class CommentController {
     @PostMapping("/comment/save")
     public ResponseEntity save(@RequestBody CommentDTO commentDTO){
         commentService.save(commentDTO);
-        List<CommentDTO> commentDTOList =commentService.findAll(commentDTO.getItemId());
-        return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-    @GetMapping("/comment/paging")
-    public String commentPaging(@PageableDefault(page = 1) Pageable pageable, Long id, Model model){
-       Page<CommentDTO> commentDTOS = commentService.commentPaging(id,pageable);
-        int blockLimit = 3;
-        //시작 페이지 값 계산
-        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
-        //끝 페이지 값 계산(3, 6, 9, 12---)
-        //endPage 값이 totalPage값보다 크다면 endPage값을 totalPage값으로 덮어쓴다.
-        int endPage = ((startPage + blockLimit - 1) < commentDTOS.getTotalPages()) ? startPage + blockLimit - 1 : commentDTOS.getTotalPages();
 
-        model.addAttribute("commentList",commentDTOS);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        return "redirect:/item/detail";
-    }
 }
