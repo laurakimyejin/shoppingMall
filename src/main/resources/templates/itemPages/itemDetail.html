@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/style/style3.css}" type="text/css">
     <script th:src="@{/js/axios.min.js}"></script>
+    <script src="/resources/js/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!--    시간설정-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
@@ -99,10 +101,6 @@
             </tr>
         </table>
     </div>
-    <div th:if="${commentList == 'empty'}">
-        <p>작성된 댓글이 없습니다.</p>
-    </div>
-    <div th:unless="${commentList == 'empty'}">
     <div class="container">
         <ul class="pagination justify-content-center">
             <li class="page-item">
@@ -146,7 +144,6 @@
             </li>
         </ul>
     </div>
-</div>
 </div>
 </body>
 
@@ -192,36 +189,36 @@
                 commentWriter: writer,
                 commentContents: contents,
                 itemId: id
+            },
+            dataType: "json",
+            success: function (commentList) {
+                commentList = commentList.content;
+                console.log("성공");
+                console.log("commentList", commentList);
+                let output = "<table class='table'>";
+                output += "<tr><th>댓글번호</th>";
+                output += "<th>작성자</th>";
+                output += "<th>내용</th>";
+                output += "<th>작성시간</th>";
+                output += "<th>별점</th></tr>";
+                for (let i in commentList) {
+                    output += "<tr>";
+                    output += "<td>" + commentList[i].id + "</td>";
+                    output += "<td>" + commentList[i].commentWriter + "</td>";
+                    output += "<td>" + commentList[i].commentContents + "</td>";
+                    output += "<td>" + moment(commentList[i].commentCreatedDate).format("YYYY-MM-DD HH:mm:ss") + "</td>";
+                    output += "<td>" + commentList[i].starCount + "</td>";
+                    output += "</tr>";
+                }
+                output += "</table>";
+                document.getElementById('comment-list').innerHTML = output;
+                document.getElementById('commentWriter').value = '';
+                document.getElementById('commentContents').value = '';
+            },
+            error: function () {
+                console.log("실패");
             }
-        }).then(res => {
-            console.log("성공");
-            console.log(res);
-            console.log(res.data);
-            const commentList = res.data;
-            console.log("commentList", commentList);
-            let output = "<table class='table'>";
-            output += "<tr><th>댓글번호</th>";
-            output += "<th>작성자</th>";
-            output += "<th>내용</th>";
-            output += "<th>작성시간</th>";
-            output += "<th>별점</th></tr>";
-            for (let i in commentList) {
-                output += "<tr>";
-                output += "<td>" + commentList[i].id + "</td>";
-                output += "<td>" + commentList[i].commentWriter + "</td>";
-                output += "<td>" + commentList[i].commentContents + "</td>";
-                output += "<td>" + moment(commentList[i].commentCreatedDate).format("YYYY-MM-DD HH:mm:ss") + "</td>";
-                output += "<td>" + commentList[i].starCount + "</td>";
-                output += "</tr>";
-            }
-            output += "</table>";
-            document.getElementById('comment-list').innerHTML = output;
-            document.getElementById('commentWriter').value = '';
-            document.getElementById('commentContents').value = '';
-
-        }).catch(res => {
-            console.log("실패");
-        })
+        });
     }
 
 

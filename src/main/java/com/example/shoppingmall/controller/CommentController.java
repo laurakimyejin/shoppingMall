@@ -10,9 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,9 +20,14 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/comment/save")
-    public ResponseEntity save(@RequestBody CommentDTO commentDTO){
+    public @ResponseBody Page<CommentDTO> save(@ModelAttribute CommentDTO commentDTO,@PageableDefault(page = 1) Pageable pageable){
         commentService.save(commentDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        System.out.println("commentDTO = " + commentDTO + ", pageable = " + pageable);
+        Page<CommentDTO> commentDTOList = commentService.findAll(commentDTO.getItemId(),pageable);
+        System.out.println("commentDTOList = " + commentDTOList.get());
+        System.out.println("commentDTOList.getTotalElements() = " + commentDTOList.getTotalElements());
+        System.out.println("commentDTOList.getContent()" + commentDTOList.getContent());
+        return commentDTOList;
     }
 
 }
