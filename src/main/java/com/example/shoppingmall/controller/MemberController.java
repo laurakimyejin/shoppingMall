@@ -40,6 +40,12 @@ public class MemberController {
         return "/memberPages/memberLogin";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/";
+    }
+
     @PostMapping("/login")
     public @ResponseBody String login(@ModelAttribute MemberDTO memberDTO, HttpSession session){
         MemberDTO result = memberService.memberLogin(memberDTO);
