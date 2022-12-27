@@ -3,6 +3,7 @@ package com.example.shoppingmall.entity;
 import com.example.shoppingmall.dto.MemberDTO;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.criterion.Order;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -35,9 +36,21 @@ public class MemberEntity extends BaseEntity {
     @Column(length = 100)
     private String memberAddress;
 
-    //member(회원) : comment(후기) = 1 : M
-//    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-//    private List<CommentEntity> commentEntityList = new ArrayList<>();
+//    member(회원) : order(주문) = 1 : M
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<OrderEntity> orderEntityList = new ArrayList<>();
+
+//    member(회원) : cart(장바구니) = 1 : M
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CartEntity> cartEntityList = new ArrayList<>();
+
+//    member(회원) : question(질문) = 1 : M
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<QuestionEntity> questionEntityList = new ArrayList<>();
+
+//    member(회원) : reply(답변) = 1 : M
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ReplyEntity> replyEntityList = new ArrayList<>();
 
 
     public static MemberEntity toSaveEntity(MemberDTO memberDTO){

@@ -20,4 +20,10 @@ public class CartEntity extends BaseEntity {
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
-    }
+    //    cart(장바구니) : cart_item(장바구니 상품) = 1 : M
+    @OneToMany(mappedBy = "cartEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CartItemEntity> cartItemEntityList = new ArrayList<>();
+
+
+
+}

@@ -29,12 +29,6 @@ public class CommentEntity extends BaseEntity {
     @JoinColumn(name = "item_id")
     private ItemEntity itemEntity;
 
-    //회원-후기 연관관계
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "member_id")
-//    private MemberEntity memberEntity;
-
-
     public static CommentEntity toCommentEntity(ItemEntity itemEntity, CommentDTO commentDTO){
         CommentEntity commentEntity = new CommentEntity();
         commentEntity.setItemEntity(itemEntity);
