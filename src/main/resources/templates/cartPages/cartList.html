@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:if="${cartList == 'empty'}">
+  <p>작성된 댓글이 없습니다.</p>
+</div>
+<div th:unless="${cartList == 'empty'}">
+  <table class="table">
+    <tr>
+      <th>상품이미지</th>
+      <th>수량</th>
+      <th>가격</th>
+      <th>이름</th>
+
+    </tr>
+    <tr th:each="cart: ${cartList}">
+      <td>
+        <img th:src="@{|/upload/${cart.itemImage}}" alt="" width="50" height="50">
+      </td>
+      <td th:text="${cart.cartCount}"></td>
+      <td th:text="${cart.itemPrice}"></td>
+      <td th:text="${cart.itemName}"></td>
+    </tr>
+  </table>
+
+
+
+
+
+
+</body>
+</html>
