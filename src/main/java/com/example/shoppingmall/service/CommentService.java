@@ -36,7 +36,8 @@ public class CommentService {
     public Page<CommentDTO> findAll(Long itemId,Pageable pageable) {
         int page = pageable.getPageNumber()-1;
         final int pageLimit = 5;
-        Page<CommentEntity> commentEntities = commentRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
+        ItemEntity itemEntity=itemRepository.findById(itemId).get();
+        Page<CommentEntity> commentEntities = commentRepository.findByItemEntity(itemEntity,PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
         Page<CommentDTO> commentDTOPage = commentEntities.map(
                 comment->new CommentDTO(
                         comment.getCommentWriter(),
