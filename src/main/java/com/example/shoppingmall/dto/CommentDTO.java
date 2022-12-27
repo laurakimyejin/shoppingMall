@@ -21,7 +21,8 @@ public class CommentDTO {
     private Long memberId;
     private Long itemId;
 
-    public CommentDTO(String commentWriter, String commentContents, LocalDateTime commentCreatedDate, int starCount) {
+    public CommentDTO(Long id, String commentWriter, String commentContents, LocalDateTime commentCreatedDate, int starCount) {
+        this.id = id;
         this.commentWriter = commentWriter;
         this.commentContents = commentContents;
         this.commentCreatedDate = commentCreatedDate;
