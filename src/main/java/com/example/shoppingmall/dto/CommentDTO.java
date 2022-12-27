@@ -37,6 +37,7 @@ public class CommentDTO {
         commentDTO.setStarCount(commentEntity.getStarCount());
         commentDTO.setCommentCreatedDate(commentEntity.getCreatedTime());
         commentDTO.setItemId(commentEntity.getItemEntity().getId());
+//        commentDTO.setMemberId(commentEntity.getMemberEntity().getId());
         return commentDTO;
     }
 

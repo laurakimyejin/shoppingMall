@@ -24,11 +24,13 @@ import java.util.List;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final ItemRepository itemRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public Long save(CommentDTO commentDTO) {
         ItemEntity itemEntity = itemRepository.findById(commentDTO.getItemId()).get();
-        CommentEntity commentEntity = CommentEntity.toCommentEntity(itemEntity, commentDTO);
+//        MemberEntity memberEntity = memberRepository.findById(commentDTO.getMemberId()).get();
+        CommentEntity commentEntity = CommentEntity.toCommentEntity(itemEntity,commentDTO);
         Long id = commentRepository.save(commentEntity).getId();
         return id;
     }
