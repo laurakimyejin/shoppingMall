@@ -17,10 +17,10 @@ public class CartItemEntity extends BaseEntity {
     private Long id;
 
     @Column(length = 100, nullable = false)
-    private String cardName;
+    private String cartName;
 
     @Column(nullable = false)
-    private int cardCount;
+    private int cartCount;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")
