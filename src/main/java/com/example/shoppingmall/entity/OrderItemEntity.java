@@ -19,4 +19,12 @@ public class OrderItemEntity extends BaseEntity{
 
     @Column(nullable = false)
     private int orderCount;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "item_id")
+    private ItemEntity itemEntity;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_id")
+    private OrderEntity orderEntity;
 }

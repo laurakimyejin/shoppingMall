@@ -19,4 +19,12 @@ public class ReplyEntity extends BaseEntity{
 
     @Column(length = 500)
     private String replyContents;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "question_id")
+    private QuestionEntity questionEntity;
 }

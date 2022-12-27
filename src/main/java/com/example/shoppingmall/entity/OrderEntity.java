@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter
@@ -16,4 +18,13 @@ public class OrderEntity extends BaseEntity{
 
     @Column(length = 4, nullable = false)
     private String orderStatus;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
+
+    //    order(주문) : order_item(주문상품) = 1 : M
+    @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<OrderItemEntity> orderItemEntityList = new ArrayList<>();
+
 }
