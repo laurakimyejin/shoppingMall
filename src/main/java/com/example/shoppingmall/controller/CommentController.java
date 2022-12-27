@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -20,7 +21,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/comment/save")
-    public @ResponseBody Page<CommentDTO> save(@ModelAttribute CommentDTO commentDTO,@PageableDefault(page = 1) Pageable pageable){
+    public @ResponseBody Page<CommentDTO> save(@ModelAttribute CommentDTO commentDTO, @PageableDefault(page = 1) Pageable pageable){
         commentService.save(commentDTO);
         System.out.println("commentDTO = " + commentDTO + ", pageable = " + pageable);
         Page<CommentDTO> commentDTOList = commentService.findAll(commentDTO.getItemId(),pageable);
