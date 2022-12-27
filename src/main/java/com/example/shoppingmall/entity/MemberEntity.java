@@ -35,6 +35,8 @@ public class MemberEntity extends BaseEntity {
     @Column(length = 100)
     private String memberAddress;
 
+
+
     public static MemberEntity toSaveEntity(MemberDTO memberDTO){
         MemberEntity memberEntity = new MemberEntity();
         memberEntity.setUserId(memberDTO.getUserId());
