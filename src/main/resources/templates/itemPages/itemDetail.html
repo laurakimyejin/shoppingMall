@@ -146,6 +146,7 @@
         </div>
     </div>
 </div>
+</div>
 </body>
 
 <script th:inline="javascript">
@@ -183,10 +184,11 @@
         const writer = document.getElementById("commentWriter").value;
         const contents = document.getElementById("commentContents").value;
         const id = [[${item.id}]];
-        axios({
-            method: "post",
+        $.ajax({
+            type: "post",
             url: "/comment/save",
             data: {
+                id: id,
                 commentWriter: writer,
                 commentContents: contents,
                 itemId: id

@@ -40,6 +40,7 @@ public class CommentService {
         Page<CommentEntity> commentEntities = commentRepository.findByItemEntity(itemEntity,PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
         Page<CommentDTO> commentDTOPage = commentEntities.map(
                 comment->new CommentDTO(
+                        comment.getId(),
                         comment.getCommentWriter(),
                         comment.getCommentContents(),
                         comment.getCreatedTime(),
