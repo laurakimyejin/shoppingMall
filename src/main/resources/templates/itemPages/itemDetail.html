@@ -99,6 +99,10 @@
             </tr>
         </table>
     </div>
+    <div th:if="${commentList == 'empty'}">
+        <p>작성된 댓글이 없습니다.</p>
+    </div>
+    <div th:unless="${commentList == 'empty'}">
     <div class="container">
         <ul class="pagination justify-content-center">
             <li class="page-item">
@@ -142,6 +146,7 @@
             </li>
         </ul>
     </div>
+</div>
 </div>
 </body>
 
