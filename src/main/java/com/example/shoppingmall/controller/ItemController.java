@@ -39,13 +39,13 @@ public class ItemController {
     }
 
     @GetMapping("/item/")
-    public String findById(@PageableDefault(page = 1) Pageable pageable, @RequestParam("itemId") Long id, Model model){
-        System.out.println( "id = " + id);
+    public String findById(@PageableDefault(page = 1) Pageable pageable, @RequestParam("itemId") Long itemId, Model model){
+        System.out.println( "itemId = " + itemId);
 //        Page<CommentDTO> commentDTOS = itemService.commentPaging(pageable);
 
-        ItemDTO itemDTO = itemService.findById(id);
+        ItemDTO itemDTO = itemService.findById(itemId);
         model.addAttribute("item",itemDTO);
-        Page<CommentDTO> commentDTOList = commentService.findAll(id,pageable);
+        Page<CommentDTO> commentDTOList = commentService.findAll(itemId,pageable);
         if (!commentDTOList.isEmpty()) {
             model.addAttribute("commentList", commentDTOList);
             int blockLimit = 3;
@@ -54,9 +54,9 @@ public class ItemController {
             //끝 페이지 값 계산(3, 6, 9, 12---)
             //endPage 값이 totalPage값보다 크다면 endPage값을 totalPage값으로 덮어쓴다.
             int endPage = ((startPage + blockLimit - 1) < commentDTOList.getTotalPages()) ? startPage + blockLimit - 1 : commentDTOList.getTotalPages();
-
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
+            model.addAttribute("itemId",itemId);
         }else {
             model.addAttribute("commentList", "empty");
         }

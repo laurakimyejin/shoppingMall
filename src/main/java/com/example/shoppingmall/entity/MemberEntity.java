@@ -35,6 +35,9 @@ public class MemberEntity extends BaseEntity {
     @Column(length = 100)
     private String memberAddress;
 
+    //member(회원) : comment(후기) = 1 : M
+//    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+//    private List<CommentEntity> commentEntityList = new ArrayList<>();
 
 
     public static MemberEntity toSaveEntity(MemberDTO memberDTO){

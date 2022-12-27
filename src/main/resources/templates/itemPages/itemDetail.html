@@ -66,26 +66,26 @@
             <input type="text" id="commentContents" class="form-control" placeholder="내용">
             <label for="commentContents">내용</label>
         </div>
-        <div class="star-container">
+        <div class="star-container" >
             <div class="star"></div>
             <div class="star"></div>
             <div class="star"></div>
             <div class="star"></div>
             <div class="star"></div>
         </div>
-        <h1 class="rating">0/5</h1>
+        <h1 class="rating" id="starCount">0</h1>
         <script th:src="app.js"></script>
-        <button id="comment-write-btn" class="btn btn-secondary" onclick="commentWrite()">댓글작성</button>
+        <button id="comment-write-btn" class="btn btn-secondary" onclick="commentWrite()">후기작성</button>
     </div>
 </div>
 <div class="container mt-5" id="comment-list">
     <div th:if="${commentList == 'empty'}">
-        <p>작성된 댓글이 없습니다.</p>
+        <p>작성된 후기가 없습니다.</p>
     </div>
     <div th:unless="${commentList == 'empty'}">
         <table class="table">
             <tr>
-                <th>댓글번호</th>
+                <th>번호</th>
                 <th>작성자</th>
                 <th>내용</th>
                 <th>작성시간</th>
@@ -100,12 +100,11 @@
                 <td th:text="${comment.starCount}"></td>
             </tr>
         </table>
-
         <div class="container">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
                     <!--첫페이지 요청 링크 /board?page=1-->
-                    <a class="page-link" th:href="@{/item(page=1)}">
+                    <a class="page-link" th:href="@{/item/(page=1,itemId=${itemId})}">
                         <span>First</span>
                     </a>
                 </li>
@@ -113,7 +112,7 @@
                 <li th:class="${commentList.first} ? 'disabled'" class="page-item">
                     <!--boardList.first: isFirst()
                         boardList.number: getNumber()-->
-                    <a class="page-link" th:href="${commentList.first} ? '#' : @{/item(page=${commentList.number})}">
+                    <a class="page-link" th:href="${commentList.first} ? '#' : @{/item/(page=${commentList.number},itemId=${itemId})}">
                         <!-- 사용자 3페이지, number 2 /board?page=2-->
                         <span><</span> <!-- < -->
                     </a>
@@ -123,7 +122,7 @@
                 <!--for(int page=startPage; page<=endPage; page++)-->
                 <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
                     th:class="${page == commentList.number + 1} ? 'page-item active'" class="page-item">
-                    <a class="page-link" th:text="${page}" th:href="@{/item(page=${page})}"></a>
+                    <a class="page-link" th:text="${page}" th:href="@{/item/(page=${page},itemId=${itemId})}"></a>
                 </li>
 
                 <!-- 다음 페이지 요청
@@ -131,14 +130,14 @@
                     getNumber() 값은 2임.
                     따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
                 <li th:class="${commentList.last} ? 'disabled'">
-                    <a class="page-link" th:href="${commentList.last} ? '#' : @{/item(page=${commentList.number + 2})}">
+                    <a class="page-link" th:href="${commentList.last} ? '#' : @{/item/(page=${commentList.number + 2},itemId=${itemId})}">
                         <span>&gt;</span>
                     </a>
                 </li>
 
                 <li class="page-item">
                     <!--마지막페이지 요청 링크-->
-                    <a class="page-link" th:href="@{/item(page=${commentList.totalPages})}">
+                    <a class="page-link" th:href="@{/item/(page=${commentList.totalPages},itemId=${itemId})}">
                         <span>Last</span>
                     </a>
                 </li>
@@ -174,15 +173,17 @@
         const i = [...stars].indexOf(e.target);
         if (i > -1) {
             stars[i].classList.add("star__checked");
-            rating.textContent = `${stars.length - i}/5`;
+            rating.textContent = `${stars.length - i}`;
         } else {
-            rating.textContent = `${0}/5`;
+            rating.textContent = `${0}`;
         }
     }
 
     const commentWrite = () => {
         const writer = document.getElementById("commentWriter").value;
         const contents = document.getElementById("commentContents").value;
+        const starCount = document.getElementById("starCount").textContent;
+        console.log(starCount);
         const id = [[${item.id}]];
         $.ajax({
             type: "post",
@@ -191,7 +192,8 @@
                 id: id,
                 commentWriter: writer,
                 commentContents: contents,
-                itemId: id
+                itemId: id,
+                starCount: starCount
             },
             dataType: "json",
             success: function (commentList) {
