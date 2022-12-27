@@ -146,6 +146,10 @@
     </div>
 </div>
 </div>
+<div id="comment-page">
+
+</div>
+
 </body>
 
 <script th:inline="javascript">
@@ -196,29 +200,36 @@
                 starCount: starCount
             },
             dataType: "json",
-            success: function (commentList) {
-                commentList = commentList.content;
+            success: function (commentMap) {
+                console.log(commentMap);
+                console.log(commentMap.commentList);
+                console.log(commentMap.commentList.content[0]);
+                console.log(commentMap.paging);
+                console.log(commentMap.paging.startPage);
+                let commentList2 = commentMap.commentList.content;
                 console.log("성공");
-                console.log("commentList", commentList);
+                console.log("commentList", commentList2);
                 let output = "<table class='table'>";
                 output += "<tr><th>댓글번호</th>";
                 output += "<th>작성자</th>";
                 output += "<th>내용</th>";
                 output += "<th>작성시간</th>";
                 output += "<th>별점</th></tr>";
-                for (let i in commentList) {
+                for (let i in commentList2) {
                     output += "<tr>";
-                    output += "<td>" + commentList[i].id + "</td>";
-                    output += "<td>" + commentList[i].commentWriter + "</td>";
-                    output += "<td>" + commentList[i].commentContents + "</td>";
-                    output += "<td>" + moment(commentList[i].commentCreatedDate).format("YYYY-MM-DD HH:mm:ss") + "</td>";
-                    output += "<td>" + commentList[i].starCount + "</td>";
+                    output += "<td>" + commentList2[i].id + "</td>";
+                    output += "<td>" + commentList2[i].commentWriter + "</td>";
+                    output += "<td>" + commentList2[i].commentContents + "</td>";
+                    output += "<td>" + moment(commentList2[i].commentCreatedDate).format("YYYY-MM-DD HH:mm:ss") + "</td>";
+                    output += "<td>" + commentList2[i].starCount + "</td>";
                     output += "</tr>";
                 }
                 output += "</table>";
                 document.getElementById('comment-list').innerHTML = output;
                 document.getElementById('commentWriter').value = '';
                 document.getElementById('commentContents').value = '';
+                document.getElementById('comment-page').innerHTML = '';
+
             },
             error: function () {
                 console.log("실패");

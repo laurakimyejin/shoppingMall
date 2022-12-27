@@ -31,9 +31,6 @@ public class ItemEntity extends BaseEntity {
     @Column
     private int itemCount = 0;
 
-//  @Column(length = 100)
-//  private String itemImage;
-
     @Column
     private int fileAttachedItem;
 
@@ -48,6 +45,14 @@ public class ItemEntity extends BaseEntity {
     @OneToMany(mappedBy = "itemEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
+    //item(상품) : order_item(주문) = 1 : M
+    @OneToMany(mappedBy = "itemEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<OrderItemEntity> orderItemEntityList = new ArrayList<>();
+
+    //item(상품) : cart_item(장바구니 상품) = 1 : M
+    @OneToMany(mappedBy = "itemEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CartItemEntity> cartItemEntityList = new ArrayList<>();
+
 
     public static ItemEntity toItemSaveEntity(ItemDTO itemDTO) {
         ItemEntity itementity = new ItemEntity();
@@ -55,7 +60,6 @@ public class ItemEntity extends BaseEntity {
         itementity.setItemPrice(itemDTO.getItemPrice());
         itementity.setItemContents(itemDTO.getItemContents());
         itementity.setItemCount(itemDTO.getItemCount());
-//        itementity.setItemImage(itemDTO.getItemImage());
         itementity.setItemCategory(itemDTO.getItemCategory());
         itementity.setFileAttachedItem(0);
         return itementity;
