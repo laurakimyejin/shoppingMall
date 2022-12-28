@@ -20,6 +20,9 @@ public class OrderItemEntity extends BaseEntity{
     @Column(nullable = false)
     private int orderCount;
 
+    @Column(nullable = false)
+    private int orderPrice;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")
     private ItemEntity itemEntity;
