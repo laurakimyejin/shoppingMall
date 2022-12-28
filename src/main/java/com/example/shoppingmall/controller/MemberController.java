@@ -88,4 +88,10 @@ public class MemberController {
 
         return "memberPages/memberList";
     }
+    @GetMapping("/{id}")
+    public String findById(@PathVariable Long id, Model model){
+        MemberDTO memberDTO = memberService.findById(id);
+        model.addAttribute("member",memberDTO);
+        return"memberPages/memberDetail";
+    }
 }

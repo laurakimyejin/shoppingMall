@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <!--  //시간설정-->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <table class="table table-striped text-center">
+        <tr>
+            <th>번호</th>
+            <td th:text="${member.id}"></td>
+        </tr>
+        <tr>
+            <th>아이디</th>
+            <td th:text="${member.userId}"></td>
+        </tr>
+        <tr>
+            <th>이메일</th>
+            <td th:text="${member.memberEmail}"></td>
+        </tr>
+        <tr>
+            <th>이름</th>
+            <td th:text="${member.memberName}"></td>
+        </tr>
+        <tr>
+            <th>전화번호</th>
+            <td th:text="${member.memberMobile}"></td>
+        </tr>
+        <tr>
+        <tr>
+            <th>가입일자</th>
+            <td th:text="*{#temporals.format(member.memberCreatedTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+    </table>
+<!--    <a th:href="@{|/member/delete/${member.id}|}" class="btn btn-danger">삭제</a>-->
+</div>
+</body>
+</html>
