@@ -25,6 +25,7 @@
             <td th:text="${member.memberName}"></td>
             <td th:text="${member.memberMobile}"></td>
             <td th:text="*{#temporals.format(member.memberCreatedTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td><a th:href="@{|/member/${member.id}|}">상세조회</a></td>
         </tr>
     </table>
 </div>

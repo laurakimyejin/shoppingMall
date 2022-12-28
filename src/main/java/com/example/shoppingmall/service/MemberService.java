@@ -71,4 +71,15 @@ public class MemberService {
                         member.getCreatedTime()));
         return memberDTOPage;
     }
+
+    public MemberDTO findById(Long id) {
+        Optional<MemberEntity> memberEntity = memberRepository.findById(id);
+        if(memberEntity.isPresent()){
+            MemberEntity memberEntity1 = memberEntity.get();
+            MemberDTO memberDTO = MemberDTO.toDTO(memberEntity1);
+            return memberDTO;
+        }else{
+            return null;
+        }
+    }
 }
