@@ -6,6 +6,10 @@ import com.example.shoppingmall.entity.MemberEntity;
 import com.example.shoppingmall.repository.CartRepository;
 import com.example.shoppingmall.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -51,5 +55,20 @@ public class MemberService {
         } else {
             return "success";
         }
+    }
+
+    public Page<MemberDTO> findAll(Pageable pageable) {
+        int page = pageable.getPageNumber() - 1;
+        final int pageLimit = 5;
+        Page<MemberEntity> memberEntities = memberRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        Page<MemberDTO> memberDTOPage = memberEntities.map(
+                member -> new MemberDTO(
+                        member.getId(),
+                        member.getUserId(),
+                        member.getMemberEmail(),
+                        member.getMemberName(),
+                        member.getMemberMobile(),
+                        member.getCreatedTime()));
+        return memberDTOPage;
     }
 }
