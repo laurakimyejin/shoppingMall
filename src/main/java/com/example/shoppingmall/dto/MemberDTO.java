@@ -2,6 +2,7 @@ package com.example.shoppingmall.dto;
 
 import com.example.shoppingmall.entity.MemberEntity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class MemberDTO {
     private Long id;
     private String userId;
@@ -20,6 +22,15 @@ public class MemberDTO {
     private String memberAddress;
     private LocalDateTime memberCreatedTime;
     private LocalDateTime memberUpdatedTime;
+
+    public MemberDTO(Long id, String userId, String memberEmail, String memberName, String memberMobile, LocalDateTime memberCreatedTime) {
+        this.id = id;
+        this.userId = userId;
+        this.memberEmail = memberEmail;
+        this.memberName = memberName;
+        this.memberMobile = memberMobile;
+        this.memberCreatedTime = memberCreatedTime;
+    }
 
     public static MemberDTO toDTO(MemberEntity memberEntity) {
         MemberDTO memberDTO = new MemberDTO();
