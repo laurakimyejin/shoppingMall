@@ -19,12 +19,15 @@
         </tr>
         <tr th:each="item: ${itemList}">
             <td th:text="${item.id}"></td>
-            <td> <a th:href="@{/item/(itemId=${item.id})}" th:text="${item.itemName}"></a></td>
+            <td><a th:href="@{/item/(itemId=${item.id})}" th:text="${item.itemName}"></a></td>
             <td th:text="${item.itemPrice}"></td>
             <td th:text="*{#temporals.format(item.itemCreatedDate,'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${item.itemCategory}"></td>
         </tr>
     </table>
+    <a th:href="@{|/item/delete/${item.id}|}" class="btn btn-danger">상품 삭제</a>
+    <a th:href="@{|/item/update/${item.id}|}" class="btn btn-danger">상품 수정</a>
+
 </div>
 </body>
 </html>

@@ -82,4 +82,18 @@ public class MemberService {
             return null;
         }
     }
+
+    public MemberDTO findByUserId(String userId) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByUserId(userId);
+        if(optionalMemberEntity.isPresent()){
+            return MemberDTO.toDTO(optionalMemberEntity.get());
+        }else{
+            return null;
+        }
+    }
+
+    public void update(MemberDTO memberDTO) {
+        MemberEntity updateEntity = MemberEntity.toUpdateEntity(memberDTO);
+        memberRepository.save(updateEntity);
+    }
 }

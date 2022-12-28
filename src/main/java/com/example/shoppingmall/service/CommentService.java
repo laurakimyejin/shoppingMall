@@ -57,5 +57,14 @@ public class CommentService {
 //        }
 //        return commentDTOList;
     }
+
+    public List<CommentDTO> list() {
+        List<CommentEntity> commentEntityList = commentRepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
+        List<CommentDTO> commentDTOList = new ArrayList<>();
+        for(CommentEntity commentEntity:commentEntityList){
+            commentDTOList.add(CommentDTO.toCommentDTO(commentEntity));
+        }
+        return commentDTOList;
+    }
 }
 
