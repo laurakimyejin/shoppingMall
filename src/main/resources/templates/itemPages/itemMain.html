@@ -12,6 +12,7 @@
     <table class="table table-striped table-hover text-center mt-5">
         <tr>
             <th>번호</th>
+            <th>상품</th>
             <th>상품명</th>
             <th>가격</th>
             <th>등록 일자</th>
@@ -19,7 +20,6 @@
         </tr>
         <tr th:each="item: ${itemList}">
             <td th:text="${item.id}"></td>
-            <td><a th:href="@{/item/(itemId=${item.id})}" th:text="${item.itemName}"></a></td>
             <td th:text="${item.itemPrice}"></td>
             <td th:text="*{#temporals.format(item.itemCreatedDate,'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${item.itemCategory}"></td>
