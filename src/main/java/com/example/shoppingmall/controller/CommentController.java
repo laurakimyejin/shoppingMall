@@ -47,7 +47,12 @@ public class CommentController {
         }else {
         return null;
         }
+    }
 
+    @GetMapping("/comment/list")
+    public String list(Model model){
+        List<CommentDTO> commentDTOList = commentService.list();
+        return "commentPages/commentList";
     }
 
 }
