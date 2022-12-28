@@ -16,7 +16,7 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
 
-    @PostMapping("/save")
+    @GetMapping("/save")
     public String saveForm(@ModelAttribute ItemDTO itemDTO, Model model) {
         cartService.save(itemDTO);
         model.addAttribute("item", itemDTO);

@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container">
-    <form action="/cart/save" method="post">
+    <form action="#" method="get" id="loc">
         <table class="table table-hover table-striped mt-5">
             <tr th:if="${item.fileAttachedItem == 1}">
                 <th>파일</th>
@@ -54,7 +54,7 @@
         </table>
     </form>
     <input type="button" value="장바구니" onclick="cart()">
-    <a href="/order/save">바로구매</a>
+    <input type="button" value="바로구매" onclick="orderItem()">
 </div>
 <div class="container mt-5">
     <div id="comment-write" class="input-group" mb-3>
@@ -66,7 +66,7 @@
             <input type="text" id="commentContents" class="form-control" placeholder="내용">
             <label for="commentContents">내용</label>
         </div>
-        <div class="star-container" >
+        <div class="star-container">
             <div class="star"></div>
             <div class="star"></div>
             <div class="star"></div>
@@ -112,7 +112,8 @@
                 <li th:class="${commentList.first} ? 'disabled'" class="page-item">
                     <!--boardList.first: isFirst()
                         boardList.number: getNumber()-->
-                    <a class="page-link" th:href="${commentList.first} ? '#' : @{/item/(page=${commentList.number},itemId=${itemId})}">
+                    <a class="page-link"
+                       th:href="${commentList.first} ? '#' : @{/item/(page=${commentList.number},itemId=${itemId})}">
                         <!-- 사용자 3페이지, number 2 /board?page=2-->
                         <span><</span> <!-- < -->
                     </a>
@@ -130,7 +131,8 @@
                     getNumber() 값은 2임.
                     따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
                 <li th:class="${commentList.last} ? 'disabled'">
-                    <a class="page-link" th:href="${commentList.last} ? '#' : @{/item/(page=${commentList.number + 2},itemId=${itemId})}">
+                    <a class="page-link"
+                       th:href="${commentList.last} ? '#' : @{/item/(page=${commentList.number + 2},itemId=${itemId})}">
                         <span>&gt;</span>
                     </a>
                 </li>
@@ -154,6 +156,16 @@
 
 <script th:inline="javascript">
     const cart = () => {
+        const loc = document.getElementById("loc");
+        loc.action = "/cart/save";
+        const form = document.querySelector('form');
+        form.submit();
+    }
+
+    const orderItem = () => {
+        console.log("orderItem 호출");
+        const loc = document.getElementById("loc");
+        loc.action = "/order/save";
         const form = document.querySelector('form');
         form.submit();
     }
@@ -188,7 +200,9 @@
         const contents = document.getElementById("commentContents").value;
         const starCount = document.getElementById("starCount").textContent;
         console.log(starCount);
-        const id = [[${item.id}]];
+        let id = [[${item.id}]];
+        let itemId = [[${item.id}]];
+        console.log(itemId);
         $.ajax({
             type: "post",
             url: "/comment/save",
@@ -225,10 +239,14 @@
                     output += "</tr>";
                 }
                 output += "</table>";
+
                 document.getElementById('comment-list').innerHTML = output;
                 document.getElementById('commentWriter').value = '';
                 document.getElementById('commentContents').value = '';
-                document.getElementById('comment-page').innerHTML = '';
+                let output2 = "<ul class=\"pagination justify-content-center\">\n";
+                output2 += "<li class=\"page-item\">\n";
+                output2 += "<a class=\"page-link\" href=\"/item/?page=1&itemId="+itemId+"\">"
+                document.getElementById('comment-page').innerHTML = output2;
 
             },
             error: function () {

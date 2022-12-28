@@ -8,25 +8,26 @@
 <body>
 
 <div class="container">
-    <form action="/oder/save" method="get">
+    <form action="/order/save" method="post">
         <table class="table table-hover table-striped mt-5">
             <tr>
                 <th>파일</th>
-                    <img th:src="@{|/upload/${item.storedFileNameItem}}" alt="" width="200" height="200"></td>
+                <img th:src="@{|/upload/${item.itemImage}}" alt="" width="200" height="200"></td>
             </tr>
             <tr>
                 <th>상품명</th>
                 <input type="hidden" name="id" th:value="${item.id}">
-                <td><input type="text" name="itemName" th:value="${item.itemName}" class="form-control" readonly></td>
+                <td><input type="text" name="orderName" th:value="${item.itemName}" class="form-control" readonly></td>
             </tr>
             <tr>
                 <th>가격</th>
-                <td><input type="text" name="itemPrice" th:value="${item.itemPrice}"  class="form-control" readonly></td>
+                <td><input type="text" name="itemPrice" th:value="${item.itemPrice}" class="form-control" readonly></td>
             </tr>
             <tr>
                 <th>구매수량</th>
                 <td>
-                    <input type="number" id="itemCountInput" min="1" max="100" value="1" name="oderCount" onchange="total()">
+                    <input type="number" id="itemCountInput" min="1" max="100" th:value="${item.cartCount}" name="orderCount"
+                           onchange="total()">
                 </td>
             <tr>
                 <th>가격</th>
@@ -34,14 +35,31 @@
             </tr>
             <tr>
                 <th>총가격</th>
-                <td id="totalPrice"></td>
+                <td id="totalPrice">
+                    <th:text th:utext="${item.itemPrice * item.cartCount}"></th:text>
+                    <input type="text" th:value="${item.itemPrice * item.cartCount}" name="orderPrice" readonly>
+                </td>
             </tr>
         </table>
-    </form>
+        <!--구매자 정보-->
+        <div class="container">
+            <h2>구매자 정보</h2>
+                <input type="hidden" name="userId" th:value="${session.member.userId}">
+            <input type="hidden" name="memberId" th:value="${session.member.id}">
+            <input type="hidden" name="itemId" th:value="${item.id}">
+                <input type="text" th:value="${session.member.memberName}" readonly style="display: block" name="memberName">
+                <input type="text" th:value="${session.member.memberEmail}" readonly style="display: block" name="memberEmail">
+                <input type="text" th:value="${session.member.memberMobile}" readonly style="display: block" name="memberMobile">
+                <li>주소지 입력</li>
+                <input type="text" name="memberAddress" placeholder="주소입력">
+                <input type="submit" value="결제하기">
+        </div>
+
+
+    <div class=></div>
     <a href="/cart/save">장바구니</a>
     <a href="/order/save">바로구매</a>
 </div>
-
 
 
 
