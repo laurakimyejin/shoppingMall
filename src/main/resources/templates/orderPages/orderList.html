@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:if="${orderList == 'empty'}">
+    <p>주문내역이 없습니다.</p>
+</div>
+<div th:unless="${orderList == 'empty'}">
+    <table class="table">
+        <tr>
+            <th>주문번호</th>
+            <th>상품이름</th>
+            <th>배송상태</th>
+
+        </tr>
+        <tr th:each="order: ${orderList}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.orderName}"></td>
+            <td th:text="${order.orderStatus}"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

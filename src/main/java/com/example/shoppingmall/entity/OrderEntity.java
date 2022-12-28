@@ -19,6 +19,9 @@ public class OrderEntity extends BaseEntity{
     @Column(length = 4, nullable = false)
     private String orderStatus;
 
+    @Column(length = 4, nullable = false)
+    private String orderName;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
