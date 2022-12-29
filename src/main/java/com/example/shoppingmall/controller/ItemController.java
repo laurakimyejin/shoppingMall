@@ -42,6 +42,7 @@ public class ItemController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("sort", sort);
         model.addAttribute("size", pageable.getPageSize());
+        model.addAttribute("page", pageable.getPageNumber());
         return "itemPages/itemMain";
     }
 
