@@ -1,30 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--    카카오 로그인 api-->
+    <script src = "https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
     <div>
-            <input type="text" name="userId" placeholder="아이디" id="memberId">
+            <input type="text" name="userId" placeholder="아이디" id="userId">
             <input type="password" name="memberPassword" placeholder="비밀번호" id="pass">
             <input type="button" onclick="memberLogin()" value="로그인">
+        <a href="http://developers.kakao.com/logout">카카오 로그아웃</a>
     </div>
-
+<!--카카오 로그인 버튼-->
+    <div class="button-login">
+        <a id="kakao-login-btn" >
+            <img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="200px" height ="40px" />
+        </a>
+    </div>
 
 </body>
 
 <script th:inline="javascript">
     const memberLogin = () => {
-        const email = document.getElementById("memberId").value;
+        const email = document.getElementById("userId").value;
         const pw = document.getElementById("pass").value;
         $.ajax({
             type:"post",
             url:"/member/login",
             data: {
                 UserId: email,
-                memberPassword: pw,
+                memberPassword: pw
             },
             dataType:"text",
             success : function (result){
@@ -40,7 +48,34 @@
             }
         })
     }
+    //카카로 로그인 javascript
+    //0. init 안에 앱 키 중 'javascript 키' 넣기
+    Kakao.init('d3c662a1dff6e0b1b829a613939f14bc');
+    $("#kakao-login-btn").on("click", function(){
+        //1. 로그인 시도
+        Kakao.Auth.login({
+            success: function(authObj) {
+
+                //2. 로그인 성공시, API 호출
+                Kakao.API.request({
+                    url: '/v2/user/me',
+                    success: function(res) {
+                        console.log(res);
+                        var userId = res.id;
+                        //scope: 카카오 로그인 동의항목
+                        scope : 'account_email';
+                        alert('로그인성공');
+                        location.href="/kakao?userId="+userId;
+                    }
+                })
+                console.log(authObj);
+                var token = authObj.access_token;
+            },
+            fail: function(err) {
+                alert(JSON.stringify(err));
+            }
+        });
+
+    }) //
     </script>
-
-
 </html>
