@@ -60,8 +60,7 @@
                 Kakao.API.request({
                     url: '/v2/user/me',
                     success: function(res) {
-                        var account = res.kakao_account;
-                        var memberEmail =account.email;
+                        const memberEmail = res.kakao_account.email;
                         //scope: 카카오 로그인 동의항목
                         scopes : ['account_email', 'profile_nickname'];
                         alert(memberEmail);
