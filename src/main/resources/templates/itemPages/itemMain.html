@@ -8,6 +8,17 @@
 </head>
 <body>
 <a href="/item/save" class="btn-success">상품등록</a>
+
+<!--정렬 버튼나열-->
+<div class="btn-group">
+    <a href="/item/main" class="btn btn-default">최신순</a>
+    <a th:href="@{/item/main(sort=itemPrice)}" class="btn btn-default">낮은가격순</a>
+    <a th:href="@{/item/main(sort=itemSellCount)}" class="btn btn-default">판매순</a>
+</div>
+
+
+
+
 <div class="container">
     <table class="table table-striped table-hover text-center mt-5">
         <tr>

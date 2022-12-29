@@ -17,8 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,10 +48,15 @@ public class ItemService {
         }
     }
 @Transactional
-    public Page<ItemDTO> findAll(Pageable pageable) {
+    public Page<ItemDTO> findAll(Pageable pageable, String sort) {
     int page = pageable.getPageNumber() - 1;
     final int pageLimit = 3;
-      Page<ItemEntity> itemEntityList = itemRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+      Page<ItemEntity> itemEntityList = itemRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, sort)));
+      if(sort.equals("itemPrice")){
+          itemEntityList = itemRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.ASC, sort)));
+          Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
+          return itemDTOList;
+      }
       Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
         return itemDTOList;
     }
