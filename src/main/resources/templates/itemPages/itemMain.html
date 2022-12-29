@@ -48,7 +48,7 @@
         <ul class="pagination justify-content-center">
             <li class="page-item">
                 <!--첫페이지 요청 링크-->
-                <a class="page-link" th:href="@{/item/main(page=1)}">
+                <a class="page-link" th:href="@{/item/main(page=1 ,sort=${sort})}">
                     <span>First</span>
                 </a>
             </li>
@@ -56,7 +56,7 @@
             <li th:class="${itemList.first} ? 'disabled'" class="page-item">
                 <!--boardList.first: isFirst()
                     boardList.number: getNumber()-->
-                <a class="page-link" th:href="${itemList.first} ? '#' : @{/item/main(page=${itemList.number})}">
+                <a class="page-link" th:href="${itemList.first} ? '#' : @{/item/main(page=${itemList.number},sort=${sort})}">
                     <span><</span> <!-- < -->
                 </a>
             </li>
@@ -64,7 +64,7 @@
             <!-- startPage ~ endPage 까지 숫자를 만들어주는 역할 -->
             <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
                 th:class="${page == itemList.number + 1} ? 'page-item active'" class="page-item">
-                <a class="page-link" th:text="${page}" th:href="@{/item/main(page=${page})}"></a>
+                <a class="page-link" th:text="${page}" th:href="@{/item/main(page=${page},sort=${sort})}"></a>
             </li>
 
             <!-- 다음 페이지 요청
@@ -72,13 +72,13 @@
                 getNumber() 값은 2임.
                 따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
             <li th:class="${itemList.last} ? 'disabled'">
-                <a class="page-link" th:href="${itemList.last} ? '#' : @{/item/main(page=${itemList.number + 2})}">
+                <a class="page-link" th:href="${itemList.last} ? '#' : @{/item/main(page=${itemList.number + 2},sort=${sort})}">
                     <span>&gt;</span>
                 </a>
             </li>
 
             <li class="page-item">
-                <a class="page-link" th:href="@{/item/main(page=${itemList.totalPages})}">
+                <a class="page-link" th:href="@{/item/main(page=${itemList.totalPages},sort=${sort})}">
                     <span>Last</span>
                 </a>
             </li>

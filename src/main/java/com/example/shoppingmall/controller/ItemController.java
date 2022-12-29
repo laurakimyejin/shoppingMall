@@ -40,6 +40,7 @@ public class ItemController {
         int endPage = ((startPage + blockLimit - 1) < itemDTOList.getTotalPages()) ? startPage + blockLimit - 1 : itemDTOList.getTotalPages();
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        model.addAttribute("sort", sort);
         return "itemPages/itemMain";
     }
 
