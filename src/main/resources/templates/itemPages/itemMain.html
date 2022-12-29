@@ -51,35 +51,7 @@
 
 <div class="container">
     <table class="table table-striped table-hover text-center mt-5">
-        <div th:each="item: ${itemList}">
-            <div>
-                <div class="item  col-xs-4 col-md-3">
-                    <div class="thumbnail">
-                        <div th:if="${item.fileAttachedItem == 1}">
-                            <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="200" height="150">
-                        </div>
-                        <div th:if="${item.fileAttachedItem == 0}">
-                            이미지 미등록
-                        </div>
-                        <div th:text="${item.itemPrice}">
-                        </div>
 
-                        <div class="category">
-                            <h5 th:text="${item.itemCategory}"></h5>
-                        </div>
-
-                        <div class="caption">
-                            <div class="row">
-                                <div class="col-xs-12 col-md-6">
-                                    <p class="read"> <a th:href="@{/item/(itemId=${item.id})}" th:text="${item.itemName}"></a></p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
     </table>
 </div>
 
