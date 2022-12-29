@@ -5,7 +5,7 @@
     <title>main</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
-<!--    bootstrap dropdown -->
+    <!--    bootstrap dropdown -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
             integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
             crossorigin="anonymous"></script>
@@ -31,7 +31,7 @@
 <!--정렬 버튼-->
 <div class="btn-group dropdown">
     <button type="button" class="btn btn-default dropdown-toggle active" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true" th:text="${size}+'개씩보기'">
-         <span class="caret"></span>
+        <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
         <li th:class="${size == 1} ? 'dropdown-item active' " class="dropdown-item active"> <a th:href="@{/item/main(page=1, size=1 , sort=${sort})}" class="dropdown-item">1개씩</a></li>
@@ -81,6 +81,7 @@
             </div>
         </div>
     </table>
+</div>
 
     <div class="container">
         <ul class="pagination justify-content-center">
