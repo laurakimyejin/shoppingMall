@@ -20,18 +20,26 @@
         </tr>
         <tr th:each="item: ${itemList}">
             <td th:text="${item.id}"></td>
+<<<<<<<<< Temporary merge branch 1
+=========
             <td th:if="${item.fileAttachedItem == 1}">
                 <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="50" height="50">
             </td>
             <td th:if="${item.fileAttachedItem == 0}">
-                이미지 미등록
+               이미지 미등록
             </td>
             <td> <a th:href="@{/item/(itemId=${item.id})}" th:text="${item.itemName}"></a></td>
+>>>>>>>>> Temporary merge branch 2
             <td th:text="${item.itemPrice}"></td>
             <td th:text="*{#temporals.format(item.itemCreatedDate,'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${item.itemCategory}"></td>
         </tr>
     </table>
+<<<<<<<<< Temporary merge branch 1
+    <a th:href="@{|/item/delete/${item.id}|}" class="btn btn-danger">상품 삭제</a>
+    <a th:href="@{|/item/update/${item.id}|}" class="btn btn-danger">상품 수정</a>
+
+=========
 
     <div class="container">
         <ul class="pagination justify-content-center">
@@ -73,6 +81,7 @@
             </li>
         </ul>
     </div>
+>>>>>>>>> Temporary merge branch 2
 </div>
 </body>
 </html>
