@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -62,6 +63,12 @@ public class MemberController {
             return "no";
         }
     }
+    //카카오 로그인 처리
+    @PostMapping("/v2/user/me")
+    public @ResponseBody void kakaoLogin(HttpSession session){
+       session.setAttribute("member","5235268");
+    }
+
     //마이페이지
     @GetMapping("/myPage")
     public String myPage(){
