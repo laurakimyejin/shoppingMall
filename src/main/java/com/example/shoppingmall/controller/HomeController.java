@@ -18,10 +18,9 @@ public class HomeController {
     }
 
     @GetMapping("/kakao")
-    public String Home(@RequestParam("userId")Long userId, HttpSession session){
+    public String Home(@RequestParam("memberEmail")String memberEmail, HttpSession session){
         MemberDTO memberDTO = new MemberDTO();
-        System.out.println("userId = " + userId + ", session = " + session);
-        memberDTO.setId(userId);
+        memberDTO.setMemberEmail(memberEmail);
         session.setAttribute("member",memberDTO);
         return "index";
     }
