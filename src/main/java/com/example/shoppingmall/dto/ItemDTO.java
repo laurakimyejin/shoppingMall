@@ -21,6 +21,7 @@ public class ItemDTO {
     private String itemContents;
     private LocalDateTime itemCreatedDate;
     private int itemCount;
+    private int itemSellCount;
     private String itemCategory;
 //    private List<String> itemImage;
     private int fileAttachedItem;

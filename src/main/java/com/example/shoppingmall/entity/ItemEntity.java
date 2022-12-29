@@ -37,6 +37,9 @@ public class ItemEntity extends BaseEntity {
     @Column(length = 30)
     private String itemCategory;
 
+    @Column
+    private int itemSellCount = 0;
+
     //item(상품) : item_file(상품이미지) = 1 : M
     @OneToMany(mappedBy = "itemEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ItemFileEntity> itemFileEntityList = new ArrayList<>();

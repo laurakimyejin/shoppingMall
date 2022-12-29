@@ -27,6 +27,8 @@ public class OrderService {
     public void save(OrderDTO orderDTO) {
         Optional<MemberEntity> memberEntity1 = memberRepository.findById(orderDTO.getMemberId());
         ItemEntity itemEntity1 = itemRepository.findById(orderDTO.getItemId()).get();
+        itemEntity1.setItemSellCount(itemEntity1.getItemSellCount() + orderDTO.getOrderCount());
+        itemRepository.save(itemEntity1);
         if (memberEntity1.isPresent()) {
             MemberEntity memberEntity2 = memberEntity1.get();
             memberEntity2.setMemberAddress(orderDTO.getMemberAddress());
