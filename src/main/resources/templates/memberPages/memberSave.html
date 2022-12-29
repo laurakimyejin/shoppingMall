@@ -26,7 +26,7 @@
 <header id="header">
   <h1 class="tit">회원가입</h1>
 </header>
-<form name="join" action="/member/save" method="post">
+<form name="join" action="/member/save" method="post" >
   <fieldset>
     <div class="id-container">
       <label for="uid">아이디</label>
@@ -38,25 +38,27 @@
       <label for="pwd">비밀번호</label>
       <input type="password" class="width-450 form-control" name="memberPassword" id="pwd">
       <span id="pwdError"></span>
-      <label for="repwd">비밀번호 확인</label>
-      <input type="password" class="width-450 form-control" name="memberPassword2" id="repwd" onblur="check_pwd()">
-      <span id="rePwderror"></span>
+      <label for="rePwd">비밀번호 확인</label>
+      <input type="password" class="width-450 form-control" name="memberPassword2" id="rePwd" onblur="check_pwd()">
+      <span id="rePwdError"></span>
     </div>
     <div class=name-container>
       <label for="uname">이름</label>
-      <input type="text" class="width-450 form-control" name="memberName" id="uname">
+      <input type="text" class="width-450 form-control" name="memberName" id="uname" onblur="check_name()">
       <span id="nameError"></span>
       </span>
     </div>
 
     <div class=mobile-container>
       <label for="memberMobile">전화번호</label>
-      <input type="text" class="width-450 form-control" name="memberMobile" id="memberMobile">
+      <input type="text" class="width-450 form-control" name="memberMobile" id="memberMobile" onblur="check_mobile()">
+      <span id="mobileError"></span>
     </div>
 
     <div class=email-container>
       <label for="memberEmail">이메일</label>
-      <input type="text" class="width-450 form-control" name="memberEmail" id="memberEmail">
+      <input type="text" class="width-450 form-control" name="memberEmail" id="memberEmail" onblur="check_email()">
+      <span id="emailError"></span>
     </div>
 
 
@@ -74,7 +76,7 @@ const check_id = () => {
   const id = document.getElementById("uid").value;
   if (id == "") {
     alert("아이디를 입력해주세요.");
-  } else {
+     } else {
     $.ajax({
       type: "post",
       url: "/member/duplicate-check-userId",
@@ -91,38 +93,83 @@ const check_id = () => {
 
         } else {
           $("#joinBtn").attr("disabled", "disabled");
-          alert("이미 존재하는 이메일 입니다.")
+          alert("이미 존재하는 아이디입니다.")
         }
       },
       error: function () {
         console.log("실패")
       }
-
     })
   }
 }
-
+const check_name = () => {
+  console.log("check_name 함수호출");
+  if(document.join.memberName.value === ""){
+    $("#joinBtn").attr("disabled", "disabled");
+    const nameCheck = document.getElementById("nameError");
+    nameCheck.innerHTML="이름을 입력해주세요";
+    nameCheck.style.color="red";
+    return false;
+  } else{
+    const nameCheck = document.getElementById("nameError");
+    nameCheck.innerHTML="";
+  }
+}
   const check_pwd = () => {
     const pwd = document.getElementById("pwd").value;
-    const repwd = document.getElementById("repwd").value;
+    const rePwd = document.getElementById("rePwd").value;
+    const exp = /^(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,12}$/;
+
     if (pwd == "") {
-      alert("비밀번호를 입력해주세요.");
-    } else if (pwd != repwd) {
-      alert("비밀번호가 일치하지 않습니다.");
-      document.getElementById("pwdError").innerHTML = "비밀번호가 일치하지 않습니다.";
-      document.getElementById("pwdError").style.color = "red";
-    } else {
+      $("#joinBtn").attr("disabled", "disabled");
+      const passwordCheck = document.getElementById("pwdError");
+      passwordCheck.innerHTML="비밀번호를 입력해주세요";
+      passwordCheck.style.color="red";
+    } else if (pwd != rePwd) {
+      $("#joinBtn").attr("disabled", "disabled");
+      const passwordCheck = document.getElementById("pwdError");
+      passwordCheck.innerHTML="비밀번호가 일치하지 않습니다.";
+      passwordCheck.style.color= "red";
+    } else if(!document.join.memberPassword.value.match(exp)){
+      $("#joinBtn").attr("disabled", "disabled");
+        const passwordCheck =document.getElementById("pwdError");
+        passwordCheck.innerHTML="영문 소문자와 숫자를 이용하여 8~12자 이내로 입력하세요";
+        passwordCheck.style.color="red";
+        return false;
+      } else {
       document.getElementById("pwdError").innerHTML = "비밀번호가 일치합니다.";
       document.getElementById("pwdError").style.color = "blue";
     }
   }
 
+  const check_mobile = () => {
+    const mobile = document.getElementById("memberMobile").value;
+    const mobileCheck = document.getElementById("mobileError");
+    const regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+    if (!regExp.test(mobile)) {
+      $("#joinBtn").attr("disabled", "disabled");
+      document.getElementById("memberMobile").value = "";
+      mobileCheck.innerHTML = "전화번호는 000-0000-0000 형식으로 입력해주세요."
+      mobileCheck.style.color = "red"
+    } else {
+      $("#joinBtn").removeAttr("disabled");
+      mobileCheck.innerHTML = ""
+    }
+  }
 
-
-
-
-
+const check_email = () => {
+  const email = document.getElementById("memberEmail").value;
+  const emailCheck = document.getElementById("emailError");
+  const regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
+  if (!regExp.test(email)) {
+    $("#joinBtn").attr("disabled", "disabled");
+    document.getElementById("memberEmail").value = "";
+    emailCheck.innerHTML = "이메일은 ____@____ 형식으로 입력해주세요."
+    emailCheck.style.color = "red"
+  } else {
+    $("#joinBtn").removeAttr("disabled");
+    emailCheck.innerHTML = ""
+  }
+}
 </script>
-
-
 </html>
