@@ -1,10 +1,7 @@
 package com.example.shoppingmall.dto;
 
 import com.example.shoppingmall.entity.MemberEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
