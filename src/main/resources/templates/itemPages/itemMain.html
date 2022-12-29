@@ -22,7 +22,11 @@
             <td th:text="${item.id}"></td>
             <td><a th:href="@{/item/(itemId=${item.id})}" th:text="${item.itemName}"></a></td>
             <td>
+            <td th:if="${item.fileAttachedItem == 1}">
                 <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="50" height="50">
+            </td>
+            <td th:if="${item.fileAttachedItem == 0}">
+               이미지 미등록
             </td>
             <td> <a th:href="@{/item/(itemId=${item.id})}" th:text="${item.itemName}"></a></td>
             <td th:text="${item.itemPrice}"></td>
@@ -30,9 +34,52 @@
             <td th:text="${item.itemCategory}"></td>
         </tr>
     </table>
+
     <a th:href="@{|/item/delete/${item.id}|}" class="btn btn-danger">상품 삭제</a>
     <a th:href="@{|/item/update/${item.id}|}" class="btn btn-danger">상품 수정</a>
 
+
+
+    <div class="container">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <!--첫페이지 요청 링크-->
+                <a class="page-link" th:href="@{/item/main(page=1)}">
+                    <span>First</span>
+                </a>
+            </li>
+
+            <li th:class="${itemList.first} ? 'disabled'" class="page-item">
+                <!--boardList.first: isFirst()
+                    boardList.number: getNumber()-->
+                <a class="page-link" th:href="${itemList.first} ? '#' : @{/item/main(page=${itemList.number})}">
+                    <span><</span> <!-- < -->
+                </a>
+            </li>
+
+            <!-- startPage ~ endPage 까지 숫자를 만들어주는 역할 -->
+            <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+                th:class="${page == itemList.number + 1} ? 'page-item active'" class="page-item">
+                <a class="page-link" th:text="${page}" th:href="@{/item/main(page=${page})}"></a>
+            </li>
+
+            <!-- 다음 페이지 요청
+                현재 3페이지를 보고 있다면 다음 페이지는 4페이지임.
+                getNumber() 값은 2임.
+                따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
+            <li th:class="${itemList.last} ? 'disabled'">
+                <a class="page-link" th:href="${itemList.last} ? '#' : @{/item/main(page=${itemList.number + 2})}">
+                    <span>&gt;</span>
+                </a>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" th:href="@{/item/main(page=${itemList.totalPages})}">
+                    <span>Last</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>
 </body>
 </html>

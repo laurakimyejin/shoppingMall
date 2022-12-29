@@ -1,8 +1,6 @@
 package com.example.shoppingmall.service;
 
-import com.example.shoppingmall.dto.CommentDTO;
 import com.example.shoppingmall.dto.ItemDTO;
-import com.example.shoppingmall.entity.CommentEntity;
 import com.example.shoppingmall.entity.ItemEntity;
 import com.example.shoppingmall.entity.ItemFileEntity;
 import com.example.shoppingmall.repository.CommentRepository;
@@ -52,14 +50,14 @@ public class ItemService {
         }
     }
 @Transactional
-    public List<ItemDTO> findAll() {
-      List<ItemEntity> itemEntityList = itemRepository.findAll();
-      List<ItemDTO> itemDTOList = new ArrayList<>();
-      for(ItemEntity itemEntity : itemEntityList){
-          itemDTOList.add(ItemDTO.toItemDTO(itemEntity));
-      }
-      return itemDTOList;
+    public Page<ItemDTO> findAll(Pageable pageable) {
+    int page = pageable.getPageNumber() - 1;
+    final int pageLimit = 3;
+      Page<ItemEntity> itemEntityList = itemRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+      Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
+        return itemDTOList;
     }
+
 @Transactional
     public ItemDTO findById(Long id) {
     Optional<ItemEntity> itemEntityOptional = itemRepository.findById(id);
