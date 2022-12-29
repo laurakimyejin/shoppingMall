@@ -20,22 +20,23 @@
 <a href="/item/save" class="btn-success">상품등록</a>
 
 
-<div class="btn-group">
-    <a href="/item/main" class="btn btn-default">최신순</a>
-    <a th:href="@{/item/main(sort=itemPrice)}" class="btn btn-default">낮은가격순</a>
-    <a th:href="@{/item/main(sort=itemSellCount)}" class="btn btn-default">판매순</a>
+<div class="btn">
+    <a th:href="@{/item/main(page=${page} ,sort='id' , size=${size})}" th:class="${sort.equals('id')} ? 'btn btn-default active' " class="btn btn-default">최신순</a>
+    <a th:href="@{/item/main(page=${page} ,sort='itemPrice' , size=${size})}"  th:class="${sort.equals('itemPrice')} ? 'btn btn-default active' " class="btn btn-default">낮은가격순</a>
+    <a th:href="@{/item/main(page=${page} ,sort='itemSellCount' , size=${size})}" th:class="${sort.equals('itemSellCount')} ? 'btn btn-default active' "   class="btn btn-default ">판매순</a>
 </div>
 
 
-<!--정렬 버튼나열-->
+
+<!--정렬 버튼-->
 <div class="btn-group dropdown">
-    <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true" th:text="${size}+'개씩보기'">
+    <button type="button" class="btn btn-default dropdown-toggle active" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true" th:text="${size}+'개씩보기'">
          <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
-        <li> <a th:href="@{/item/main(page=1, size=1)}" th:class="${size == 1} ? 'dropdown-item active'" class="dropdown-item">1개씩</a></li>
-        <li> <a th:href="@{/item/main(page=1, size=2)}" th:class="${size == 2} ? 'dropdown-item active'" class="dropdown-item">2개씩</a></li>
-        <li> <a th:href="@{/item/main(page=1, size=3)}" th:class="${size == 3} ? 'dropdown-item active'" class="dropdown-item">3개씩</a></li>
+        <li th:class="${size == 1} ? 'dropdown-item active' " class="dropdown-item active"> <a th:href="@{/item/main(page=1, size=1 , sort=${sort})}" class="dropdown-item">1개씩</a></li>
+        <li th:class="${size == 2} ? 'dropdown-item active' " class="dropdown-item active"> <a th:href="@{/item/main(page=1, size=2 , sort=${sort})}"  class="dropdown-item">2개씩</a></li>
+        <li th:class="${size == 3} ? 'dropdown-item active' " class="dropdown-item active"> <a th:href="@{/item/main(page=1, size=3, sort=${sort})}"  class="dropdown-item">3개씩</a></li>
     </ul>
 </div>
 
