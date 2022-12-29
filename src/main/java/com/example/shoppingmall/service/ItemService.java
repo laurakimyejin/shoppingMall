@@ -50,7 +50,7 @@ public class ItemService {
 @Transactional
     public Page<ItemDTO> findAll(Pageable pageable, String sort) {
     int page = pageable.getPageNumber() - 1;
-    final int pageLimit = 3;
+    int pageLimit = pageable.getPageSize();
       Page<ItemEntity> itemEntityList = itemRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, sort)));
       if(sort.equals("itemPrice")){
           itemEntityList = itemRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.ASC, sort)));

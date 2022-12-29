@@ -32,7 +32,7 @@ public class ItemController {
         return "redirect:/item/main";
     }
     @GetMapping("/item/main")
-    public String findAll(@PageableDefault(page = 1)Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort){
+    public String findAll(@PageableDefault(page = 1,size = 1)Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort){
         Page<ItemDTO> itemDTOList = itemService.findAll(pageable, sort);
         model.addAttribute("itemList",itemDTOList);
         int blockLimit = 3;
@@ -41,6 +41,7 @@ public class ItemController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("sort", sort);
+        model.addAttribute("size", pageable.getPageSize());
         return "itemPages/itemMain";
     }
 
