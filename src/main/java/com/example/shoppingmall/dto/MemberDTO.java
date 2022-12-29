@@ -23,6 +23,8 @@ public class MemberDTO {
     private LocalDateTime memberCreatedTime;
     private LocalDateTime memberUpdatedTime;
 
+    private String memberPasswordUpdate;
+
     public MemberDTO(Long id, String userId, String memberEmail, String memberName, String memberMobile, LocalDateTime memberCreatedTime) {
         this.id = id;
         this.userId = userId;

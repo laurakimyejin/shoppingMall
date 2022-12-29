@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>update</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+<body>
+<style>
+  #update-form {
+    width: 800px;
+  }
+</style>
+</head>
+<body>
+<div class="container" id="update-form">
+  <form action="/member/update" method="post" name="updateForm">
+    <input type="hidden" name="id" th:value="${session.member.id}">
+    아이디: <input type="text" name="userId" th:value="${session.member.userId}" class="form-control" readonly>
+    이메일: <input type="text" name="memberEmail" th:value="${session.member.memberEmail}" class="form-control">
+    변경 비밀번호: <input type="password" name="memberPasswordUpdate" id="pwdUpdate" class="form-control">
+    <span id="pwdUpdateError"></span>
+    변경 비밀번호 확인: <input type="password" name="memberPasswordUpdateCheck" id="pwdUpdateCheck" onblur="updateCheck_pwd()" class="form-control">
+    <span id="reUpdatePwdError"></span>
+    이름: <input type="text" name="memberName" th:value="${session.member.memberName}" class="form-control">
+    전화번호: <input type="text" name="memberMobile" th:value="${session.member.memberMobile}" class="form-control">
+    주소: <input type="text" name="memberAddress" th:value="${session.member.memberAddress}" class="form-control">
+    <input type="button" value="수정" class="btn btn-warning" onclick="update()">
+  </form>
+</div>
+</body>
+<script th:inline="javascript">
+  const updateCheck_pwd = () => {
+    const pwdUpdate = document.getElementById("pwdUpdate").value;
+    const rePwdUpdate = document.getElementById("rePwdUpdate").value;
+    if (pwdUpdate == "") {
+      alert("새로운 비밀번호를 입력해주세요.");
+    } else if (pwdUpdate != rePwdUpdate) {
+      alert("비밀번호가 일치하지 않습니다.");
+      document.getElementById("pwdUpdateError").innerHTML = "비밀번호가 일치하지 않습니다.";
+      document.getElementById("pwdUpdateError").style.color = "red";
+    } else {
+      document.getElementById("pwdUpdateError").innerHTML = "비밀번호가 일치합니다.";
+      document.getElementById("pwdUpdateError").style.color = "blue";
+    }
+  }
+  const update = () => {
+   document.updateForm.submit();
+  }
+
+</script>
+</body>
+</html>
