@@ -60,12 +60,12 @@
                 Kakao.API.request({
                     url: '/v2/user/me',
                     success: function(res) {
-                        console.log(res);
-                        var userId = res.id;
+                        console.log(account_email);
+                        var memberEmail = res.kakao_account.email;
                         //scope: 카카오 로그인 동의항목
-                        scope : 'account_email';
+                        scopes : ['account_email', 'profile_nickname'];
                         alert('로그인성공');
-                        location.href="/kakao?userId="+userId;
+                        location.href="/kakao?memberEmail="+memberEmail;
                     }
                 })
                 console.log(authObj);
