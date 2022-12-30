@@ -71,6 +71,7 @@ public class CartService {
             List<CartItemDTO>cartItemDTOList = new ArrayList<>();
             for (CartItemEntity cartItemEntity : cartItemEntityList) {
                 CartItemDTO cartItemDTO = new CartItemDTO();
+                cartItemDTO.setId(cartItemEntity.getId());
                 cartItemDTO.setCartCount(cartItemEntity.getCartCount());
                 cartItemDTO.setItemName(cartItemEntity.getItemEntity().getItemName());
                 cartItemDTO.setItemPrice(cartItemEntity.getItemEntity().getItemPrice());
@@ -82,5 +83,9 @@ public class CartService {
         }else {
             return null;
         }
+    }
+    @Transactional
+    public void delete(Long id) {
+        cartItemRepository.deleteById(id);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -16,13 +17,14 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
 
+    //장바구니 저장
     @GetMapping("/save")
     public String saveForm(@ModelAttribute ItemDTO itemDTO, Model model) {
         cartService.save(itemDTO);
         model.addAttribute("item", itemDTO);
         return "/cartPages/cartSave";
     }
-
+    //장바구니 리스트
     @GetMapping("/list")
     public String listForm(@RequestParam("userId") String userId,Model model) {
         List<CartItemDTO>cartItemDTOList = cartService.findAll(userId);
@@ -30,6 +32,12 @@ public class CartController {
         return "/cartPages/cartList";
     }
 
-
+    //장바구니 삭제
+    @GetMapping("/delete2")
+    public String delete(@RequestParam("cartId")Long id, @RequestParam("userId")String userId){
+        System.out.println("id = " + id + ", userId = " + userId);
+        cartService.delete(id);
+        return "redirect:/cart/list?userId="+userId;
+    }
 
 }
