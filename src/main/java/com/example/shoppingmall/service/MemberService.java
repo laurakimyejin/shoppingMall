@@ -22,9 +22,9 @@ public class MemberService {
 
     public Long save(MemberDTO memberDTO) {
         Long savedId = memberRepository.save(MemberEntity.toSaveEntity(memberDTO)).getId();
-        Optional<MemberEntity>memberEntity=memberRepository.findById(savedId);
-        if (memberEntity.isPresent()){
-            MemberEntity memberEntity1=memberEntity.get();
+        Optional<MemberEntity> memberEntity = memberRepository.findById(savedId);
+        if (memberEntity.isPresent()) {
+            MemberEntity memberEntity1 = memberEntity.get();
             CartEntity cartEntity = new CartEntity();
             cartEntity.setMemberEntity(memberEntity1);
             cartRepository.save(cartEntity);
@@ -38,7 +38,7 @@ public class MemberService {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByUserId(memberDTO.getUserId());
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
-            if (memberEntity.getMemberPassword().equals(memberDTO.getMemberPassword())){
+            if (memberEntity.getMemberPassword().equals(memberDTO.getMemberPassword())) {
                 return MemberDTO.toDTO(memberEntity);
             } else {
                 return null;
@@ -74,20 +74,20 @@ public class MemberService {
 
     public MemberDTO findById(Long id) {
         Optional<MemberEntity> memberEntity = memberRepository.findById(id);
-        if(memberEntity.isPresent()){
+        if (memberEntity.isPresent()) {
             MemberEntity memberEntity1 = memberEntity.get();
             MemberDTO memberDTO = MemberDTO.toDTO(memberEntity1);
             return memberDTO;
-        }else{
+        } else {
             return null;
         }
     }
 
     public MemberDTO findByUserId(String userId) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByUserId(userId);
-        if(optionalMemberEntity.isPresent()){
+        if (optionalMemberEntity.isPresent()) {
             return MemberDTO.toDTO(optionalMemberEntity.get());
-        }else{
+        } else {
             return null;
         }
     }
@@ -96,4 +96,33 @@ public class MemberService {
         MemberEntity updateEntity = MemberEntity.toUpdateEntity(memberDTO);
         memberRepository.save(updateEntity);
     }
+
+    public MemberDTO saveKakao(MemberDTO memberDTO) {
+        Optional<MemberEntity> memberEntity2 = memberRepository.findByMemberEmail(memberDTO.getMemberEmail());
+        if (memberEntity2.isEmpty()) {
+            MemberDTO memberDTO1 = new MemberDTO();
+            memberDTO1.setMemberEmail(memberDTO.getMemberEmail());
+            memberDTO1.setUserId(memberDTO.getUserId());
+            memberDTO1.setMemberName(memberDTO.getMemberName());
+            memberDTO1.setMemberPassword(memberDTO1.getUserId());
+            memberDTO1.setMemberMobile("000-0000-0000");
+            Long savedId = memberRepository.save(MemberEntity.toSaveEntity(memberDTO1)).getId();
+            Optional<MemberEntity> memberEntity = memberRepository.findById(savedId);
+            if (memberEntity.isPresent()) {
+                MemberEntity memberEntity1 = memberEntity.get();
+                CartEntity cartEntity = new CartEntity();
+                cartEntity.setMemberEntity(memberEntity1);
+                cartRepository.save(cartEntity);
+                return MemberDTO.toDTO(memberEntity1);
+            }
+        } else {
+            return MemberDTO.toDTO(memberEntity2.get());
+
+        }
+        return null;
+    }
 }
+
+
+
+

@@ -17,11 +17,4 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/kakao")
-    public String Home(@RequestParam("memberEmail")String memberEmail, HttpSession session){
-        MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setMemberEmail(memberEmail);
-        session.setAttribute("member",memberDTO);
-        return "index";
-    }
 }
