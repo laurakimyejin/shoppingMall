@@ -136,4 +136,13 @@ public class MemberController {
         return"/memberPages/myPage";
     }
 
+    //카카오 로그인
+    @PostMapping("/kakao")
+    public String Home(@ModelAttribute MemberDTO memberDTO, HttpSession session){
+        System.out.println("memberDTO = " + memberDTO + ", session = " + session);
+        MemberDTO member = memberService.saveKakao(memberDTO);
+        session.setAttribute("member", member);
+        return "index";
+    }
+
 }
