@@ -29,7 +29,7 @@ public class QuestionEntity extends BaseEntity{
     @Column(length = 4, nullable = false)
     private String questionStatus;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
