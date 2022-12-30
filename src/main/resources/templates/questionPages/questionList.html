@@ -18,12 +18,12 @@
             <th>날자</th>
             <th>답변여부</th>
         </tr>
-        <tr th:each="board: ${questionList}">
-            <td th:text="${board.id}"></td>
-            <td><a th:href="@{|/board/${board.id}|}" th:text="${board.questionTitle}"></a></td>
-            <td th:text="${board.questionName}"></td>
-            <td th:text="*{#temporals.format(board.getQuestionCreatedTime(), 'yyyy-MM-dd HH:mm:ss')}"></td>
-            <td th:text="${board.questionStatus}"></td>
+        <tr th:each="question: ${questionList}">
+            <td th:text="${question.id}"></td>
+            <td><a th:href="@{|/question/${question.id}|}" th:text="${question.questionTitle}"></a></td>
+            <td th:text="${question.questionName}"></td>
+            <td th:text="*{#temporals.format(question.getQuestionCreatedTime(), 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${question.questionStatus}"></td>
         </tr>
     </table>
 </div>

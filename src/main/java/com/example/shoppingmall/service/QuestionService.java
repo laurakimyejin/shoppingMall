@@ -44,4 +44,12 @@ public class QuestionService {
     }
 
 
+    public QuestionDTO findById(Long id) {
+        Optional<QuestionEntity> questionEntity = questionRepository.findById(id);
+        if (questionEntity.isPresent()) {
+            QuestionEntity question = questionEntity.get();
+            return QuestionDTO.toQuestionDTO(question);
+        }
+        return null;
+    }
 }
