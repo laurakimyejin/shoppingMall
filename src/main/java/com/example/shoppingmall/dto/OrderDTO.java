@@ -1,5 +1,6 @@
 package com.example.shoppingmall.dto;
 
+import com.example.shoppingmall.entity.OrderEntity;
 import lombok.*;
 
 @Getter
@@ -17,5 +18,22 @@ public class OrderDTO {
     private String orderStatus = "배송준비";
     private Long itemId;
     private Long memberId;
+    private String memberName;
     private int orderPrice;
+
+    public static <U> U toOderDTO(OrderEntity orderEntity) {
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setId(orderEntity.getId());
+        orderDTO.setUserId(orderEntity.getMemberEntity().getUserId());
+        orderDTO.setOrderCount(orderEntity.getOrderItemEntityList().get(0).getOrderCount());
+        orderDTO.setOrderName(orderEntity.getOrderItemEntityList().get(0).getOrderName());
+        orderDTO.setMemberAddress(orderEntity.getMemberEntity().getMemberAddress());
+        orderDTO.setMemberMobile(orderEntity.getMemberEntity().getMemberMobile());
+        orderDTO.setOrderStatus(orderEntity.getOrderStatus());
+        orderDTO.setItemId(orderEntity.getOrderItemEntityList().get(0).getItemEntity().getId());
+        orderDTO.setMemberId(orderEntity.getMemberEntity().getId());
+        orderDTO.setOrderPrice(orderEntity.getOrderItemEntityList().get(0).getOrderPrice());
+        orderDTO.setMemberName(orderEntity.getMemberEntity().getMemberName());
+        return (U) orderDTO;
+    }
 }
