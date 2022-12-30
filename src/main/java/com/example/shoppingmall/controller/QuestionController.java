@@ -47,4 +47,11 @@ public class QuestionController {
         return "redirect:/question/list";
     }
 
+    @GetMapping("/{id}")
+    public String questionDetail(@PathVariable Long id, Model model){
+        QuestionDTO questionDTO = questionService.findById(id);
+        model.addAttribute("question", questionDTO);
+        return "/questionPages/questionDetail";
+    }
+
 }

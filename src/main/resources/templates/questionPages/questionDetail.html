@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <script th:src="@{/js/axios.min.js}"></script>
+    <!--  //시간설정-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <style>
+        .contentContainer {
+            width: 500px;
+            height: 500px;
+            left: 500px;
+            top: 500px;
+            /* Rectangle 1 */
+        }
+
+        td {
+            width: 200px;
+        }
+
+        th {
+            width: 100px;
+        }
+
+        .main {
+            width: 600px;
+            margin-top: 200px;
+            margin-left: 500px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div>
+    <div class="main">
+        <div class="d-flex justify-content-center">
+            <div class="contentContainer">
+                <table class="table">
+                    <tr>
+                        <th>번호</th>
+                        <td th:text="${question.id}"></td>
+                    </tr>
+                    <tr>
+                        <th>작성자</th>
+                        <td th:text="${question.questionName}"></td>
+                    </tr>
+                    <tr>
+                        <th>제목</th>
+                        <td th:text="${question.questionTitle}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>작성시간</th>
+                        <td th:text="*{#temporals.format(question.questionCreatedTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                    </tr>
+                </table>
+
+
+                <div class="contentContainer d-flex justify-content-center">
+                    <textarea class="form-control" rows="10" th:text="${question.questionContents}"></textarea>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--    <div>-->
+<!--        <button class="btn btn-primary" onclick="listReq()" style="float: left">목록</button>-->
+<!--        <div th:if="${session.loginEmail} == ${board.boardWriter}">-->
+<!--            <button class="btn btn-warning" onclick="updateReq()" style="float: right">수정</button>-->
+<!--        </div>-->
+<!--        <div th:block th:switch="${session.loginEmail}">-->
+<!--        <span th:case="'admin'">-->
+<!--          <button class="btn btn-danger" onclick="deleteReq()" style="float: right">삭제</button>-->
+<!--        </span>-->
+<!--            <span th:case="${board.boardWriter}">-->
+<!--          <button class="btn btn-danger" onclick="deleteReq()" style="float: right">삭제</button>-->
+<!--        </span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="container mt-5">-->
+<!--    <div id="comment-write" class="input-group" mb-3>-->
+<!--        <div class="form-floating">-->
+<!--            <input type="text" id="commentWriter" th:value="${session.loginEmail}" class="form-control" readonly>-->
+<!--            <label for="commentWriter">작성자</label>-->
+<!--        </div>-->
+<!--        <div class="form-floating">-->
+<!--            <input type="text" id="commentContents" class="form-control" placeholder="내용">-->
+<!--            <label for="commentContents">내용</label>-->
+<!--        </div>-->
+<!--        <button id="comment-write-btn" class="btn btn-secondary" onclick="commentWrite()">댓글작성</button>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="container mt-5" id="comment-list">-->
+<!--    <div th:if="${commentList == 'empty'}">-->
+<!--        <p>작성된 댓글이 없습니다.</p>-->
+<!--    </div>-->
+<!--    <div th:unless="${commentList == 'empty'}">-->
+<!--        <table class="table">-->
+<!--            <tr>-->
+<!--                <th>댓글번호</th>-->
+<!--                <th>작성자</th>-->
+<!--                <th>내용</th>-->
+<!--                <th>작성시간</th>-->
+<!--            </tr>-->
+<!--            <tr th:each="comment: ${commentList}">-->
+<!--                <td th:text="${comment.id}"></td>-->
+<!--                <td th:text="${comment.commentWriter}"></td>-->
+<!--                <td th:text="${comment.commentContents}"></td>-->
+<!--                <td th:text="*{#temporals.format(comment.commentCreatedDate,'yyyy-MM-dd HH:mm:ss')}"></td>-->
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--</div>-->
+
+</body>
+<script th:inline="javascript">
+
+</script>
+</html>
