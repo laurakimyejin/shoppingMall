@@ -1,11 +1,16 @@
 package com.example.shoppingmall.service;
 
+import com.example.shoppingmall.dto.OrderDTO;
 import com.example.shoppingmall.dto.QuestionDTO;
 import com.example.shoppingmall.entity.MemberEntity;
+import com.example.shoppingmall.entity.OrderEntity;
 import com.example.shoppingmall.entity.QuestionEntity;
 import com.example.shoppingmall.repository.MemberRepository;
 import com.example.shoppingmall.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,13 +34,14 @@ public class QuestionService {
         }
     }
 
-    public List<QuestionDTO> findAll() {
-        List<QuestionEntity> questionEntityList = questionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        List<QuestionDTO> questionDTOList = new ArrayList<>();
-        for (QuestionEntity questionEntity : questionEntityList) {
-            QuestionDTO boardDTO = QuestionDTO.toDTO(questionEntity);
-            questionDTOList.add(boardDTO);
-        }
+    @Transactional
+    public Page<QuestionDTO> findAll(Pageable pageable, String sort) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = pageable.getPageSize();
+        Page<QuestionEntity> questionEntityList = questionRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, sort)));
+        Page<QuestionDTO> questionDTOList = questionEntityList.map(QuestionDTO::toQuestionDTO);
         return questionDTOList;
     }
+
+
 }

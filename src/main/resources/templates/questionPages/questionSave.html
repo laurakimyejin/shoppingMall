@@ -7,7 +7,7 @@
 <body>
     <div>
         <form action="/question/save" method="post" class="">
-            <input type="hidden" th:value="${session.member.userId}" readonly name="memberId">
+            <input type="hidden" th:value="${session.member.id}" readonly name="memberId">
             <input type="text" th:value="${session.member.memberName}" readonly name="questionName">
             <input type="text" name="questionTitle" placeholder="제목">
             <textarea name="questionContents" cols="30" rows="10" placeholder="내용"></textarea>

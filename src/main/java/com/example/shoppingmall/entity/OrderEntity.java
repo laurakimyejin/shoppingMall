@@ -19,7 +19,7 @@ public class OrderEntity extends BaseEntity{
     @Column(length = 4, nullable = false)
     private String orderStatus;
 
-    @Column(length = 4, nullable = false)
+    @Column(length = 100, nullable = false)
     private String orderName;
 
     @ManyToOne(fetch = FetchType.EAGER)
