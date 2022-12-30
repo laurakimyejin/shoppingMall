@@ -1,7 +1,6 @@
 package com.example.shoppingmall.service;
 
-import com.example.shoppingmall.dto.CartItemDTO;
-import com.example.shoppingmall.dto.MemberDTO;
+import com.example.shoppingmall.dto.ItemDTO;
 import com.example.shoppingmall.dto.OrderDTO;
 import com.example.shoppingmall.entity.*;
 import com.example.shoppingmall.repository.ItemRepository;
@@ -9,6 +8,10 @@ import com.example.shoppingmall.repository.MemberRepository;
 import com.example.shoppingmall.repository.OrderItemRepository;
 import com.example.shoppingmall.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +55,7 @@ public class OrderService {
     @Transactional
     public List<OrderDTO> findAll(String userId) {
         MemberEntity memberEntity = memberRepository.findByUserId(userId).get();
-        List<OrderEntity>orderEntityList = orderRepository.findByMemberEntity(memberEntity);
+        List<OrderEntity> orderEntityList = orderRepository.findByMemberEntity(memberEntity);
         System.out.println("orderEntityList = " + orderEntityList);
         List<OrderDTO> orderDTOList = new ArrayList<>();
         for (OrderEntity orderEntity : orderEntityList) {
@@ -67,7 +70,12 @@ public class OrderService {
     }
 
 
-
-
-
+    @Transactional
+    public Page<OrderDTO> findListAll(Pageable pageable, String sort) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = pageable.getPageSize();
+        Page<OrderEntity> orderEntityList = orderRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, sort)));
+        Page<OrderDTO> orderDTOList = orderEntityList.map(OrderDTO::toOderDTO);
+        return orderDTOList;
+    }
 }
