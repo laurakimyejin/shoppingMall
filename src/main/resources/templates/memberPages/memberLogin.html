@@ -4,22 +4,56 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!--    카카오 로그인 api-->
-    <script src = "https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <!--    카카오 로그인 api-->
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <link rel="stylesheet" th:href="@{../static/css/bootstrap.css}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 <body>
-    <div>
-            <input type="text" name="userId" placeholder="아이디" id="userId">
-            <input type="password" name="memberPassword" placeholder="비밀번호" id="pass">
-            <input type="button" onclick="memberLogin()" value="로그인">
-        <a href="http://developers.kakao.com/logout">카카오 로그아웃</a>
-    </div>
-<!--카카오 로그인 버튼-->
-    <div class="button-login">
-        <a id="kakao-login-btn" >
-            <img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="200px" height ="40px" />
-        </a>
-    </div>
+
+
+
+
+<div>
+    <article class="inner_login">
+        <div class="login_tistory">
+            <h2 class="page_title">LOGIN</h2>
+                <input type="hidden" name="redirectUrl" value="https://blogpack.tistory.com/manage">
+                <fieldset>
+                    <legend class="screen_out">로그인 정보 입력폼</legend>
+                    <div class="box_login">
+                        <div class="inp_text">
+                            <label for="userId" class="screen_out">아이디</label>
+                            <input type="text" name="userId" placeholder="아이디" id="userId">
+                        </div>
+                        <div class="inp_text">
+                            <label for="pass" class="screen_out">비밀번호</label>
+                            <input type="password" name="memberPassword" placeholder="비밀번호" id="pass">
+                        </div>
+                    </div>
+                    <button style="text-align: center" type="button" onclick="memberLogin()"class="btn_login">로그인</button>
+                </fieldset>
+        </div>
+
+
+
+
+        <section>
+            <a id="kakao-login-btn" role="button" class="btn">
+                    <img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="200px" height="40px" style="width: 200px;"/>
+            </a>
+            <div>
+                <a href="http://developers.kakao.com/logout">카카오 로그아웃</a>
+            </div>
+        </section>
+    </article>
+    <article class="join">
+        <h1>join-us</h1>
+    </article>
+</div>
+
 
 </body>
 
@@ -28,22 +62,22 @@
         const email = document.getElementById("userId").value;
         const pw = document.getElementById("pass").value;
         $.ajax({
-            type:"post",
-            url:"/member/login",
+            type: "post",
+            url: "/member/login",
             data: {
                 UserId: email,
                 memberPassword: pw
             },
-            dataType:"text",
-            success : function (result){
-                if(result == "ok"){
+            dataType: "text",
+            success: function (result) {
+                if (result == "ok") {
                     alert("로그인성공")
                     location.href = "/";
-                }else{
+                } else {
                     alert("아이디 또는 비밀번호를 다시 확인해주세요")
                 }
             },
-            error : function (){
+            error: function () {
                 alert("아이디 또는 비밀번호를 다시 확인해주세요")
             }
         })
@@ -51,15 +85,15 @@
     //카카로 로그인 javascript
     //0. init 안에 앱 키 중 'javascript 키' 넣기
     Kakao.init('5ca0c2c747c6a9590ce005b29d09b00c');
-    $("#kakao-login-btn").on("click", function(){
+    $("#kakao-login-btn").on("click", function () {
         //1. 로그인 시도
         Kakao.Auth.login({
-            success: function(authObj) {
+            success: function (authObj) {
 
                 //2. 로그인 성공시, API 호출
                 Kakao.API.request({
                     url: '/v2/user/me',
-                    success: function(res) {
+                    success: function (res) {
                         const memberEmail = res.kakao_account.email;
                         const userId = res.id;
                         const memberName = res.properties.nickname;
@@ -72,14 +106,14 @@
                 console.log(authObj);
                 var token = authObj.access_token;
             },
-            fail: function(err) {
+            fail: function (err) {
                 alert(JSON.stringify(err));
             }
         });
 
     })
 
-    function kakao(userId, memberEmail, memberName){
+    function kakao(userId, memberEmail, memberName) {
         let f = document.createElement('form');
 
         let obj;
@@ -112,5 +146,5 @@
         f.submit();
     }
 
-    </script>
+</script>
 </html>
