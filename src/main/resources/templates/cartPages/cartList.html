@@ -16,7 +16,8 @@
       <th>상품이미지</th>
       <th>수량</th>
       <th>가격</th>
-      <th>이름</th>
+      <th>상품명</th>
+      <th>삭제</th>
 
     </tr>
     <tr th:each="cart: ${cartList}">
@@ -24,8 +25,10 @@
         <img th:src="@{|/upload/${cart.itemImage}}" alt="" width="50" height="50">
       </td>
       <td th:text="${cart.cartCount}"></td>
-      <td th:text="${cart.itemPrice}"></td>
+<!--      <td th:text="${cart.itemPrice}"></td>-->
+      <td th:text="${cart.itemPrice * cart.cartCount}"></td>
       <td th:text="${cart.itemName}"></td>
+      <td><a th:href="@{/cart/delete2(cartId=${cart.id},userId=${session.member.userId})}">삭제</a></td>
     </tr>
   </table>
 </div>

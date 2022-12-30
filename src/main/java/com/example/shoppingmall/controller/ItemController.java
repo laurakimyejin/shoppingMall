@@ -21,16 +21,18 @@ public class ItemController {
     private final ItemService itemService;
     private final CommentService commentService;
 
+    //상품 저장 화면
     @GetMapping("/item/save")
     public String saveForm(){
         return "itemPages/itemSave";
     }
-
+    //상품 저장처리
     @PostMapping("/item/save")
     public String save(@ModelAttribute ItemDTO itemDTO) throws IOException {
         itemService.save(itemDTO);
         return "redirect:/item/main";
     }
+    //상품 메인
     @GetMapping("/item/main")
     public String findAll(@PageableDefault(page = 1,size = 1)Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort){
         Page<ItemDTO> itemDTOList = itemService.findAll(pageable, sort);
@@ -45,7 +47,7 @@ public class ItemController {
         model.addAttribute("page", pageable.getPageNumber());
         return "itemPages/itemMain";
     }
-
+    //상품 상세조회
     @GetMapping("/item/")
     public String findById(@PageableDefault(page = 1) Pageable pageable, @RequestParam("itemId") Long itemId, Model model){
         System.out.println( "itemId = " + itemId);
@@ -70,5 +72,4 @@ public class ItemController {
         }
        return "itemPages/itemDetail";
     }
-
 }
