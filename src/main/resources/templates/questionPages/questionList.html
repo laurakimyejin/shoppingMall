@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
 </head>
 <body>
 
@@ -24,6 +26,54 @@
             <td th:text="${board.questionStatus}"></td>
         </tr>
     </table>
+</div>
+
+
+
+
+
+
+
+
+<div class="container">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <!--첫페이지 요청 링크-->
+            <a class="page-link" th:href="@{/question/list(page=1 ,sort=${sort} , size=${size})}">
+                <span>First</span>
+            </a>
+        </li>
+
+        <li th:class="${questionList.first} ? 'disabled'" class="page-item">
+            <!--boardList.first: isFirst()
+                boardList.number: getNumber()-->
+            <a class="page-link" th:href="${questionList.first} ? '#' : @{/question/list(page=${questionList.number},sort=${sort},size=${size})}">
+                <span><</span> <!-- < -->
+            </a>
+        </li>
+
+        <!-- startPage ~ endPage 까지 숫자를 만들어주는 역할 -->
+        <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+            th:class="${page == questionList.number + 1} ? 'page-item active'" class="page-item">
+            <a class="page-link" th:text="${page}" th:href="@{/question/list(page=${page},sort=${sort},size=${size})}"></a>
+        </li>
+
+        <!-- 다음 페이지 요청
+            현재 3페이지를 보고 있다면 다음 페이지는 4페이지임.
+            getNumber() 값은 2임.
+            따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
+        <li th:class="${questionList.last} ? 'disabled'">
+            <a class="page-link" th:href="${questionList.last} ? '#' : @{/question/list(page=${questionList.number + 2},sort=${sort},size=${size})}">
+                <span>&gt;</span>
+            </a>
+        </li>
+
+        <li class="page-item">
+            <a class="page-link" th:href="@{/question/list(page=${questionList.totalPages},sort=${sort},size=${size})}">
+                <span>Last</span>
+            </a>
+        </li>
+    </ul>
 </div>
 
 
