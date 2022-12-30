@@ -28,6 +28,7 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
     private final ItemRepository itemRepository;
 
+    @Transactional
     public void save(ItemDTO itemDTO) {
         MemberEntity memberEntity = memberRepository.findByUserId(itemDTO.getUserId()).get();
         Optional<CartEntity>cartEntity = cartRepository.findByMemberEntity(memberEntity);
@@ -36,26 +37,32 @@ public class CartService {
             cartEntity1.setMemberEntity(memberEntity);
             cartEntity1.setId(cartEntity1.getId());
             cartRepository.save(cartEntity1);
+
             CartItemEntity cartItemEntity = new CartItemEntity();
             cartItemEntity.setCartName(itemDTO.getItemName());
             cartItemEntity.setCartCount(itemDTO.getItemCount());
-            cartItemEntity.setCartEntity(cartEntity1);
             cartItemEntity.setCartCount(itemDTO.getCartCount());
+            cartItemEntity.setCartEntity(cartEntity1);
+
             ItemEntity itemEntity =itemRepository.findById(itemDTO.getId()).get();
             cartItemEntity.setItemEntity(itemEntity);
+
             cartItemRepository.save(cartItemEntity);
 
         }else {
             CartEntity cartEntity1 = new CartEntity();
             cartEntity1.setMemberEntity(memberEntity);
             cartRepository.save(cartEntity1);
+
             CartItemEntity cartItemEntity = new CartItemEntity();
             cartItemEntity.setCartName(itemDTO.getItemName());
             cartItemEntity.setCartCount(itemDTO.getItemCount());
-            cartItemEntity.setCartEntity(cartEntity1);
             cartItemEntity.setCartCount(itemDTO.getCartCount());
+            cartItemEntity.setCartEntity(cartEntity1);
+
             ItemEntity itemEntity =itemRepository.findById(itemDTO.getId()).get();
             cartItemEntity.setItemEntity(itemEntity);
+
             cartItemRepository.save(cartItemEntity);
         }
     }
@@ -85,7 +92,44 @@ public class CartService {
         }
     }
     @Transactional
+    public CartItemDTO findById(Long id) {
+        Optional<CartItemEntity> cartEntityOptional = cartItemRepository.findById(id);
+        if(cartEntityOptional.isPresent()){
+            CartItemEntity cartEntity = cartEntityOptional.get();
+            CartItemDTO cartItemDTO = new CartItemDTO();
+            cartItemDTO.setId(cartEntity.getId());
+            cartItemDTO.setCartCount(cartEntity.getCartCount());
+            cartItemDTO.setItemName(cartEntity.getItemEntity().getItemName());
+            cartItemDTO.setItemPrice(cartEntity.getItemEntity().getItemPrice());
+            cartItemDTO.setItemImage(cartEntity.getItemEntity().getItemFileEntityList().get(0).getStoredFileNameItem());
+            return cartItemDTO;
+        }else{
+            return null;
+        }
+    }
+    @Transactional
     public void delete(Long id) {
         cartItemRepository.deleteById(id);
+    }
+    @Transactional
+    public void update(ItemDTO itemDTO) {
+        MemberEntity memberEntity = memberRepository.findByUserId(itemDTO.getUserId()).get();
+        Optional<CartEntity>cartEntity = cartRepository.findByMemberEntity(memberEntity);
+
+        CartEntity cartEntity1 = cartEntity.get();
+        cartEntity1.setMemberEntity(memberEntity);
+        cartEntity1.setId(cartEntity1.getId());
+        cartRepository.save(cartEntity1);
+
+        CartItemEntity cartItemEntity = new CartItemEntity();
+        cartItemEntity.setId(itemDTO.getId());
+        cartItemEntity.setCartName(itemDTO.getItemName());
+        cartItemEntity.setCartCount(itemDTO.getItemCount());
+        cartItemEntity.setCartCount(itemDTO.getCartCount());
+        cartItemEntity.setCartEntity(cartEntity1);
+
+        ItemEntity itemEntity =itemRepository.findById(itemDTO.getId()).get();
+        cartItemEntity.setItemEntity(itemEntity);
+        cartItemRepository.save(cartItemEntity);
     }
 }

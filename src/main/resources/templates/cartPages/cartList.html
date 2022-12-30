@@ -17,6 +17,7 @@
       <th>수량</th>
       <th>가격</th>
       <th>상품명</th>
+      <th>수정</th>
       <th>삭제</th>
 
     </tr>
@@ -24,18 +25,33 @@
       <td>
         <img th:src="@{|/upload/${cart.itemImage}}" alt="" width="50" height="50">
       </td>
-      <td th:text="${cart.cartCount}"></td>
-<!--      <td th:text="${cart.itemPrice}"></td>-->
-      <td th:text="${cart.itemPrice * cart.cartCount}"></td>
+      <td><input type="number" th:id="${cart.id}+'a'" min="1" max="100" th:value="${cart.cartCount}" name="orderCount" th:onchange="total([[${cart}]])"></td>
+<!--      <td th:text="${cart.cartCount}"></td>-->
+<!--      <td th:text="${cart.itemPrice * cart.cartCount}"></td>-->
+      <td th:id="${cart.id}">
+        <th:text th:text="${cart.itemPrice * cart.cartCount}"></th:text>
+      </td>
       <td th:text="${cart.itemName}"></td>
-      <td><a th:href="@{/cart/delete2(cartId=${cart.id},userId=${session.member.userId})}">삭제</a></td>
+      <td><a th:href="@{/cart/update(cartId=${cart.id},userId=${session.member.userId})}">수정</a></td>
+      <td><a th:href="@{/cart/delete(cartId=${cart.id},userId=${session.member.userId})}">삭제</a></td>
     </tr>
   </table>
+
 </div>
-
-
-
-
-
 </body>
+
+<script th:inline="javascript">
+
+  const total = (cart) => {
+    console.log(cart)
+    let orderCount = document.getElementById(cart.id+"a").value;
+    const cartId = cart.id
+    const itemPrice2 = cart.itemPrice;
+    let itemPrice = itemPrice2;
+    let totalPrice = orderCount * itemPrice;
+    console.log(totalPrice);
+    document.getElementById(cartId).innerHTML = totalPrice+"₩"
+  }
+
+</script>
 </html>
