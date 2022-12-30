@@ -60,14 +60,13 @@
                 Kakao.API.request({
                     url: '/v2/user/me',
                     success: function(res) {
-                        const member = new Object();
-                        member.memberEmail = res.kakao_account.email;
-                        member.id = res.id;
-                        member.memberName = res.properties.nickname;
+                        const memberEmail = res.kakao_account.email;
+                        const userId = res.id;
+                        const memberName = res.properties.nickname;
                         //scope: 카카오 로그인 동의항목
                         scopes : ['account_email', 'profile_nickname'];
-                        alert(memberEmail);
-                        location.href="/kakao?memberEmail="+member;
+                        kakao(userId, memberEmail, memberName);
+                        alert("로그인 성공");
                     }
                 })
                 console.log(authObj);
@@ -78,6 +77,40 @@
             }
         });
 
-    }) //
+    })
+
+    function kakao(userId, memberEmail, memberName){
+        let f = document.createElement('form');
+
+        let obj;
+        obj = document.createElement('input');
+        obj.setAttribute('type', 'hidden');
+        obj.setAttribute('name', 'userId');
+        obj.setAttribute('value', userId);
+
+
+        let obj2;
+        obj2 = document.createElement('input');
+        obj2.setAttribute('type', 'hidden');
+        obj2.setAttribute('name', 'memberEmail');
+        obj2.setAttribute('value', memberEmail);
+
+
+        let obj3;
+        obj3 = document.createElement('input');
+        obj3.setAttribute('type', 'hidden');
+        obj3.setAttribute('name', 'memberName');
+        obj3.setAttribute('value', memberName);
+
+
+        f.append(obj);
+        f.append(obj2);
+        f.append(obj3);
+        f.setAttribute('method', 'post');
+        f.setAttribute('action', '/member/kakao');
+        document.body.append(f);
+        f.submit();
+    }
+
     </script>
 </html>
