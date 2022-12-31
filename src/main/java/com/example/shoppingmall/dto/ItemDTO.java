@@ -26,12 +26,14 @@ public class ItemDTO {
 //    private List<String> itemImage;
     private int fileAttachedItem;
 
+
     private List<MultipartFile> itemFile;
     private List<String> originalFileNameItem;
     private List<String> storedFileNameItem;
     private String itemImage;
     private String userId;
     private int cartCount;
+    private Long cartId;
 
     public static ItemDTO toItemDTO(ItemEntity itemEntity){
         ItemDTO itemDTO = new ItemDTO();

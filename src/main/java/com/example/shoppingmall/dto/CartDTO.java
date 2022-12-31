@@ -8,4 +8,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CartDTO {
+    private Long id;
+    private String userId;
+    private int cartCount;
+
 }

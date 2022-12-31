@@ -51,12 +51,10 @@ public class CartController {
 
     //장바구니 수정
     @GetMapping("/update")
-    public String update(@ModelAttribute ItemDTO itemDTO, Model model){
-        cartService.update(itemDTO);
-        System.out.println("itemDTO = " + itemDTO);
-        CartItemDTO cartDTO = cartService.findById(itemDTO.getId());
-        model.addAttribute("cart",cartDTO);
-        return "redirect:/cart/list?userId="+itemDTO.getUserId();
+    public String update(@ModelAttribute CartDTO cartDTO){
+        System.out.println("cartDTO = " + cartDTO);
+        cartService.update(cartDTO);
+        return "redirect:/cart/list?userId="+cartDTO.getUserId();
     }
 
 }
