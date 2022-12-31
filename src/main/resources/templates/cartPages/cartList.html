@@ -1,57 +1,69 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
 
 <div th:if="${cartList == 'empty'}">
-  <p>작성된 댓글이 없습니다.</p>
+    <p>작성된 댓글이 없습니다.</p>
 </div>
 <div th:unless="${cartList == 'empty'}">
-  <table class="table">
-    <tr>
-      <th>상품이미지</th>
-      <th>수량</th>
-      <th>가격</th>
-      <th>상품명</th>
-      <th>수정</th>
-      <th>삭제</th>
+    <table class="table">
+        <tr>
+          <th>번호</th>
+            <th>상품이미지</th>
+            <th>수량</th>
+            <th>가격</th>
+            <th>상품명</th>
+            <th>수정</th>
+            <th>삭제</th>
 
-    </tr>
-    <tr th:each="cart: ${cartList}">
-      <td>
-        <img th:src="@{|/upload/${cart.itemImage}}" alt="" width="50" height="50">
-      </td>
-      <td><input type="number" th:id="${cart.id}+'a'" min="1" max="100" th:value="${cart.cartCount}" name="orderCount" th:onchange="total([[${cart}]])"></td>
-<!--      <td th:text="${cart.cartCount}"></td>-->
-<!--      <td th:text="${cart.itemPrice * cart.cartCount}"></td>-->
-      <td th:id="${cart.id}">
-        <th:text th:text="${cart.itemPrice * cart.cartCount}"></th:text>
-      </td>
-      <td th:text="${cart.itemName}"></td>
-      <td><a th:href="@{/cart/update(cartId=${cart.id},userId=${session.member.userId})}">수정</a></td>
-      <td><a th:href="@{/cart/delete(cartId=${cart.id},userId=${session.member.userId})}">삭제</a></td>
-    </tr>
-  </table>
+        </tr>
+        <tr th:each="cart: ${cartList}">
+          <td th:text="${cart.id}">
+          </td>
+            <td>
+                <img th:src="@{|/upload/${cart.itemImage}}" alt="" width="50" height="50">
+            </td>
+            <td><input type="number" th:id="${cart.id}+'a'" min="1" max="100" th:value="${cart.cartCount}"
+                       name="orderCount" th:onchange="total([[${cart}]])"></td>
+            <!--      <td th:text="${cart.cartCount}"></td>-->
+            <!--      <td th:text="${cart.itemPrice * cart.cartCount}"></td>-->
+            <td th:id="${cart.id}">
+                <th:text th:text="${cart.itemPrice * cart.cartCount}"></th:text>
+            </td>
+            <td th:text="${cart.itemName}"></td>
+            <td><input type="button" th:onclick="adj([[${cart}]])" value="수정"></td>
+            <td><a th:href="@{/cart/delete(cartId=${cart.id},userId=${session.member.userId})}">삭제</a></td>
+        </tr>
+    </table>
 
 </div>
 </body>
 
 <script th:inline="javascript">
+    const adj = (cart) => {
+        let cartCount = document.getElementById(cart.id + "a").value;
+        console.log(cartCount);
+        const userId = [[${session.member.userId}]]
+        location.href = "/cart/update?id="+cart.id+"&userId="+userId+"&cartCount="+cartCount;
 
-  const total = (cart) => {
-    console.log(cart)
-    let orderCount = document.getElementById(cart.id+"a").value;
-    const cartId = cart.id
-    const itemPrice2 = cart.itemPrice;
-    let itemPrice = itemPrice2;
-    let totalPrice = orderCount * itemPrice;
-    console.log(totalPrice);
-    document.getElementById(cartId).innerHTML = totalPrice+"₩"
-  }
+
+    }
+
+    const total = (cart) => {
+        console.log(cart)
+        let orderCount = document.getElementById(cart.id + "a").value;
+        const cartId = cart.id
+        const itemPrice2 = cart.itemPrice;
+        let itemPrice = itemPrice2;
+        let totalPrice = orderCount * itemPrice;
+        console.log(totalPrice);
+        document.getElementById(cartId).innerHTML = totalPrice + "₩"
+    }
 
 </script>
 </html>

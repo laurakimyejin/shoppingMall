@@ -112,24 +112,9 @@ public class CartService {
         cartItemRepository.deleteById(id);
     }
     @Transactional
-    public void update(ItemDTO itemDTO) {
-        MemberEntity memberEntity = memberRepository.findByUserId(itemDTO.getUserId()).get();
-        Optional<CartEntity>cartEntity = cartRepository.findByMemberEntity(memberEntity);
-
-        CartEntity cartEntity1 = cartEntity.get();
-        cartEntity1.setMemberEntity(memberEntity);
-        cartEntity1.setId(cartEntity1.getId());
-        cartRepository.save(cartEntity1);
-
-        CartItemEntity cartItemEntity = new CartItemEntity();
-        cartItemEntity.setId(itemDTO.getId());
-        cartItemEntity.setCartName(itemDTO.getItemName());
-        cartItemEntity.setCartCount(itemDTO.getItemCount());
-        cartItemEntity.setCartCount(itemDTO.getCartCount());
-        cartItemEntity.setCartEntity(cartEntity1);
-
-        ItemEntity itemEntity =itemRepository.findById(itemDTO.getId()).get();
-        cartItemEntity.setItemEntity(itemEntity);
+    public void update(CartDTO cartDTO) {
+        CartItemEntity cartItemEntity = cartItemRepository.findById(cartDTO.getId()).get();
+        cartItemEntity.setCartCount(cartDTO.getCartCount());
         cartItemRepository.save(cartItemEntity);
     }
 }
