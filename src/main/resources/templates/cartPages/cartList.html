@@ -36,7 +36,7 @@
                 <th:text th:text="${cart.itemPrice * cart.cartCount}"></th:text>
             </td>
             <td th:text="${cart.itemName}"></td>
-            <td><input type="button" th:onclick="adj([[${cart}]])" value="수 정"></td>
+            <td><input type="button" th:onclick="adj([[${cart}]])" value="수정"></td>
             <td><a th:href="@{/cart/delete(cartId=${cart.id},userId=${session.member.userId})}">삭제</a></td>
         </tr>
     </table>
