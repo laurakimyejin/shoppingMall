@@ -30,7 +30,7 @@ public class CartController {
     public String listForm(@RequestParam("userId") String userId,Model model) {
         List<CartItemDTO>cartItemDTOList = cartService.findAll(userId);
         model.addAttribute("cartList", cartItemDTOList);
-        return "/cartPages/cartList";
+        return "/cartPages/cartList2";
     }
 
     //장바구니 상세페이지
