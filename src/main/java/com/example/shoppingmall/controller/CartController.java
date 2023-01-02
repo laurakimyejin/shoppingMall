@@ -38,15 +38,14 @@ public class CartController {
     public String findById(@PathVariable Long id, Model model){
         CartItemDTO cartDTO = cartService.findById(id);
         model.addAttribute("cart",cartDTO);
-        return "cartPages/cartList";
+        return "cartPages/cartList2";
     }
 
     //장바구니 삭제
     @GetMapping("/delete")
-    public String delete(@RequestParam("cartId")Long id, @RequestParam("userId")String userId){
-        System.out.println("id = " + id + ", userId = " + userId);
-        cartService.delete(id);
-        return "redirect:/cart/list?userId="+userId;
+    public @ResponseBody List<CartItemDTO> delete(@RequestParam("cartId")Long id){
+        List<CartItemDTO>cartItemDTOList = cartService.delete(id);
+        return cartItemDTOList;
     }
 
     //장바구니 수정
