@@ -35,6 +35,9 @@ public class OrderService {
         if (memberEntity1.isPresent()) {
             MemberEntity memberEntity2 = memberEntity1.get();
             memberEntity2.setMemberAddress(orderDTO.getMemberAddress());
+            memberEntity2.setDetailAddress(orderDTO.getDetailAddress());
+            memberEntity2.setExtraAddress(orderDTO.getExtraAddress());
+            memberEntity2.setPostcode(orderDTO.getPostcode());
             memberRepository.save(memberEntity2);
             OrderEntity orderEntity = new OrderEntity();
             orderEntity.setOrderStatus(orderDTO.getOrderStatus());

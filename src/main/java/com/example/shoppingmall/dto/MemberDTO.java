@@ -3,6 +3,7 @@ package com.example.shoppingmall.dto;
 import com.example.shoppingmall.entity.MemberEntity;
 import lombok.*;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,10 +18,14 @@ public class MemberDTO {
     private String memberName;
     private String memberMobile;
     private String memberAddress;
+    private String detailAddress;
+    private String extraAddress;
+    private String postcode;
     private LocalDateTime memberCreatedTime;
     private LocalDateTime memberUpdatedTime;
 
     private String memberPasswordUpdate;
+
 
     public MemberDTO(Long id, String userId, String memberEmail, String memberName, String memberMobile, LocalDateTime memberCreatedTime) {
         this.id = id;
@@ -40,6 +45,9 @@ public class MemberDTO {
         memberDTO.setMemberName(memberEntity.getMemberName());
         memberDTO.setMemberMobile(memberEntity.getMemberMobile());
         memberDTO.setMemberAddress(memberEntity.getMemberAddress());
+        memberDTO.setDetailAddress(memberEntity.getDetailAddress());
+        memberDTO.setExtraAddress(memberEntity.getExtraAddress());
+        memberDTO.setPostcode(memberEntity.getPostcode());
         memberDTO.setMemberCreatedTime(memberEntity.getCreatedTime());
         memberDTO.setMemberUpdatedTime(memberEntity.getUpdatedTime());
         return memberDTO;
