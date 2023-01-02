@@ -23,6 +23,12 @@ import java.util.Map;
 public class CommentController {
     private final CommentService commentService;
 
+    @GetMapping("/comment/save")
+    public String saveForm(@RequestParam("itemId")Long id){
+        System.out.println("id = " + id);
+        return"commentPages/commentSave";
+    }
+
     @PostMapping("/comment/save")
     public @ResponseBody Map<String, Object> save(@ModelAttribute CommentDTO commentDTO, @PageableDefault(page = 1) Pageable pageable){
         commentService.save(commentDTO);
