@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="header">
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+  <div id="wrap">
+    <!--s:header-->
+    <div id="header_bg"> <!--#1366bf-->
+      <header><!--1400px-->
+        <div id="my_menu"><a href="#"><img th:src="@{/img/my_icon.png}" alt="my_menu"></a></div>
+        <ul><!--언어영역-->
+          <div>
+            <div th:if="${session.member} != null">
+              <li><a href="/member/logout">로그아웃</a></li>
+              <li><a href="/member/myPage">마이페이지</a></li>
+              <li><a th:href="@{/cart/list(userId=${session.member.userId})}">장바구니</a></li>
+              <li><a href="/question/list">고객센터</a></li>
+              <li><a href="/member/admin">관리자페이지</a></li>
+
+
+              <div class="dropdown">
+                <button class="dropdown-toggle" type="text" data-bs-toggle="dropdown" aria-expanded="true">
+                  마이페이지
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" th:href="@{/order/list(userId=${session.member.userId})}">주문확인/배송조회</a>
+                  </li>
+                  <li>
+                    <button class="dropdown-item" type="button">Another action</button>
+                  </li>
+                  <li>
+                    <button class="dropdown-item" type="button">Something else here</button>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+            <div th:unless="${session.member}">
+              <li><a href="/member/login">로그인</a></li>
+              <li><a href="/member/save">회원가입</a></li>
+              <li><a href="/question/list">고객센터</a></li>
+            </div>
+          </div>
+        </ul>
+
+        <div id="h_btm" style="width: 950px"> <!--로고부분헤더-->
+          <h1><a href="#"><img th:src="@{/img/mainlogo1.png}" alt="도그쿡"></a></h1>
+          <nav>
+            <div id="all_menu">
+              <a href="#"><img th:src="@{/img/allmenu_icon.png}" alt="menu"></a>
+            </div>
+
+            <ul style="margin-left: 100px;">
+
+              <li><a href="#">소형 식물</a></li>
+              <li><a href="#">중형 식물</a></li>
+              <li><a href="#">대형 식물</a></li>
+              <li><a href="/item/main">전체상품</a></li>
+
+              <!--                        <li id="search_icon2">-->
+              <!--                            <a href="/item/search">-->
+              <!--                                <img th:src="@{/img/icon_search.png}" alt=""></a>-->
+              <!--                        </li>-->
+
+              <!--                        <li>-->
+              <!--                            <form href="/item/search" method="post" id="search_form">-->
+
+              <!--                                <fieldset>-->
+              <!--                                    <legend>검색창</legend>-->
+              <!--                                    <p><input type="search" name="q" value="검색어를 입력하세요" ></p>-->
+              <!--                                    <p><input type="submit" value="검색" name="search_click"></p>-->
+
+              <!--                                </fieldset>-->
+              <!--                            </form>-->
+              <!--                        </li>-->
+            </ul>
+          </nav>
+        </div>
+      </header>
+    </div>
+    <!--e:header-->
+</th:block>
+</script>
+</html>
