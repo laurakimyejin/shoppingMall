@@ -25,12 +25,14 @@
 
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <li><a class="dropdown-item" th:href="@{/order/list(userId=${session.member.userId})}">주문확인/배송조회</a></li>
-                                    <li><a class="dropdown-item" href="#">내정보</a></li>
+                                    <li><a class="dropdown-item" href="/member/myPage">내정보</a></li>
                                 </ul>
                             </li>
                             <li><a th:href="@{/cart/list(userId=${session.member.userId})}">장바구니</a></li>
                             <li><a href="/question/list">고객센터</a></li>
+                            <div th:if="${session.member.userId.toString().equals('admin')}">
                             <li><a href="/member/admin">관리자페이지</a></li>
+                            </div>
                         </div>
 
 
@@ -43,7 +45,7 @@
                 </ul>
 
                 <div id="h_btm" style="width: 950px"> <!--로고부분헤더-->
-                    <h1><a href="#"><img th:src="@{/img/gardening.jpg}" width="150" height="130" alt="도그쿡"></a></h1>
+                    <h1><a href="/"><img th:src="@{/img/gardening.jpg}" width="150" height="130" alt="도그쿡"></a></h1>
                     <nav>
                         <div id="all_menu">
                             <a href="#"><img th:src="@{/img/allmenu_icon.png}" alt="menu"></a>
