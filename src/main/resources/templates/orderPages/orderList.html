@@ -17,15 +17,21 @@
             <th>주문번호</th>
             <th>상품이름</th>
             <th>배송상태</th>
+            <th>후기 남기기</th>
 
         </tr>
         <tr th:each="order: ${orderList}">
             <td th:text="${order.id}"></td>
             <td th:text="${order.orderName}"></td>
             <td th:text="${order.orderStatus}"></td>
+<!--            <td><a th:href="@{/comment/save(userId=${session.member.userId})}">후기 작성</a></td>-->
+            <div th:if="${order.orderStatus == '배송완료'}">
+            <td><a th:href="@{/comment/save}">후기 작성</a></td>
+            </div>
         </tr>
     </table>
 </div>
-
+<script>
+</script>
 </body>
 </html>

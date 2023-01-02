@@ -24,7 +24,7 @@ public class CommentEntity extends BaseEntity {
     @Column(nullable = false)
     private int starCount;
 
-    //게시글-후기 연관관계
+    //상품-후기 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private ItemEntity itemEntity;

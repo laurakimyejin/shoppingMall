@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>save</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body>
+<th:block th:replace="commonPages/header :: header"></th:block>
+  <div class="container mt-5">
+    <div id="comment-write" class="input-group" mb-3>
+      <div class="form-floating">
+        <input type="text" id="commentWriter" th:value="${session.member.userId}" class="form-control" readonly>
+        <label for="commentWriter">작성자</label>
+      </div>
+      <div class="form-floating">
+        <input type="text" id="commentContents" class="form-control" placeholder="내용">
+        <label for="commentContents">내용</label>
+      </div>
+      <div class="star-container">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+      </div>
+      <h1 class="rating" id="starCount">0</h1>
+      <script th:src="app.js"></script>
+      <button id="comment-write-btn" class="btn btn-secondary" onclick="commentWrite()">후기작성</button>
+    </div>
+  </div>
+</form>
+</body>
+<script>
+  //별점
+  let stars = document.querySelectorAll(".star");
+  document.querySelector(".star-container").addEventListener("click", starRating);
+  let rating = document.querySelector(".rating");
+
+  function starRating(e) {
+    stars.forEach((star) => star.classList.remove("star__checked"));
+    const i = [...stars].indexOf(e.target);
+    if (i > -1) {
+      stars[i].classList.add("star__checked");
+      rating.textContent = `${stars.length - i}`;
+    } else {
+      rating.textContent = `${0}`;
+    }
+  }
+  //후기 쓰기
+  const commentWrite = () => {
+    const writer = document.getElementById("commentWriter").value;
+    const contents = document.getElementById("commentContents").value;
+    const starCount = document.getElementById("starCount").textContent;
+    console.log(starCount);
+    let id = [[${item.id}]];
+    let itemId = [[${item.id}]];
+    console.log(itemId);
+    console.log(findId);
+    $.ajax({
+      type: "post",
+      url: "/comment/save",
+      data: {
+        id: id,
+        commentWriter: writer,
+        commentContents: contents,
+        itemId: id,
+        starCount: starCount
+      },
+      dataType: "json",
+      success: function (commentMap) {
+        console.log(commentMap);
+        console.log(commentMap.commentList);
+        console.log(commentMap.commentList.content[0]);
+        console.log(commentMap.paging);
+        console.log(commentMap.paging.startPage);
+        let commentList2 = commentMap.commentList.content;
+        console.log("성공");
+        console.log("commentList", commentList2);
+        let output = "<table class='table'>";
+        output += "<tr><th>댓글번호</th>";
+        output += "<th>작성자</th>";
+        output += "<th>내용</th>";
+        output += "<th>작성시간</th>";
+        output += "<th>별점</th></tr>";
+        for (let i in commentList2) {
+          output += "<tr>";
+          output += "<td>" + commentList2[i].id + "</td>";
+          output += "<td>" + commentList2[i].commentWriter + "</td>";
+          output += "<td>" + commentList2[i].commentContents + "</td>";
+          output += "<td>" + moment(commentList2[i].commentCreatedDate).format("YYYY-MM-DD HH:mm:ss") + "</td>";
+          output += "<td>" + commentList2[i].starCount + "</td>";
+          output += "</tr>";
+        }
+        output += "</table>";
+
+        document.getElementById('comment-list').innerHTML = output;
+        document.getElementById('commentWriter').value = '';
+        document.getElementById('commentContents').value = '';
+        let output2 = "<ul class=\"pagination justify-content-center\">\n";
+        output2 += "<li class=\"page-item\">\n";
+        output2 += "<a class=\"page-link\" href=\"/item/?page=1&itemId="+itemId+"\">"
+        document.getElementById('comment-page').innerHTML = output2;
+
+      },
+      error: function () {
+        console.log("실패");
+      }
+    });
+  }
+</script>
+</html>
