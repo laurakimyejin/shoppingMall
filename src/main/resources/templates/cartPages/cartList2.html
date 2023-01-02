@@ -66,7 +66,19 @@
 
 
 <script th:inline="javascript">
-
+    //계속 쇼핑하기
+    const goBack = () => {
+        location.href="/item/main";
+    }
+    //주문하기
+    const orderFn = () => {
+        console.log("orderItem 호출");
+        const loc = document.getElementById("loc");
+        loc.action = "/order/save";
+        const form = document.querySelector('form');
+        form.submit();
+    }
+    //장바구니 삭제
     const deleteFn = (find) => {
         const id = find.id;
 
@@ -74,7 +86,7 @@
             type:"get",
             url:"/cart/delete",
             data:{
-                cartId: id,
+                cartId: id
             },
             dataType: "json",
             success:function (cartResult){
@@ -87,15 +99,7 @@
             }
         });
     }
-
-    const orderFn = () => {
-        console.log("orderItem 호출");
-        const loc = document.getElementById("loc");
-        loc.action = "/order/save";
-        const form = document.querySelector('form');
-        form.submit();
-    }
-
+    //총 상품금액
     window.onload = function () {
         let itemPriceTotal = 0;
         const cartList = [[${cartList}]];
@@ -104,7 +108,7 @@
         }
         document.querySelector(".item_price_total").innerHTML = itemPriceTotal;
     }
-
+    //수량변경 시 상품금액
     const total = (cart) => {
         console.log(cart)
         let orderCount = document.getElementById(cart.id + "a").value;
