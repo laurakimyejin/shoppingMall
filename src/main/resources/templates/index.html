@@ -30,27 +30,24 @@
                 <div>
                     <div th:if="${session.member} != null">
                         <li><a href="/member/logout">로그아웃</a></li>
-                        <li><a href="/member/myPage">마이페이지</a></li>
+                        <ui class="dropdown">
+                            <li data-bs-toggle="dropdown" aria-expanded="true">
+                                <a role="button">마이페이지</a>
+                            </li>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" th:href="@{/order/list(userId=${session.member.userId})}">주문확인/배송조회</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" role="button" style="text-align: center">내정보</a>
+                                </li>
+
+                            </ul>
+                        </ui>
                         <li><a th:href="@{/cart/list(userId=${session.member.userId})}">장바구니</a></li>
                         <li><a href="/question/list">고객센터</a></li>
                         <li><a href="/member/admin">관리자페이지</a></li>
 
-
-                        <div class="dropdown">
-                            <button class="dropdown-toggle" type="text" data-bs-toggle="dropdown" aria-expanded="true">
-                                마이페이지
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" th:href="@{/order/list(userId=${session.member.userId})}">주문확인/배송조회</a>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">Another action</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">Something else here</button>
-                                </li>
-                            </ul>
-                        </div>
 
                     </div>
                     <div th:unless="${session.member}">
@@ -62,7 +59,7 @@
             </ul>
 
             <div id="h_btm" style="width: 950px"> <!--로고부분헤더-->
-                <h1><a href="#"><img th:src="@{/img/mainlogo1.png}" alt="도그쿡"></a></h1>
+                <h1><a href="#"><img th:src="@{/img/gardening.jpg}" width="150" height="130" alt="gardening"></a></h1>
                 <nav>
                     <div id="all_menu">
                         <a href="#"><img th:src="@{/img/allmenu_icon.png}" alt="menu"></a>
@@ -240,6 +237,7 @@
     }
 </script>
 </html>
+
 
 
 
