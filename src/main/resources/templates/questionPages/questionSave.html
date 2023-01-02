@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
+<th:block th:replace="commonPages/header :: header"></th:block>
     <div>
         <form action="/question/save" method="post" class="">
             <input type="hidden" th:value="${session.member.id}" readonly name="memberId">

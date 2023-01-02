@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
 </head>
 <body>
-
+<th:block th:replace="commonPages/header :: header"></th:block>
 <div th:if="${orderList == 'empty'}">
     <p>주문내역이 없습니다.</p>
 </div>

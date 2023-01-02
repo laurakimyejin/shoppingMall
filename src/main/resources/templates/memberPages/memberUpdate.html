@@ -15,6 +15,7 @@
 </style>
 </head>
 <body>
+<th:block th:replace="commonPages/header :: header"></th:block>
 <div class="container" id="update-form">
   <form action="/member/update" method="post" name="updateForm">
     <input type="hidden" name="id" th:value="${session.member.id}">
