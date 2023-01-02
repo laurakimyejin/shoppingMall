@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>detail</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
     <script th:src="@{/js/axios.min.js}"></script>
     <!--  //시간설정-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -33,7 +35,7 @@
     </style>
 </head>
 <body>
-
+<th:block th:replace="commonPages/header :: header"></th:block>
 <div>
     <div class="main">
         <div class="d-flex justify-content-center">

@@ -13,6 +13,7 @@
     </style>
 </head>
 <body>
+<th:block th:replace="commonPages/header :: header"></th:block>
 <div class="container" id="item_save_form">
     <form action="/item/save" method="post" enctype="multipart/form-data">
         <input type="text" name="itemName" placeholder="상품명" class="form-control">

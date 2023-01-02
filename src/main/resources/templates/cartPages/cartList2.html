@@ -8,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
+<th:block th:replace="commonPages/header :: header"></th:block>
 <div th:unless="${cartList == 'empty'}" class="cart_table">
     <p>장바구니</p>
 
