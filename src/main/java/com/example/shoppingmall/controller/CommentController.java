@@ -24,8 +24,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping("/comment/save")
-    public String saveForm(@RequestParam("itemId")Long id){
-        System.out.println("id = " + id);
+    public String saveForm(){
         return"commentPages/commentSave";
     }
 

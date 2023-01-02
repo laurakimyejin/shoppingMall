@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="modal">
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <div class="modal modal-comment position-static d-block bg-secondary py-5" tabindex="-1" role="dialog" id="modalComment">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header p-5 pb-4 border-bottom-0">
+          <!-- <h1 class="modal-title fs-5" >Modal title</h1> -->
+          <h1 class="fw-bold mb-0 fs-2" id="commentSave">후기 작성</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body p-5 pt-0">
+          <form class="">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control rounded-3" id="commentWriter" th:value="${session.member.userId}" readonly>
+              <label for="commentWriter">작성자</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control rounded-3" id="commentContents" placeholder="내용">
+              <label for="commentContents">내용</label>
+            </div>
+            <div class="star-container">
+              <div class="star"></div>
+              <div class="star"></div>
+              <div class="star"></div>
+              <div class="star"></div>
+              <div class="star"></div>
+            </div>
+            <h1 class="rating" id="starCount">0</h1>
+            <script th:src="app.js"></script>
+            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">작성완료</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $('#commentSave').click(function(e){
+      e.preventDefault();
+      $('#modalComment').modal("show");
+    });
+  </script>
+</th:block>
+</html>
