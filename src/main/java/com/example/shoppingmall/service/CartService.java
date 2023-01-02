@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -108,8 +107,9 @@ public class CartService {
         }
     }
     @Transactional
-    public void delete(Long id) {
+    public List<CartItemDTO> delete(Long id) {
         cartItemRepository.deleteById(id);
+        return null;
     }
     @Transactional
     public void update(CartDTO cartDTO) {
