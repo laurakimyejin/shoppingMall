@@ -68,12 +68,7 @@
 <script th:inline="javascript">
 
     const deleteFn = (find) => {
-        console.log("deleteFn 호출");
-        console.log(find);
         const id = find.id;
-        const userId = [[${session.member.userId}]]
-        console.log(id);
-        console.log(userId)
 
         $.ajax({
             type:"get",
