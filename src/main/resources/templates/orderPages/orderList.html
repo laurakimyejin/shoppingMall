@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <th:block th:replace="commonPages/header :: header"></th:block>
+<th:block th:fragment="commonPages(modal)">
 <div th:if="${orderList == 'empty'}">
     <p>주문내역이 없습니다.</p>
 </div>
@@ -17,21 +19,22 @@
             <th>주문번호</th>
             <th>상품이름</th>
             <th>배송상태</th>
-            <th>후기 남기기</th>
+            <th>후기작성</th>
 
         </tr>
         <tr th:each="order: ${orderList}">
             <td th:text="${order.id}"></td>
             <td th:text="${order.orderName}"></td>
             <td th:text="${order.orderStatus}"></td>
-<!--            <td><a th:href="@{/comment/save(userId=${session.member.userId})}">후기 작성</a></td>-->
             <div th:if="${order.orderStatus == '배송완료'}">
-            <td><a th:href="@{/comment/save}">후기 작성</a></td>
+             <td><button class="btn btn-primary" data-toggle="modal" data-target="#modalComment">후기 작성</button></td>
             </div>
         </tr>
     </table>
 </div>
 <script>
+
 </script>
+</th:block>
 </body>
 </html>
