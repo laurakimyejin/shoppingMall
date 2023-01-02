@@ -33,8 +33,19 @@ public class MemberEntity extends BaseEntity {
     @Column(length = 15, nullable = false)
     private String memberMobile;
 
+
     @Column(length = 100)
     private String memberAddress;
+
+    @Column(length = 100)
+    private String detailAddress;
+
+    @Column(length = 100)
+    private String extraAddress;
+
+    @Column(length = 100)
+    private String postcode;
+
 
 //    member(회원) : order(주문) = 1 : M
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -61,6 +72,9 @@ public class MemberEntity extends BaseEntity {
         memberEntity.setMemberName(memberDTO.getMemberName());
         memberEntity.setMemberMobile(memberDTO.getMemberMobile());
         memberEntity.setMemberAddress(memberDTO.getMemberAddress());
+        memberEntity.setDetailAddress(memberDTO.getDetailAddress());
+        memberEntity.setExtraAddress(memberDTO.getExtraAddress());
+        memberEntity.setPostcode(memberDTO.getPostcode());
         return memberEntity;
     }
     public static MemberEntity toUpdateEntity(MemberDTO memberDTO){
@@ -72,6 +86,9 @@ public class MemberEntity extends BaseEntity {
         memberEntity.setMemberName(memberDTO.getMemberName());
         memberEntity.setMemberMobile(memberDTO.getMemberMobile());
         memberEntity.setMemberAddress(memberDTO.getMemberAddress());
+        memberEntity.setDetailAddress(memberDTO.getDetailAddress());
+        memberEntity.setExtraAddress(memberDTO.getExtraAddress());
+        memberEntity.setPostcode(memberDTO.getPostcode());
         return memberEntity;
     }
 }
