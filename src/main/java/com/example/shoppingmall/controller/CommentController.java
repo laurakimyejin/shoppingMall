@@ -24,7 +24,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping("/comment/save")
-    public String saveForm(){
+    public String saveForm(@RequestParam("orderId") Long id){
         return"commentPages/commentSave";
     }
 
@@ -57,7 +57,14 @@ public class CommentController {
     @GetMapping("/comment/list")
     public String list(Model model){
         List<CommentDTO> commentDTOList = commentService.list();
+        model.addAttribute("commentList",commentDTOList);
         return "commentPages/commentList";
+    }
+
+    @GetMapping("/comment/save2")
+    public @ResponseBody String commentSave(@ModelAttribute CommentDTO commentDTO){
+        Long id = commentService.save(commentDTO);
+        return "성공";
     }
 
 }
