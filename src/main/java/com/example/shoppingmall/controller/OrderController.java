@@ -17,6 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+    @GetMapping("/order")
+    public String order(){
+        return "orderPages/order";
+    }
+
 
     @GetMapping("/order/save")
     public String saveForm(@ModelAttribute ItemDTO itemDTO, Model model) {
