@@ -9,38 +9,38 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/css/login.css}">
+    <axios cdn="https://unpkg.com/axios/dist/axios.min.js"></axios>
 </head>
 <body>
 <div>
     <article class="inner_login">
         <div class="login_tistory">
             <h2 class="page_title">LOGIN</h2>
-                <input type="hidden" name="redirectUrl" value="https://blogpack.tistory.com/manage">
-                <fieldset>
-                    <legend class="screen_out">로그인 정보 입력폼</legend>
-                    <div class="box_login">
-                        <div class="inp_text">
-                            <label for="userId" class="screen_out">아이디</label>
-                            <input type="text" name="userId" placeholder="아이디" id="userId">
-                        </div>
-                        <div class="inp_text">
-                            <label for="pass" class="screen_out">비밀번호</label>
-                            <input type="password" name="memberPassword" placeholder="비밀번호" id="pass">
-                        </div>
+            <input type="hidden" name="redirectUrl" value="https://blogpack.tistory.com/manage">
+            <fieldset>
+                <legend class="screen_out">로그인 정보 입력폼</legend>
+                <div class="box_login">
+                    <div class="inp_text">
+                        <label for="userId" class="screen_out">아이디</label>
+                        <input type="text" name="userId" placeholder="아이디" id="userId">
                     </div>
-                    <button style="text-align: center" type="button" onclick="memberLogin()"class="btn_login">로그인</button>
-                </fieldset>
+                    <div class="inp_text">
+                        <label for="pass" class="screen_out">비밀번호</label>
+                        <input type="password" name="memberPassword" placeholder="비밀번호" id="pass">
+                    </div>
+                </div>
+                <button style="text-align: center" type="button" onclick="memberLogin()" class="btn_login">로그인</button>
+            </fieldset>
         </div>
-
-
 
 
         <section>
             <a id="kakao-login-btn" role="button" class="btn">
-                    <img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="200px" height="40px" style="width: 200px;"/>
+                <img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="200px" height="40px"
+                     style="width: 200px;"/>
             </a>
             <div>
-                <a href="http://developers.kakao.com/logout">카카오 로그아웃</a>
+                <a href="/member/join" class="btn btn-primary">회원가입</a>
             </div>
         </section>
     </article>
@@ -82,18 +82,20 @@
         //1. 로그인 시도
         Kakao.Auth.login({
             success: function (authObj) {
-
                 //2. 로그인 성공시, API 호출
                 Kakao.API.request({
                     url: '/v2/user/me',
                     success: function (res) {
+                        console.log(res);
+                        console.log(res.access_token);
                         const memberEmail = res.kakao_account.email;
                         const userId = res.id;
                         const memberName = res.properties.nickname;
+                        var accessToken = authObj.access_token;
                         //scope: 카카오 로그인 동의항목
                         scopes : ['account_email', 'profile_nickname'];
-                        kakao(userId, memberEmail, memberName);
-                        alert("로그인 성공");
+                        alert("로그인 성공")
+                        kakao(userId, memberEmail, memberName, accessToken);
                     }
                 })
                 console.log(authObj);
@@ -106,7 +108,7 @@
 
     })
 
-    function kakao(userId, memberEmail, memberName) {
+    function kakao(userId, memberEmail, memberName, accessToken) {
         let f = document.createElement('form');
 
         let obj;
@@ -129,15 +131,23 @@
         obj3.setAttribute('name', 'memberName');
         obj3.setAttribute('value', memberName);
 
+        let obj4;
+        obj4 = document.createElement('input');
+        obj4.setAttribute('type', 'hidden');
+        obj4.setAttribute('name', 'accessToken');
+        obj4.setAttribute('value', accessToken);
+
 
         f.append(obj);
         f.append(obj2);
         f.append(obj3);
+        f.append(obj4);
         f.setAttribute('method', 'post');
         f.setAttribute('action', '/member/kakao');
         document.body.append(f);
         f.submit();
     }
+
 
 </script>
 </html>

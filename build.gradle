@@ -30,6 +30,10 @@ dependencies {
     //thyme leaf header dependency
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+    //Webclient dependency
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    //JSONObject dependency
+    implementation group: 'org.json', name: 'json', version: '20090211'
 }
 
 tasks.named('test') {
