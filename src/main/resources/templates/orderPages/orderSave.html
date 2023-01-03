@@ -126,6 +126,7 @@
         const detailAddress = document.getElementById("sample6_detailAddress").value;
         const extraAddress = document.getElementById("sample6_extraAddress").value;
         const postcode = document.getElementById("sample6_postcode").value;
+        const form = document.querySelector("form");
         IMP.init('imp05030142'); //iamport 대신 자신의 "가맹점 식별코드"를 사용
         IMP.request_pay({
             pg: "kakaopay",
@@ -140,6 +141,7 @@
             buyer_postcode : postcode,
         }, function (rsp) { // callback
             if (rsp.success) {
+                form.submit();
                 console.log(rsp);
                 var msg = '결제가 완료되었습니다.\n';
                 msg += '고유ID : ' + rsp.imp_uid+"\n";
