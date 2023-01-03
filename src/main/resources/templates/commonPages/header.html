@@ -3,6 +3,8 @@
 <th:block th:fragment="header">
     <meta charset="UTF-8">
     <title>header</title>
+    <script th:src="@{/js/axios.min.js}"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script th:src="@{/scripts/scripts.js}"></script>
     <script src="/static/js/bootstrap.bundle.js"></script>
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
@@ -17,7 +19,9 @@
                 <ul><!--언어영역-->
                     <div>
                         <div th:if="${session.member} != null">
-                            <li><a href="/member/logout">로그아웃</a></li>
+
+                            <li th:if="${session.access_token} != null"><a onclick="logout()" role="button">카카오 로그아웃</a></li>
+                            <li th:if="${session.access_token} == null"><a href="/member/logout" role="button">로그아웃</a></li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                     마이페이지
@@ -82,5 +86,20 @@
         </div>
         <!--e:header-->
     </div>
+
+    <script th:inline="javascript">
+        const logout = () => {
+            axios({
+                method: "get",
+                url: "/member/logout2",
+            }).then(res => {
+                console.log("로그아웃 성공");
+                location.href = 'https://kauth.kakao.com/oauth/logout?client_id=d5397ddd558442067fc3dfb0fd736f8b&logout_redirect_uri=http://localhost:8081';
+            }).catch(err => {
+                alert("실패");
+            })
+            console.log([[${session.member}]]);
+        }
+    </script>
 </th:block>
 </html>

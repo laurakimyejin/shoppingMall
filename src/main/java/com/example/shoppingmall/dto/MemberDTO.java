@@ -26,6 +26,8 @@ public class MemberDTO {
 
     private String memberPasswordUpdate;
 
+    private String accessToken;
+
 
     public MemberDTO(Long id, String userId, String memberEmail, String memberName, String memberMobile, LocalDateTime memberCreatedTime) {
         this.id = id;
