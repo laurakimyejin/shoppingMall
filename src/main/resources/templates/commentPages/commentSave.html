@@ -8,7 +8,6 @@
 
 </head>
 <body>
-<th:block th:replace="commonPages/header :: header"></th:block>
   <div class="container mt-5">
     <div id="comment-write" class="input-group" mb-3>
       <div class="form-floating">
@@ -33,7 +32,7 @@
   </div>
 </form>
 </body>
-<script>
+<script th:inline="javascript">
   //별점
   let stars = document.querySelectorAll(".star");
   document.querySelector(".star-container").addEventListener("click", starRating);

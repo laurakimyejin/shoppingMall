@@ -20,6 +20,8 @@ public class CommentDTO {
     private int starCount;
     private Long memberId;
     private Long itemId;
+    private Long orderId;
+
 
     public CommentDTO(Long id, String commentWriter, String commentContents, LocalDateTime commentCreatedDate, int starCount) {
         this.id = id;
