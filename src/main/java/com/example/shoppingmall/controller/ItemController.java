@@ -87,4 +87,10 @@ public class ItemController {
         model.addAttribute("board",itemDTO1);
         return "redirect:/item/main";
     }
+    //상품 삭제
+    @GetMapping("/item/delete/{id}")
+    public String delete(@PathVariable Long id){
+        itemService.delete(id);
+        return"redirect:/item/main";
+    }
 }
