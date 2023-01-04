@@ -55,6 +55,7 @@
     const memberLogin = () => {
         const email = document.getElementById("userId").value;
         const pw = document.getElementById("pass").value;
+        const url = [[${redirectURL}]];
         $.ajax({
             type: "post",
             url: "/member/login",
@@ -66,7 +67,8 @@
             success: function (result) {
                 if (result == "ok") {
                     alert("로그인성공")
-                    location.href = "/";
+                     location.href = "/";
+                     // window.location.replace('url');
                 } else {
                     alert("아이디 또는 비밀번호를 다시 확인해주세요")
                 }
