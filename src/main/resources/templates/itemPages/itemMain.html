@@ -67,6 +67,7 @@
                                     <p class="read"> <a th:href="@{/item/(itemId=${item.id})}" th:text="${item.itemName}"></a></p>
                                     <div th:if="${session.member.userId == 'admin'}">
                                     <button class="btn btn-warning" th:onclick="updateReq([[${item}]])">상품 수정</button>
+                                        <button class="btn btn-warning" th:onclick="deleteReq([[${item}]])">상품 삭제</button>
                                         </div>
                                 </div>
                             </div>
@@ -129,5 +130,16 @@
 
 <script th:inline="javascript">
     //상품 수정
+    const updateReq = (updateFn) => {
+        console.log(updateFn);
+        const id = updateFn.id;
+        location.href="/item/update/"+id;
+    }
+    //상품 삭제
+    const deleteReq = (deleteFn) => {
+        console.log(deleteFn);
+        const id = deleteFn.id;
+        location.href="/item/delete/"+id;
+    }
 </script>
 </html>
