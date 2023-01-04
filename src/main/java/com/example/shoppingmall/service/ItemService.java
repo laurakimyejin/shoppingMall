@@ -113,9 +113,4 @@ public class ItemService {
         return savedId;
         }
     }
-
-
-    public void delete(Long id) {
-        itemRepository.deleteById(id);
-    }
 }
