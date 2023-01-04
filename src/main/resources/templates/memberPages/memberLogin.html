@@ -16,7 +16,8 @@
     <article class="inner_login">
         <div class="login_tistory">
             <h2 class="page_title">LOGIN</h2>
-            <input type="hidden" name="redirectUrl" value="https://blogpack.tistory.com/manage">
+<!--            <input type="hidden" name="redirectUrl" value="https://blogpack.tistory.com/manage">-->
+            <input type="hidden" name="redirectURL" th:value="${redirectURL}">
             <fieldset>
                 <legend class="screen_out">로그인 정보 입력폼</legend>
                 <div class="box_login">

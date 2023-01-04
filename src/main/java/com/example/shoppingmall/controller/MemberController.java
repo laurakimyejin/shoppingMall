@@ -58,35 +58,39 @@ public class MemberController {
     }
 
     //회원가입 처리
-    @PostMapping("save")
+    @PostMapping("/save")
     public String save(@ModelAttribute MemberDTO memberDTO) {
         memberService.save(memberDTO);
         return "index";
     }
 
-    //로그인 화면
+    //인터셉터
     @GetMapping("/login")
-    public String loginForm() {
-        return "/memberPages/memberLogin";
+    public String loginForm(@RequestParam(value = "redirectURL",defaultValue = "/") String redirectURL, Model model){
+        model.addAttribute("redirectURL",redirectURL);
+        return "memberPages/memberLogin";
     }
+
+//    //로그인 화면
+//    @GetMapping("/login")
+//    public String loginForm() {
+//        return "/memberPages/memberLogin";
+//    }
 
 
     //로그인 처리
     @PostMapping("/login")
-    public @ResponseBody String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
+    public @ResponseBody String login(@ModelAttribute MemberDTO memberDTO, HttpSession session,  @RequestParam(value = "redirectURL",defaultValue = "/")String redirectURL) {
         MemberDTO result = memberService.memberLogin(memberDTO);
         if (result != null) {
             session.setAttribute("member", result);
             return "ok";
         } else {
             return "no";
+
         }
+
     }
-    //카카오 로그인 처리
-//    @PostMapping("/v2/user/me")
-//    public @ResponseBody void kakaoLogin(HttpSession session){
-//       session.setAttribute("member","5235268");
-//    }
 
     //마이페이지
     @GetMapping("/myPage")
