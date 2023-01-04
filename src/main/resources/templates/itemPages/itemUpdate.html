@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>update</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+</head>
+<body>
+<th:block th:replace="commonPages/header :: header"></th:block>
+<div class="container" id="item_update_form">
+  <form action="/item/update" method="post" name="updateForm" enctype="multipart/form-data">
+    <input type="hidden" name="id" th:value="${item.id}">
+    <input type="text" name="itemName" th:value="${item.itemName}" placeholder="상품명" class="form-control">
+    <input type="text" name="itemPrice" th:value="${item.itemPrice}" placeholder="상품가격" class="form-control">
+    <textarea name="itemContents" cols="30" rows="10" th:field="${item.itemContents}" placeholder="상품 설명" class="form-control"></textarea>
+    <input type="file" name="itemFileUpdate" th:value="${item.storedFileNameItem}" class="form-control" multiple>
+    <select name="itemCategory" th:field="${item.itemCategory}" class="form-select" style="font-size: 12px; width: 200px; height: 35px">
+      <option value="small" selected>소형 식물</option>
+      <option value="middle">중형 식물</option>
+      <option value="large">대형 식물</option>
+    </select>
+    <input type="submit" value="수정 완료" onclick="updateFn()" class="btn btn-primary">
+  </form>
+</div>
+</body>
+<script th:inline="javascript">
+  const updateFn = () => {
+    updateForm.submit();
+  }
+</script>
+</html>

@@ -79,4 +79,15 @@ public class ItemEntity extends BaseEntity {
         itementity.setFileAttachedItem(1);
         return itementity;
     }
+    public static ItemEntity toItemUpdateEntity(ItemDTO itemDTO) {
+        ItemEntity itementity = new ItemEntity();
+        itementity.setId(itemDTO.getId());
+        itementity.setItemName(itemDTO.getItemName());
+        itementity.setItemPrice(itemDTO.getItemPrice());
+        itementity.setItemContents(itemDTO.getItemContents());
+        itementity.setItemCount(itemDTO.getItemCount());
+        itementity.setItemCategory(itemDTO.getItemCategory());
+        itementity.setFileAttachedItem(1);
+        return itementity;
+    }
 }
