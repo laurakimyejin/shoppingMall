@@ -80,21 +80,21 @@ public class ItemService {
         ItemEntity itemEntity = ItemEntity.toItemSaveEntity(itemDTO);
         return itemRepository.save(itemEntity).getId();
     } else {
-        System.out.println("파일 있음");
-
-        for (MultipartFile itemFileUpdate : itemDTO.getItemFileUpdate()) {
-            String originalFileNameItem = itemFileUpdate.getOriginalFilename();
-            String storedFileNameItem = System.currentTimeMillis() + "-" + originalFileNameItem;
-            String savePath = "C:\\springboot_img_final\\" + storedFileNameItem;
-            itemFileUpdate.transferTo(new File(savePath));
-
-            File deleteFile = new File(savePath);
-//            if (!CollectionUtils.isEmpty(boardDTO.getItemFileUpdate())) {
-//               itemRepository.deleteAll();
-            Files.deleteIfExists(deleteFile.toPath());
-//                deleteFile.delete();
-            System.out.println("파일 삭제 완료");
-        }
+//        System.out.println("파일 있음");
+//
+//        for (MultipartFile itemFileUpdate : itemDTO.getItemFileUpdate()) {
+//            String originalFileNameItem = itemFileUpdate.getOriginalFilename();
+//            String storedFileNameItem = System.currentTimeMillis() + "-" + originalFileNameItem;
+//            String savePath = "C:\\springboot_img_final\\" + storedFileNameItem;
+//            itemFileUpdate.transferTo(new File(savePath));
+//
+//            File deleteFile = new File(savePath);
+////            if (!CollectionUtils.isEmpty(boardDTO.getItemFileUpdate())) {
+////               itemRepository.deleteAll();
+//            Files.deleteIfExists(deleteFile.toPath());
+////                deleteFile.delete();
+//            System.out.println("파일 삭제 완료");
+//        }
         ItemEntity itemEntity = ItemEntity.toItemUpdateEntity(itemDTO);
         Long savedId = itemRepository.save(itemEntity).getId();
         ItemEntity entity = itemRepository.findById(savedId).get();
@@ -102,9 +102,9 @@ public class ItemService {
             String originalFileNameItem = itemFileUpdate.getOriginalFilename();
             String storedFileNameItem = System.currentTimeMillis() + "-" + originalFileNameItem;
             String savePath = "C:\\springboot_img_final\\" + storedFileNameItem;
-            itemFileUpdate.transferTo(new File(savePath));
-//            Path path = Paths.get(savePath).toAbsolutePath();
-//            itemFileUpdate.transferTo(path.toFile());
+//            itemFileUpdate.transferTo(new File(savePath));
+            Path path = Paths.get(savePath).toAbsolutePath();
+            itemFileUpdate.transferTo(path.toFile());
 
             ItemFileEntity itemFileEntity = ItemFileEntity.toSaveItemFileEntity(entity, originalFileNameItem, storedFileNameItem);
             itemFileRepository.save(itemFileEntity);

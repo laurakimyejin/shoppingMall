@@ -17,7 +17,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         System.out.println("requestURL = " + requestURL);
         HttpSession session = request.getSession();
         //request에서 session 가져옴
-        if(session.getAttribute("userId") == null){
+        if(session.getAttribute("member") == null){
             response.sendRedirect("/member/login?redirectURL="+requestURL);
             //로그인 주소로 보내면서 로그인 끝나면 다시 돌아갈 주소도 함께 보냄
             return false;
