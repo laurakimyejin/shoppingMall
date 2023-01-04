@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/starRating.css}" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script src="/static/js/bootstrap.bundle.js"></script>
     <style>
         /*화면 안뜨게 */
@@ -59,7 +61,7 @@
             <td th:text="${order.orderStatus}"></td>
             <div th:if="${order.orderStatus == '배송완료'}">
             <td>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#modalComment" id="modalOpen"> 후기 작성 </button>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modalComment" id="modalOpen" > 후기 작성 </button>
             </td>
             </div>
 
@@ -90,7 +92,6 @@
                         </div>
                         <h1 class="rating" id="starCount" name="starCount">0</h1>
                         <script th:src="app.js"></script>
-                        <!--                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">작성완료</button>-->
                         <button id="comment-write-btn" class="btn btn-secondary" th:onclick="commentWrite([[${order}]])">작성완료
                         </button>
                     </div>
@@ -104,16 +105,7 @@
 </table>
 </body>
 <script th:inline="javascript">
-
-    // const commentOrder = (order) => {
-    //     console.log(order)
-    //     console.log(order.id)
-    //   const id = order.id
-    //     document.getElementById("orderId").value = id;
-    //     document.getElementById("orderId").innerHTML = id;
-    //     console.log(id)
-
-        // 모달버튼
+    //모달 버튼
         $('#modalOpen').on('click', function(){
             $('#modalComment').modal('show');
         });
@@ -134,7 +126,7 @@
         const i = [...stars].indexOf(e.target);
         if (i > -1) {
             stars[i].classList.add("star__checked");
-            rating.textContent = `${stars.length - i}`;
+            rating.textContent = `${stars.length - i - 15}`;
         } else {
             rating.textContent = `${0}`;
         }
