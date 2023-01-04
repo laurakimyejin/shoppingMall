@@ -22,7 +22,6 @@ public class CommentDTO {
     private Long itemId;
     private Long orderId;
 
-
     public CommentDTO(Long id, String commentWriter, String commentContents, LocalDateTime commentCreatedDate, int starCount) {
         this.id = id;
         this.commentWriter = commentWriter;
@@ -38,7 +37,6 @@ public class CommentDTO {
         commentDTO.setCommentContents(commentEntity.getCommentContents());
         commentDTO.setStarCount(commentEntity.getStarCount());
         commentDTO.setCommentCreatedDate(commentEntity.getCreatedTime());
-        commentDTO.setItemId(commentEntity.getItemEntity().getId());
 //        commentDTO.setMemberId(commentEntity.getMemberEntity().getId());
         return commentDTO;
     }
