@@ -62,7 +62,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" onclick="commentWrite()">후기등록</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeRE()">Close</button>
             </div>
         </div>
     </div>
@@ -70,6 +70,13 @@
 </body>
 
 <script th:inline="javascript">
+    const closeRE = () => {
+        document.querySelector('input[name=commentContents]').value = "";
+        document.querySelector('h1[name=starCount]').textContent = "0점";
+        stars.forEach((star) => star.classList.remove("star__checked"));
+    }
+
+
     const modal = (order) => {
         console.log(order);
         const orderId = document.getElementById('contents');
