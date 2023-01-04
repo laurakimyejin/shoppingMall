@@ -87,4 +87,5 @@ public class ItemController {
         model.addAttribute("board",itemDTO1);
         return "redirect:/item/main";
     }
+
 }
