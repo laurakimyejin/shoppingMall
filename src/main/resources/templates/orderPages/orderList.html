@@ -7,17 +7,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/starRating.css}" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <script src="/static/js/bootstrap.bundle.js"></script>
     <style>
         /*화면 안뜨게 */
-        .modal-dialog{
+        .modal-dialog {
             display: none;
             position: fixed;
             width: 100%;
             height: 100%;
             z-index: 1;
         }
+
         /*.modal-content {*/
         /*text-align:center;*/
         /*width:100%;*/
@@ -60,61 +61,72 @@
             <td th:text="${order.orderName}"></td>
             <td th:text="${order.orderStatus}"></td>
             <div th:if="${order.orderStatus == '배송완료'}">
-            <td>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#modalComment" id="modalOpen" > 후기 작성 </button>
-            </td>
+                <td>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalComment" id="modalOpen"> 후기 작성
+                    </button>
+                </td>
             </div>
 
 
-<!--모달 영역-->
-    <div class="modal modal-comment position-static d-block py-5" tabindex="-1" role="dialog" id="modalComment">
-        <div class="modal-dialog" role="document" id="modal-dialog">
-            <div class="modal-content rounded-4 shadow">
-                <div class="modal-header p-5 pb-4 border-bottom-0">
-                    <h1 class="fw-bold " id="commentSave">후기 작성</h1>
-                    <button type="button" class="btn-close close-area" data-bs-dismiss="modal" aria-label="Close" id="close">
-                    </button>
-                    <div class="modal-body p-5 pt-0">
-                        <input type="text" class="form-control rounded-3" id="commentWriter"
-                               name="commentWriter" th:value="${session.member.userId}" readonly>
-                        <label for="commentWriter">작성자</label>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control rounded-3 mt-3" id="commentContents"
-                                   name="commentContents" placeholder="내용">
-                            <label for="commentContents">내용</label>
+            <!--모달 영역-->
+            <div class="modal modal-comment position-static d-block py-5" tabindex="-1" role="dialog" id="modalComment">
+                <div class="modal-dialog" role="document" id="modal-dialog">
+                    <div class="modal-content rounded-4 shadow">
+                        <div class="modal-header p-5 pb-4 border-bottom-0">
+                            <h1 class="fw-bold " id="commentSave">후기 작성</h1>
+                            <button type="button" class="btn-close close-area" data-bs-dismiss="modal"
+                                    aria-label="Close" id="close">
+                            </button>
+                            <div class="modal-body p-5 pt-0">
+                                <input type="text" class="form-control rounded-3" th:id="'name'+${order.id}"
+                                       name="commentWriter" th:value="${session.member.userId}" readonly>
+                                <label th:for="'name'+${order.id}">작성자</label>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control rounded-3 mt-3" th:id="'contents'+${order.id}"
+                                           name="commentContents" placeholder="내용">
+                                    <label th:for="'contents'+${order.id}">내용</label>
+                                </div>
+                                <div class="star-container">
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                </div>
+                                <h1 class="rating" th:id="'star'+${order.id}" name="starCount">0</h1>
+                                <script th:src="app.js"></script>
+                                <button id="comment-write-btn" class="btn btn-secondary"
+                                        th:onclick="commentWrite([[${order}]])">작성완료
+                                </button>
+                            </div>
                         </div>
-                        <div class="star-container">
-                            <div class="star"></div>
-                            <div class="star"></div>
-                            <div class="star"></div>
-                            <div class="star"></div>
-                            <div class="star"></div>
-                        </div>
-                        <h1 class="rating" id="starCount" name="starCount">0</h1>
-                        <script th:src="app.js"></script>
-                        <button id="comment-write-btn" class="btn btn-secondary" th:onclick="commentWrite([[${order}]])">작성완료
-                        </button>
-                    </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </tr>
+    </table>
 </div>
-</tr>
-</table>
+
+
 </body>
 <script th:inline="javascript">
+
+    $(".btn-modal").click(function(){
+        var data = $(this).data('id');
+        $("#contents.body-contents").val(data);
+        $("#text-contents.body-contents").html(data);
+    });
+
     //모달 버튼
-        $('#modalOpen').on('click', function(){
-            $('#modalComment').modal('show');
-        });
-        document.getElementById("modalOpen").onclick = function() {
-            document.getElementById("modal-dialog").style.display="block";
-        }
-        document.getElementById("close").onclick = function() {
-            document.getElementById("modal-dialog").style.display="none";
-        }
+    $('#modalOpen').on('click', function(){
+        $('#modalComment').modal('show');
+    });
+    document.getElementById("modalOpen").onclick = function() {
+        document.getElementById("modal-dialog").style.display="block";
+    }
+    document.getElementById("close").onclick = function() {
+        document.getElementById("modal-dialog").style.display="none";
+    }
 
     // 별점
     let stars = document.querySelectorAll(".star");
@@ -134,19 +146,23 @@
 
     // 후기 쓰기
     const commentWrite = (order) => {
-        const writer = document.getElementById("commentWriter").value;
-        const contents = document.getElementById("commentContents").value;
-        const starCount = document.getElementById("starCount").textContent;
+        const commentWriter = document.getElementById("name" + order.id).value;
+        const commentContents = document.getElementById("contents" + order.id).value;
+        const starCount = document.getElementById("star" + order.id).textContent;
         const id = order.id;
 
-        console.log(id);
+        console.log(commentWriter);
+        console.log(commentContents);
         console.log(starCount);
+        console.log(id);
+
+
         $.ajax({
             type: "get",
             url: "/comment/save2",
             data: {
-                commentWriter: writer,
-                commentContents: contents,
+                commentWriter: commentWriter,
+                commentContents: commentContents,
                 orderId: id,
                 starCount: starCount
             },

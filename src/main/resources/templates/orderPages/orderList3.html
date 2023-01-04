@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<th:block th:replace="commonPages/header :: header"></th:block>
+<div th:if="${orderList == 'empty'}">
+    <p>주문내역이 없습니다.</p>
+</div>
+<div th:unless="${orderList == 'empty'}">
+    <table class="table" id="table-form">
+        <tr>
+            <th>주문번호</th>
+            <th>상품이름</th>
+            <th>배송상태</th>
+            <th>후기작성</th>
+        </tr>
+        <tr th:each="order: ${orderList}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.orderName}"></td>
+            <td th:text="${order.orderStatus}"></td>
+            <div th:if="${order.orderStatus == '배송완료'}">
+                <td>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalComment" id="modalOpen"> 후기
+                        작성
+                    </button>
+                </td>
+            </div>
+        </tr>
+    </table>
+</div>
+
+
+<div class="container">
+    <h2>Modal Example</h2>
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
