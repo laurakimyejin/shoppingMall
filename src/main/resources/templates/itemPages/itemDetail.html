@@ -65,7 +65,6 @@
     <div th:unless="${commentList == 'empty'}">
         <table class="table">
             <tr>
-                <th>번호</th>
                 <th>작성자</th>
                 <th>내용</th>
                 <th>작성시간</th>
@@ -73,7 +72,6 @@
 
             </tr>
             <tr th:each="comment: ${commentList}">
-                <td th:text="${comment.id}"></td>
                 <td th:text="${comment.commentWriter}"></td>
                 <td th:text="${comment.commentContents}"></td>
                 <td th:text="*{#temporals.format(comment.commentCreatedDate,'yyyy-MM-dd HH:mm:ss')}"></td>
@@ -159,6 +157,67 @@
         let totalPrice = oderCount * itemPrice;
         console.log(totalPrice);
         document.getElementById("totalPrice").innerHTML = totalPrice + "₩"
+    }
+
+    const commentWrite = () => {
+        const writer = document.getElementById("commentWriter").value;
+        const contents = document.getElementById("commentContents").value;
+        const starCount = document.getElementById("starCount").textContent;
+        console.log(starCount);
+        let id = [[${item.id}]];
+        let itemId = [[${item.id}]];
+        console.log(itemId);
+        console.log(findId);
+        $.ajax({
+            type: "post",
+            url: "/comment/save",
+            data: {
+                id: id,
+                commentWriter: writer,
+                commentContents: contents,
+                itemId: id,
+                starCount: starCount
+            },
+            dataType: "json",
+            success: function (commentMap) {
+                console.log(commentMap);
+                console.log(commentMap.commentList);
+                console.log(commentMap.commentList.content[0]);
+                console.log(commentMap.paging);
+                console.log(commentMap.paging.startPage);
+                let commentList2 = commentMap.commentList.content;
+                console.log("성공");
+                console.log("commentList", commentList2);
+                let output = "<table class='table'>";
+                output += "<tr><th>댓글번호</th>";
+                output += "<th>작성자</th>";
+                output += "<th>내용</th>";
+                output += "<th>작성시간</th>";
+                output += "<th>별점</th></tr>";
+                for (let i in commentList2) {
+                    output += "<tr>";
+                    output += "<td>" + commentList2[i].id + "</td>";
+                    output += "<td>" + commentList2[i].commentWriter + "</td>";
+                    output += "<td>" + commentList2[i].commentContents + "</td>";
+                    output += "<td>" + moment(commentList2[i].commentCreatedDate).format("YYYY-MM-DD HH:mm:ss") + "</td>";
+                    output += "<td>" + commentList2[i].starCount + "</td>";
+                    output += "</tr>";
+                }
+                output += "</table>";
+
+                document.getElementById('comment-list').innerHTML = output;
+                document.getElementById('commentWriter').value = '';
+                document.getElementById('commentContents').value = '';
+                let output2 = "<ul class=\"pagination justify-content-center\">\n";
+                output2 += "<li class=\"page-item\">\n";
+                output2 += "<a class=\"page-link\" href=\"/item/?page=1&itemId="+itemId+"\">"
+                document.getElementById('comment-page').innerHTML = output2;
+
+            },
+            error: function () {
+                console.log("실패");
+            }
+        });
     }
 </script>
 </html>
