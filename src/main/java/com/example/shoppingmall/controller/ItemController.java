@@ -82,6 +82,7 @@ public class ItemController {
     //상품 수정 처리
     @PostMapping("/item/update")
     public String update (@ModelAttribute ItemDTO itemDTO,Model model) throws IOException{
+        System.out.println("itemDTO = " + itemDTO + ", model = " + model);
         itemService.update(itemDTO);
         ItemDTO itemDTO1 = itemService.findById(itemDTO.getId());
         model.addAttribute("board",itemDTO1);
