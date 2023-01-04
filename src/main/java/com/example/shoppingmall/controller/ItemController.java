@@ -72,4 +72,19 @@ public class ItemController {
         }
        return "itemPages/itemDetail";
     }
+    //상품 수정 화면
+    @GetMapping("/item/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model){
+       ItemDTO itemDTO = itemService.findById(id);
+        model.addAttribute("item",itemDTO);
+        return "itemPages/itemUpdate";
+    }
+    //상품 수정 처리
+    @PostMapping("/item/update")
+    public String update (@ModelAttribute ItemDTO itemDTO,Model model) throws IOException{
+        itemService.update(itemDTO);
+        ItemDTO itemDTO1 = itemService.findById(itemDTO.getId());
+        model.addAttribute("board",itemDTO1);
+        return "redirect:/item/main";
+    }
 }

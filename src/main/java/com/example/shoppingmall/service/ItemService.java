@@ -17,6 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 @Service
@@ -70,4 +73,46 @@ public class ItemService {
         return null;
     }
     }
+@Transactional
+    public Long update(ItemDTO itemDTO) throws IOException {
+    if (itemDTO.getItemFileUpdate().get(0).isEmpty()) {
+        System.out.println("파일 없음");
+        ItemEntity itemEntity = ItemEntity.toItemSaveEntity(itemDTO);
+        return itemRepository.save(itemEntity).getId();
+    } else {
+        System.out.println("파일 있음");
+
+        for (MultipartFile itemFileUpdate : itemDTO.getItemFileUpdate()) {
+            String originalFileNameItem = itemFileUpdate.getOriginalFilename();
+            String storedFileNameItem = System.currentTimeMillis() + "-" + originalFileNameItem;
+            String savePath = "C:\\springboot_img_final\\" + storedFileNameItem;
+            itemFileUpdate.transferTo(new File(savePath));
+
+            File deleteFile = new File(savePath);
+//            if (!CollectionUtils.isEmpty(boardDTO.getItemFileUpdate())) {
+//               itemRepository.deleteAll();
+            Files.deleteIfExists(deleteFile.toPath());
+//                deleteFile.delete();
+            System.out.println("파일 삭제 완료");
+        }
+        ItemEntity itemEntity = ItemEntity.toItemUpdateEntity(itemDTO);
+        Long savedId = itemRepository.save(itemEntity).getId();
+        ItemEntity entity = itemRepository.findById(savedId).get();
+        for (MultipartFile itemFileUpdate : itemDTO.getItemFileUpdate()) {
+            String originalFileNameItem = itemFileUpdate.getOriginalFilename();
+            String storedFileNameItem = System.currentTimeMillis() + "-" + originalFileNameItem;
+            String savePath = "C:\\springboot_img_final\\" + storedFileNameItem;
+            itemFileUpdate.transferTo(new File(savePath));
+//            Path path = Paths.get(savePath).toAbsolutePath();
+//            itemFileUpdate.transferTo(path.toFile());
+
+            ItemFileEntity itemFileEntity = ItemFileEntity.toSaveItemFileEntity(entity, originalFileNameItem, storedFileNameItem);
+            itemFileRepository.save(itemFileEntity);
+
+        }
+        return savedId;
+        }
+    }
+
+
 }

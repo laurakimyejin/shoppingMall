@@ -126,7 +126,7 @@
         const i = [...stars].indexOf(e.target);
         if (i > -1) {
             stars[i].classList.add("star__checked");
-            rating.textContent = `${stars.length - i - 15}`;
+            rating.textContent = `${stars.length - i}`;
         } else {
             rating.textContent = `${0}`;
         }
