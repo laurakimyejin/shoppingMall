@@ -16,12 +16,12 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler(resourcePath).addResourceLocations(savePath);
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginCheckInterceptor()) //인터셉터로 등록할 클래스
-                .order(1) // 해당 인터셉터의 우선순위
-                .addPathPatterns("/**") //인터셉터로 체크할 주소 (모든 주소)
-                .excludePathPatterns("/", "/member/save", "/member/login", "/member/logout", "/item/main", "/js/**", "/css/**", "/jsp/**","/style/**", "/error", "/img/**", "/*.ico", "/favicon/**"); //예외할 주소, 로그인 안해도 사용 가능
-            }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new LoginCheckInterceptor()) //인터셉터로 등록할 클래스
+//                .order(1) // 해당 인터셉터의 우선순위
+//                .addPathPatterns("/**") //인터셉터로 체크할 주소 (모든 주소)
+//                .excludePathPatterns("/", "/member/save", "/member/login", "/member/logout", "/item/main", "/js/**", "/css/**", "/jsp/**","/style/**", "/error", "/img/**","/product/**", "/*.ico", "/favicon/**"); //예외할 주소, 로그인 안해도 사용 가능
+//            }
         }
 

@@ -84,6 +84,7 @@ public class MemberController {
         MemberDTO result = memberService.memberLogin(memberDTO);
         if (result != null) {
             session.setAttribute("member", result);
+            System.out.println("redirect:" + redirectURL);
             return "ok";
         } else {
             return "no";
