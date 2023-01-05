@@ -135,10 +135,15 @@
 <script th:inline="javascript">
     //장바구니
     const cart = () => {
-        const loc = document.getElementById("loc");
-        loc.action = "/cart/save";
-        const form = document.querySelector('form');
-        form.submit();
+
+        if ( confirm("장바구니에 담겼습니다.  장바구니로 이동하시겠습니까?")==true){
+            const loc = document.getElementById("loc");
+            loc.action = "/cart/save";
+            const form = document.querySelector('form');
+            form.submit();
+        }else {
+
+        }
     }
     //바로구매
     const orderItem = () => {

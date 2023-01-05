@@ -21,9 +21,10 @@ public class CartController {
     //장바구니 저장
     @GetMapping("/save")
     public String saveForm(@ModelAttribute ItemDTO itemDTO, Model model) {
+        String userId = itemDTO.getUserId();
         cartService.save(itemDTO);
         model.addAttribute("item", itemDTO);
-        return "/cartPages/cartSave";
+        return "redirect:/cart/list?userId=" + userId;
     }
     //장바구니 리스트
     @GetMapping("/list")
