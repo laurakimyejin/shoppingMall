@@ -20,6 +20,8 @@ import java.util.List;
 @RequestMapping("/question")
 public class QuestionController {
     private final QuestionService questionService;
+
+//    문의 리스트 불러오기
     @GetMapping("/list")
     public String questionList(@PageableDefault(page = 1,size = 3) Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort
             , @RequestParam(required = false , value = "search", defaultValue = "") String search,
@@ -41,18 +43,20 @@ public class QuestionController {
     }
 
 
-
+// 문의글 작성하기 페이지 이동
     @GetMapping("/save")
     public String questionSaveForm(){
         return "/questionPages/questionSave";
     }
 
+
+    // 문의글 작성하기
     @PostMapping("/save")
     public String questionSave(@ModelAttribute QuestionDTO questionDTO){
         questionService.save(questionDTO);
         return "redirect:/question/list";
     }
-
+//    문의글 상세보기
     @GetMapping("/{id}")
     public String questionDetail(@PathVariable Long id, Model model){
         QuestionDTO questionDTO = questionService.findById(id);

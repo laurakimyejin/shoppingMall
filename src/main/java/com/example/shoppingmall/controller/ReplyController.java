@@ -16,6 +16,7 @@ import java.util.List;
 public class ReplyController {
     private final ReplyService replyService;
 
+//    댓글 저장 및 댓글 리스트 불러오기
     @PostMapping("/reply/save")
     public @ResponseBody List<ReplyDTO> replySave(@ModelAttribute ReplyDTO replyDTO, Model model){
         List<ReplyDTO>replyDTOList=replyService.save(replyDTO);
