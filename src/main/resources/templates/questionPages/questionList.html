@@ -23,7 +23,7 @@
             <td><a th:href="@{|/question/${question.id}|}" th:text="${question.questionTitle}"></a></td>
             <td th:text="${question.questionName}"></td>
             <td th:text="*{#temporals.format(question.getQuestionCreatedTime(), 'yyyy-MM-dd HH:mm:ss')}"></td>
-            <td th:text="${question.questionStatus}"></td>
+            <td><input type="button" th:value="${question.questionStatus}"></td>
         </tr>
     </table>
 </div>

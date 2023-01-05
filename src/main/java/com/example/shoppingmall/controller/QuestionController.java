@@ -2,6 +2,7 @@ package com.example.shoppingmall.controller;
 
 import com.example.shoppingmall.dto.OrderDTO;
 import com.example.shoppingmall.dto.QuestionDTO;
+import com.example.shoppingmall.dto.ReplyDTO;
 import com.example.shoppingmall.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -55,8 +56,11 @@ public class QuestionController {
     @GetMapping("/{id}")
     public String questionDetail(@PathVariable Long id, Model model){
         QuestionDTO questionDTO = questionService.findById(id);
+        List<ReplyDTO>replyDTOList = questionService.findReplyById(id);
         model.addAttribute("question", questionDTO);
+        model.addAttribute("replyList", replyDTOList);
         return "/questionPages/questionDetail";
     }
+
 
 }
