@@ -22,6 +22,9 @@ public class OrderEntity extends BaseEntity{
     @Column(length = 100, nullable = false)
     private String orderName;
 
+    @Column(length = 10)
+    private String review;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
