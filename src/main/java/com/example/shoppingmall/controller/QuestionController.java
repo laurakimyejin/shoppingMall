@@ -20,8 +20,11 @@ import java.util.List;
 public class QuestionController {
     private final QuestionService questionService;
     @GetMapping("/list")
-    public String questionList(@PageableDefault(page = 1,size = 3) Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort){
-        Page<QuestionDTO> questionDTOList = questionService.findAll(pageable, sort);
+    public String questionList(@PageableDefault(page = 1,size = 3) Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort
+            , @RequestParam(required = false , value = "search", defaultValue = "") String search,
+                               @RequestParam(required = false , value = "category", defaultValue = "") String category){
+        System.out.println("pageable = " + pageable + ", model = " + model + ", sort = " + sort + ", search = " + search + ", category = " + category);
+        Page<QuestionDTO> questionDTOList = questionService.findAll(pageable, sort , search , category);
         model.addAttribute("questionList",questionDTOList);
         int blockLimit = 3;
         int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
@@ -31,6 +34,8 @@ public class QuestionController {
         model.addAttribute("sort", sort);
         model.addAttribute("size", pageable.getPageSize());
         model.addAttribute("page", pageable.getPageNumber());
+        model.addAttribute("search", search);
+        model.addAttribute("category", category);
         return "/questionPages/questionList";
     }
 
