@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -31,7 +30,7 @@ public class CartController {
     public String listForm(@RequestParam("userId") String userId,Model model) {
         List<CartItemDTO>cartItemDTOList = cartService.findAll(userId);
         model.addAttribute("cartList", cartItemDTOList);
-        return "/cartPages/cartList2";
+        return "cartPages/cartList";
     }
 
     //장바구니 상세페이지
@@ -39,7 +38,7 @@ public class CartController {
     public String findById(@PathVariable Long id, Model model){
         CartItemDTO cartDTO = cartService.findById(id);
         model.addAttribute("cart",cartDTO);
-        return "cartPages/cartList2";
+        return "cartPages/cartList";
     }
 
     //장바구니 삭제

@@ -42,7 +42,7 @@ public class OrderController {
     public String list(@RequestParam("userId")String userId, Model model) {
         List<OrderDTO>orderDTOList = orderService.findAll(userId);
         model.addAttribute("orderList", orderDTOList);
-        return "orderPages/orderList2";
+        return "orderPages/orderList";
     }
 
     @GetMapping("/order/listAll")
