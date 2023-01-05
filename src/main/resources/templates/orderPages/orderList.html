@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>Bootstrap Example</title>
+    <title>orderList</title>
     <meta charset="utf-8">
     <link rel="stylesheet" th:href="@{/css/starRating.css}" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,8 +12,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-
 <th:block th:replace="commonPages/header :: header"></th:block>
 <div th:if="${orderList == 'empty'}">
     <p>주문내역이 없습니다.</p>
@@ -23,29 +22,33 @@
             <th>주문번호</th>
             <th>상품이름</th>
             <th>배송상태</th>
-            <th>후기작성</th>
+            <th>리뷰작성</th>
         </tr>
         <tr th:each="order: ${orderList}">
             <td th:text="${order.id}"></td>
             <td th:text="${order.orderName}"></td>
+            <td><a th:href="@{/items(orderName=${order.orderName})}" th:text="${order.orderName}"></a></td>
             <td th:text="${order.orderStatus}"></td>
             <div th:if="${order.orderStatus == '배송완료'}">
                 <td>
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal"
-                            th:data-id="${order.id}" th:onclick="modal([[${order.id}]])">후기작성
+                <td th:if="${order.review} == '리뷰작성'">
+                    <button type="button" th:id="${order.id}" class="btn btn-secondary" data-toggle="modal" data-target="#myModal"
+                            th:data-id="${order.id}" th:onclick="modal([[${order.id}]])"> [[${order.review}]]
                     </button>
+                </td>
+                <td th:unless="${order.review} == '리뷰작성'">
+                    <input type="button" class="btn btn-secondary" disabled value="등록완료">
                 </td>
             </div>
         </tr>
     </table>
 </div>
-
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">후기작성</h4>
+                <h4 class="modal-title">리뷰작성</h4>
             </div>
             <div class="modal-body">
                 <input type="hidden" name="orderId" class="body-contents" id="contents">
@@ -61,7 +64,8 @@
                 <script th:src="app.js"></script>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="commentWrite()">후기등록</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="commentWrite()">리뷰등록
+                </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeRE()">Close</button>
             </div>
         </div>
@@ -70,6 +74,7 @@
 </body>
 
 <script th:inline="javascript">
+    //Close
     const closeRE = () => {
         document.querySelector('input[name=commentContents]').value = "";
         document.querySelector('h1[name=starCount]').textContent = "0점";
@@ -77,6 +82,7 @@
     }
 
 
+    //후기 작성 버튼
     const modal = (order) => {
         console.log(order);
         const orderId = document.getElementById('contents');
@@ -88,19 +94,18 @@
     let stars = document.querySelectorAll(".star");
     document.querySelector(".star-container").addEventListener("click", starRating);
     let rating = document.querySelector(".rating");
-
     function starRating(e) {
         stars.forEach((star) => star.classList.remove("star__checked"));
         const i = [...stars].indexOf(e.target);
         if (i > -1) {
             stars[i].classList.add("star__checked");
-            rating.textContent = `${stars.length - i}`+"점";
+            rating.textContent = `${stars.length - i}` + "점";
         } else {
-            rating.textContent = `${0}`+"점";
+            rating.textContent = `${0}` + "점";
         }
     }
 
-    // 후기 쓰기
+    // 후기 등록
     const commentWrite = () => {
         const commentWriter = [[${session.member.memberName}]];
         const commentContents = document.querySelector('input[name=commentContents]').value;
@@ -127,6 +132,9 @@
                 document.querySelector('h1[name=starCount]').textContent = "0점";
                 stars.forEach((star) => star.classList.remove("star__checked"));
 
+                const btnElement = document.getElementById(orderId);
+                btnElement.innerText = '등록완료';
+                btnElement.disabled = true;
 
 
             },
@@ -136,5 +144,4 @@
         });
     }
 </script>
-
 </html>

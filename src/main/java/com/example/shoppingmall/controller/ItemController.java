@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.data.domain.Pageable;
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -51,10 +50,9 @@ public class ItemController {
     @GetMapping("/item/")
     public String findById(@PageableDefault(page = 1) Pageable pageable, @RequestParam("itemId") Long itemId, Model model){
         System.out.println( "itemId = " + itemId);
-//        Page<CommentDTO> commentDTOS = itemService.commentPaging(pageable);
-
         ItemDTO itemDTO = itemService.findById(itemId);
         model.addAttribute("item",itemDTO);
+    //리뷰 리스트 페이징
         Page<CommentDTO> commentDTOList = commentService.findAll(itemId,pageable);
         if (!commentDTOList.isEmpty()) {
             model.addAttribute("commentList", commentDTOList);
@@ -94,7 +92,8 @@ public class ItemController {
         itemService.delete(id);
         return"redirect:/item/main";
     }
-    //주문조회에서 아이템조회
+
+    //주문확인에서 아이템조회
     @GetMapping("/items")
     public String findById(@PageableDefault(page = 1) Pageable pageable, @RequestParam("orderName") String orderName, Model model){
         System.out.println("pageable = " + pageable + ", orderName = " + orderName + ", model = " + model);
