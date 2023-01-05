@@ -17,12 +17,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+
+//    주문페이지 이동
     @GetMapping("/order")
     public String order(){
         return "orderPages/order";
     }
 
 
+    //주문상세페이지 이동
     @GetMapping("/order/save")
     public String saveForm(@ModelAttribute ItemDTO itemDTO, Model model) {
         System.out.println("itemDTO = " + itemDTO + ", model = " + model);
@@ -30,6 +33,7 @@ public class OrderController {
         return "orderPages/orderSave";
     }
 
+    //주문하기
     @PostMapping("/order/save")
     public String save(@ModelAttribute OrderDTO orderDTO, Model model) {
         System.out.println("orderDTO = " + orderDTO + ", model = " + model);
@@ -38,6 +42,7 @@ public class OrderController {
         return "/index";
     }
 
+    //개인주문목록
     @GetMapping("/order/list")
     public String list(@RequestParam("userId")String userId, Model model) {
         List<OrderDTO>orderDTOList = orderService.findAll(userId);
@@ -45,6 +50,7 @@ public class OrderController {
         return "orderPages/orderList";
     }
 
+    //모든 주문목록
     @GetMapping("/order/listAll")
     public String findListAll(@PageableDefault(page = 1,size = 3) Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort)
     {
