@@ -20,7 +20,6 @@
 #wrap #header_bg header > ul li{display: inline-block;}/*내용변경용*/
 #wrap #header_bg header > ul li a{
     color: #5c5c5c; text-decoration: none; font-size: 0.8em;
-    border-right: 1px solid #e5e5e5; padding-right: 6px;
     height: 10px;
     display: inline-block;
     
@@ -66,10 +65,7 @@
     font-weight: 800;
     font-family: 'Nanum Gothic', sans-serif;
    }
-#wrap #header_bg header #h_btm nav ul li a:hover{
-    border-bottom: 3px solid #c40000;
-    color: #c40000;
-}
+
 
 /*검색폼*/
 #wrap #header_bg header #h_btm nav ul li:last-child{
@@ -92,13 +88,10 @@
 
 #wrap #header_bg header #h_btm nav ul li #search_form p:nth-child(2) input{
     width: 150px;
-    border: 1px solid #dddddd;
-    border-radius: 15px;
     height: 25px;
     font-size: 0.75em;
-    color: #b2b2b2;
     padding-left: 10px;
-    box-sizing: border-box;
+
 }
 
 

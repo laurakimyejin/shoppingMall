@@ -75,8 +75,8 @@
     font-family: 'Nanum Gothic', sans-serif;
    }
 #wrap #header_bg header #h_btm nav ul li a:hover{
-    border-bottom: 3px solid #c40000;
-    color: #c40000;
+
+
 }
 
 
@@ -105,9 +105,6 @@
     border-radius: 15px;
     height: 25px;
     font-size: 0.75em;
-    color: #b2b2b2;
-    padding-left: 10px;
-    box-sizing: border-box;
 }
 
 
