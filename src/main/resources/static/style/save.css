@@ -1,0 +1,16 @@
+*{
+    font-family: 'Jua', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.main{
+    width: 400px;
+    height: 409px;
+    left: 411px;
+    top: 85px;
+    /*가운데 정렬 margin: auto*/
+    margin-left: auto;
+    margin-right: auto;
+
+}
