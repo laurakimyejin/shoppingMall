@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -80,21 +81,11 @@ public class ItemService {
         ItemEntity itemEntity = ItemEntity.toItemSaveEntity(itemDTO);
         return itemRepository.save(itemEntity).getId();
     } else {
-//        System.out.println("파일 있음");
-//
-//        for (MultipartFile itemFileUpdate : itemDTO.getItemFileUpdate()) {
-//            String originalFileNameItem = itemFileUpdate.getOriginalFilename();
-//            String storedFileNameItem = System.currentTimeMillis() + "-" + originalFileNameItem;
-//            String savePath = "C:\\springboot_img_final\\" + storedFileNameItem;
-//            itemFileUpdate.transferTo(new File(savePath));
-//
-//            File deleteFile = new File(savePath);
-////            if (!CollectionUtils.isEmpty(boardDTO.getItemFileUpdate())) {
-////               itemRepository.deleteAll();
-//            Files.deleteIfExists(deleteFile.toPath());
-////                deleteFile.delete();
-//            System.out.println("파일 삭제 완료");
-//        }
+        System.out.println("itemDTO = " + itemDTO);
+        ItemEntity itemEntity2 = itemRepository.findById(itemDTO.getId()).get();
+        System.out.println("아이템파일1"+itemEntity2);
+        itemFileRepository.deleteByItemEntity(itemEntity2);
+
         ItemEntity itemEntity = ItemEntity.toItemUpdateEntity(itemDTO);
         Long savedId = itemRepository.save(itemEntity).getId();
         ItemEntity entity = itemRepository.findById(savedId).get();
@@ -117,4 +108,20 @@ public class ItemService {
     public void delete(Long id) {
         itemRepository.deleteById(id);
     }
-}
+
+    @Transactional
+    public ItemDTO findByOrderName(String orderName) {
+        Optional<ItemEntity> itemEntityOptional = itemRepository.findByItemName(orderName);
+        if(itemEntityOptional.isPresent()){
+            return ItemDTO.toItemDTO(itemEntityOptional.get());
+        }else{
+            return null;
+        }
+    }
+
+
+
+    }
+
+
+

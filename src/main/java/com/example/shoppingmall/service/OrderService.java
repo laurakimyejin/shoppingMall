@@ -41,6 +41,7 @@ public class OrderService {
             memberRepository.save(memberEntity2);
             OrderEntity orderEntity = new OrderEntity();
             orderEntity.setOrderStatus(orderDTO.getOrderStatus());
+            orderEntity.setReview(orderDTO.getReview());
             orderEntity.setMemberEntity(memberEntity2);
             orderEntity.setOrderName(orderDTO.getOrderName());
             orderRepository.save(orderEntity);
@@ -64,6 +65,7 @@ public class OrderService {
         for (OrderEntity orderEntity : orderEntityList) {
             OrderDTO orderDTO = new OrderDTO();
             orderDTO.setId(orderEntity.getId());
+            orderDTO.setReview(orderEntity.getReview());
             orderDTO.setOrderStatus(orderEntity.getOrderStatus());
             orderDTO.setOrderName(orderEntity.getOrderName());
             orderDTOList.add(orderDTO);
