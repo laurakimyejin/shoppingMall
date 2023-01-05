@@ -1,12 +1,8 @@
 package com.example.shoppingmall.service;
 
 import com.example.shoppingmall.dto.CommentDTO;
-import com.example.shoppingmall.entity.CommentEntity;
-import com.example.shoppingmall.entity.ItemEntity;
-import com.example.shoppingmall.entity.MemberEntity;
-import com.example.shoppingmall.repository.CommentRepository;
-import com.example.shoppingmall.repository.ItemRepository;
-import com.example.shoppingmall.repository.MemberRepository;
+import com.example.shoppingmall.entity.*;
+import com.example.shoppingmall.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,23 +21,27 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
+    private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
 
     @Transactional
     public Long save(CommentDTO commentDTO) {
-        ItemEntity itemEntity = itemRepository.findById(commentDTO.getItemId()).get();
-//        MemberEntity memberEntity = memberRepository.findById(commentDTO.getMemberId()).get();
-        CommentEntity commentEntity = CommentEntity.toCommentEntity(itemEntity,commentDTO);
+        OrderEntity orderEntity = orderRepository.findById(commentDTO.getOrderId()).get();
+        OrderItemEntity orderItemEntity = orderItemRepository.findByOrderEntity(orderEntity);
+        ItemEntity itemEntity = orderItemEntity.getItemEntity();
+        CommentEntity commentEntity = CommentEntity.toCommentEntity(itemEntity, commentDTO);
         Long id = commentRepository.save(commentEntity).getId();
         return id;
     }
+
     @Transactional
-    public Page<CommentDTO> findAll(Long itemId,Pageable pageable) {
-        int page = pageable.getPageNumber()-1;
+    public Page<CommentDTO> findAll(Long itemId, Pageable pageable) {
+        int page = pageable.getPageNumber() - 1;
         final int pageLimit = 5;
-        ItemEntity itemEntity=itemRepository.findById(itemId).get();
-        Page<CommentEntity> commentEntities = commentRepository.findByItemEntity(itemEntity,PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC,"id")));
+        ItemEntity itemEntity = itemRepository.findById(itemId).get();
+        Page<CommentEntity> commentEntities = commentRepository.findByItemEntity(itemEntity, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
         Page<CommentDTO> commentDTOPage = commentEntities.map(
-                comment->new CommentDTO(
+                comment -> new CommentDTO(
                         comment.getId(),
                         comment.getCommentWriter(),
                         comment.getCommentContents(),
@@ -59,12 +59,13 @@ public class CommentService {
     }
 
     public List<CommentDTO> list() {
-        List<CommentEntity> commentEntityList = commentRepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
+        List<CommentEntity> commentEntityList = commentRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         List<CommentDTO> commentDTOList = new ArrayList<>();
-        for(CommentEntity commentEntity:commentEntityList){
+        for (CommentEntity commentEntity : commentEntityList) {
             commentDTOList.add(CommentDTO.toCommentDTO(commentEntity));
         }
         return commentDTOList;
     }
+
 }
 

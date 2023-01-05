@@ -16,7 +16,8 @@
     <article class="inner_login">
         <div class="login_tistory">
             <h2 class="page_title">LOGIN</h2>
-            <input type="hidden" name="redirectUrl" value="https://blogpack.tistory.com/manage">
+<!--            <input type="hidden" name="redirectUrl" value="https://blogpack.tistory.com/manage">-->
+            <input type="hidden" name="redirectURL" th:value="${redirectURL}">
             <fieldset>
                 <legend class="screen_out">로그인 정보 입력폼</legend>
                 <div class="box_login">
@@ -54,6 +55,7 @@
     const memberLogin = () => {
         const email = document.getElementById("userId").value;
         const pw = document.getElementById("pass").value;
+        const url = [[${redirectURL}]];
         $.ajax({
             type: "post",
             url: "/member/login",
@@ -65,7 +67,8 @@
             success: function (result) {
                 if (result == "ok") {
                     alert("로그인성공")
-                    location.href = "/";
+                     location.href = "/";
+                     // window.location.replace('url');
                 } else {
                     alert("아이디 또는 비밀번호를 다시 확인해주세요")
                 }
