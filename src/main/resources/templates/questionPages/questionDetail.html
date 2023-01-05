@@ -5,7 +5,6 @@
     <title>detail</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
     <script th:src="@{/js/axios.min.js}"></script>
     <!--  //시간설정-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -61,9 +60,12 @@
                 </table>
 
 
-                <div class="contentContainer d-flex justify-content-center">
-                    <textarea class="form-control" rows="10" th:text="${question.questionContents}"></textarea>
-
+                <div>
+                    <textarea class="form-control" rows="5" th:text="${question.questionContents}"></textarea>
+                </div>
+                <div>
+                    <input id="replyContents" type="text" name="replyContents" class="form-control" style="display: inline">
+                    <button type="button" class="btn btn-primary" onclick="reply()">댓글달기</button>
                 </div>
 
             </div>
@@ -72,58 +74,68 @@
 </div>
 
 
-<!--    <div>-->
-<!--        <button class="btn btn-primary" onclick="listReq()" style="float: left">목록</button>-->
-<!--        <div th:if="${session.loginEmail} == ${board.boardWriter}">-->
-<!--            <button class="btn btn-warning" onclick="updateReq()" style="float: right">수정</button>-->
-<!--        </div>-->
-<!--        <div th:block th:switch="${session.loginEmail}">-->
-<!--        <span th:case="'admin'">-->
-<!--          <button class="btn btn-danger" onclick="deleteReq()" style="float: right">삭제</button>-->
-<!--        </span>-->
-<!--            <span th:case="${board.boardWriter}">-->
-<!--          <button class="btn btn-danger" onclick="deleteReq()" style="float: right">삭제</button>-->
-<!--        </span>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--<div class="container mt-5">-->
-<!--    <div id="comment-write" class="input-group" mb-3>-->
-<!--        <div class="form-floating">-->
-<!--            <input type="text" id="commentWriter" th:value="${session.loginEmail}" class="form-control" readonly>-->
-<!--            <label for="commentWriter">작성자</label>-->
-<!--        </div>-->
-<!--        <div class="form-floating">-->
-<!--            <input type="text" id="commentContents" class="form-control" placeholder="내용">-->
-<!--            <label for="commentContents">내용</label>-->
-<!--        </div>-->
-<!--        <button id="comment-write-btn" class="btn btn-secondary" onclick="commentWrite()">댓글작성</button>-->
-<!--    </div>-->
-<!--</div>-->
-<!--<div class="container mt-5" id="comment-list">-->
-<!--    <div th:if="${commentList == 'empty'}">-->
-<!--        <p>작성된 댓글이 없습니다.</p>-->
-<!--    </div>-->
-<!--    <div th:unless="${commentList == 'empty'}">-->
-<!--        <table class="table">-->
-<!--            <tr>-->
-<!--                <th>댓글번호</th>-->
-<!--                <th>작성자</th>-->
-<!--                <th>내용</th>-->
-<!--                <th>작성시간</th>-->
-<!--            </tr>-->
-<!--            <tr th:each="comment: ${commentList}">-->
-<!--                <td th:text="${comment.id}"></td>-->
-<!--                <td th:text="${comment.commentWriter}"></td>-->
-<!--                <td th:text="${comment.commentContents}"></td>-->
-<!--                <td th:text="*{#temporals.format(comment.commentCreatedDate,'yyyy-MM-dd HH:mm:ss')}"></td>-->
-<!--            </tr>-->
-<!--        </table>-->
-<!--    </div>-->
-<!--</div>-->
+<div class="container mt-5" id="comment-list">
+    <div th:if="${replyList == 'empty'}">
+        <p>작성된 댓글이 없습니다.</p>
+    </div>
+    <div th:unless="${replyList == 'empty'}">
+        <table class="table">
+            <tr>
+                <th>작성자</th>
+                <th>내용</th>
+                <th>작성시간</th>
+            </tr>
+            <tr th:each="reply: ${replyList}">
+                <td th:text="${reply.replyName}"></td>
+                <td th:text="${reply.replyContents}"></td>
+                <td th:text="*{#temporals.format(reply.replyDate,'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
 
 </body>
 <script th:inline="javascript">
+    const reply = () => {
+        const memberId = [[${session.member.id}]];
+        const writer = [[${session.member.memberName}]];
+        const contents = document.getElementById("replyContents").value;
+        let questionId = [[${question.id}]];
+        $.ajax({
+            type: "post",
+            url: "/reply/save",
+            data: {
+                memberId: memberId,
+                questionId: questionId,
+                replyName: writer,
+                replyContents: contents,
+            },
+            dataType: "json",
+            success: function (replyLIst2) {
+                let commentList2 = replyLIst2;
+                let output = "<table class='table'>";
+                output += "<th>작성자</th>";
+                output += "<th>내용</th>";
+                output += "<th>작성시간</th>";
+                for (let i in commentList2) {
+                    output += "<tr>";
+                    output += "<td>" + commentList2[i].replyName + "</td>";
+                    output += "<td>" + commentList2[i].replyContents + "</td>";
+                    output += "<td>" + moment(commentList2[i].replyDate).format("YYYY-MM-DD HH:mm:ss") + "</td>";
+                    output += "</tr>";
+                }
+                output += "</table>";
+
+                document.getElementById('comment-list').innerHTML = output;
+                document.getElementById('commentContents').value = '';
+
+            },
+            error: function () {
+                console.log("실패");
+            }
+        });
+    }
+
 
 </script>
 </html>

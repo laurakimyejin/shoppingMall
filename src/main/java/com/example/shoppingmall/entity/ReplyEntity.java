@@ -27,4 +27,6 @@ public class ReplyEntity extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private QuestionEntity questionEntity;
+
+
 }

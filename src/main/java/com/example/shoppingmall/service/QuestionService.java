@@ -1,10 +1,13 @@
 package com.example.shoppingmall.service;
 
 import com.example.shoppingmall.dto.QuestionDTO;
+import com.example.shoppingmall.dto.ReplyDTO;
 import com.example.shoppingmall.entity.MemberEntity;
 import com.example.shoppingmall.entity.QuestionEntity;
+import com.example.shoppingmall.entity.ReplyEntity;
 import com.example.shoppingmall.repository.MemberRepository;
 import com.example.shoppingmall.repository.QuestionRepository;
+import com.example.shoppingmall.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +16,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +25,7 @@ import java.util.Optional;
 public class QuestionService {
     public final QuestionRepository questionRepository;
     private final MemberRepository memberRepository;
+    private final ReplyRepository replyRepository;
 
     public void save(QuestionDTO questionDTO) {
         Long id = questionDTO.getMemberId();
@@ -64,5 +70,21 @@ public class QuestionService {
             return QuestionDTO.toQuestionDTO(question);
         }
         return null;
+    }
+
+    public List<ReplyDTO> findReplyById(Long id) {
+        Optional<QuestionEntity> questionEntity = questionRepository.findById(id);
+        if (questionEntity.isPresent()) {
+            QuestionEntity question = questionEntity.get();
+            List<ReplyEntity> replyEntityList = replyRepository.findByQuestionEntity(question);
+            List<ReplyDTO>replyDTOList = new ArrayList<>();
+            for (ReplyEntity replyEntity : replyEntityList) {
+                replyDTOList.add(ReplyDTO.toReplyDTO(replyEntity));
+            }
+            return replyDTOList;
+
+        }
+        return null;
+
     }
 }
