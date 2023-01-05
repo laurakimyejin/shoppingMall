@@ -23,7 +23,7 @@ public class OrderDTO {
     private Long memberId;
     private String memberName;
     private int orderPrice;
-    private String review = "후기작성";
+    private String review = "리뷰작성";
 
     public static <U> U toOderDTO(OrderEntity orderEntity) {
         OrderDTO orderDTO = new OrderDTO();

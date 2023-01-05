@@ -7,15 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -53,13 +47,7 @@ public class CommentController {
         return null;
         }
     }
-    //리뷰 리스트
-//    @GetMapping("/comment/list")
-//    public String list(Model model){
-//        List<CommentDTO> commentDTOList = commentService.list();
-//        model.addAttribute("commentList",commentDTOList);
-//        return "commentPages/commentList";
-//    }
+
     //리뷰 작성(모달창)
     @GetMapping("/comment/save2")
     public @ResponseBody String commentSave(@ModelAttribute CommentDTO commentDTO){
@@ -68,11 +56,11 @@ public class CommentController {
     }
 
     //내가 작성한 리뷰
-    @GetMapping("/comment/detail/{id}")
-    public String detail(@PathVariable("id") Long id, Model model){
-        CommentDTO commentDTO1 = commentService.findById(id);
-        model.addAttribute("comment",commentDTO1);
-        return "commentPages/commentList";
-    }
+//    @GetMapping("/comment/detail/{id}")
+//    public String detail(@PathVariable("id") Long id, Model model){
+//        CommentDTO commentDTO1 = commentService.findById(id);
+//        model.addAttribute("comment",commentDTO1);
+//        return "commentPages/commentList";
+//    }
 
 }
