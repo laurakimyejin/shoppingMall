@@ -22,12 +22,12 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
-
+    //리뷰 작성 화면
     @GetMapping("/comment/save")
     public String saveForm(@RequestParam("orderId") Long id){
         return"commentPages/commentSave";
     }
-
+    //리뷰 작성 처리 & 리뷰 페이징
     @PostMapping("/comment/save")
     public @ResponseBody Map<String, Object> save(@ModelAttribute CommentDTO commentDTO, @PageableDefault(page = 1) Pageable pageable){
         commentService.save(commentDTO);
@@ -53,18 +53,26 @@ public class CommentController {
         return null;
         }
     }
-
-    @GetMapping("/comment/list")
-    public String list(Model model){
-        List<CommentDTO> commentDTOList = commentService.list();
-        model.addAttribute("commentList",commentDTOList);
-        return "commentPages/commentList";
-    }
-
+    //리뷰 리스트
+//    @GetMapping("/comment/list")
+//    public String list(Model model){
+//        List<CommentDTO> commentDTOList = commentService.list();
+//        model.addAttribute("commentList",commentDTOList);
+//        return "commentPages/commentList";
+//    }
+    //리뷰 작성(모달창)
     @GetMapping("/comment/save2")
     public @ResponseBody String commentSave(@ModelAttribute CommentDTO commentDTO){
         Long id = commentService.save(commentDTO);
         return "성공";
+    }
+
+    //내가 작성한 리뷰
+    @GetMapping("/comment/detail/{id}")
+    public String detail(@PathVariable("id") Long id, Model model){
+        CommentDTO commentDTO1 = commentService.findById(id);
+        model.addAttribute("comment",commentDTO1);
+        return "commentPages/commentList";
     }
 
 }

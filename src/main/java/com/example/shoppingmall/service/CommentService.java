@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +28,7 @@ public class CommentService {
     @Transactional
     public Long save(CommentDTO commentDTO) {
         OrderEntity orderEntity = orderRepository.findById(commentDTO.getOrderId()).get();
+        orderEntity.setReview("작성완료");
         OrderItemEntity orderItemEntity = orderItemRepository.findByOrderEntity(orderEntity);
         ItemEntity itemEntity = orderItemEntity.getItemEntity();
         CommentEntity commentEntity = CommentEntity.toCommentEntity(itemEntity, commentDTO);
@@ -67,5 +69,13 @@ public class CommentService {
         return commentDTOList;
     }
 
+    public CommentDTO findById(Long id) {
+        Optional<CommentEntity> optionalCommentEntity = commentRepository.findById(id);
+        if(optionalCommentEntity.isPresent()){
+            return CommentDTO.toCommentDTO(optionalCommentEntity.get());
+        }else{
+            return null;
+        }
+    }
 }
 

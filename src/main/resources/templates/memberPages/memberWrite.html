@@ -8,7 +8,8 @@
 </head>
 <body>
 <th:block th:replace="commonPages/header :: header"></th:block>
-<a href="/question/list">Q&A</a>
-<a href="/comment/list">후기</a>
+<a th:href="@{|/question/${session.member.id}|}">Q&A</a>
+<a th:href="@{|/comment/detail/${session.member.id}|}">후기</a>
+
 </body>
 </html>
