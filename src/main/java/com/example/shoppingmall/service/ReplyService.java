@@ -9,6 +9,7 @@ import com.example.shoppingmall.repository.QuestionRepository;
 import com.example.shoppingmall.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +20,11 @@ public class ReplyService {
     private final ReplyRepository replyRepository;
     private final MemberRepository memberRepository;
     private final QuestionRepository questionRepository;
+    @Transactional
     public List<ReplyDTO> save(ReplyDTO replyDTO) {
         MemberEntity memberEntity =memberRepository.findById(replyDTO.getMemberId()).get();
         QuestionEntity questionEntity = questionRepository.findById(replyDTO.getQuestionId()).get();
+        questionEntity.setQuestionStatus("Y");
         ReplyEntity replyEntity = new ReplyEntity();
         replyEntity.setReplyContents(replyDTO.getReplyContents());
         replyEntity.setReplyName(replyDTO.getReplyName());
