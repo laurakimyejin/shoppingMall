@@ -29,17 +29,11 @@
 </div>
 
 
-
-
-
-
-
-
 <div class="container">
     <ul class="pagination justify-content-center">
         <li class="page-item">
             <!--첫페이지 요청 링크-->
-            <a class="page-link" th:href="@{/question/list(page=1 ,sort=${sort} , size=${size})}">
+            <a class="page-link" th:href="@{/question/list(page=1 ,sort=${sort} , size=${size},search=${search},category=${category})}">
                 <span>First</span>
             </a>
         </li>
@@ -47,7 +41,8 @@
         <li th:class="${questionList.first} ? 'disabled'" class="page-item">
             <!--boardList.first: isFirst()
                 boardList.number: getNumber()-->
-            <a class="page-link" th:href="${questionList.first} ? '#' : @{/question/list(page=${questionList.number},sort=${sort},size=${size})}">
+            <a class="page-link"
+               th:href="${questionList.first} ? '#' : @{/question/list(page=${questionList.number},sort=${sort},size=${size},search=${search},category=${category})}">
                 <span><</span> <!-- < -->
             </a>
         </li>
@@ -55,7 +50,8 @@
         <!-- startPage ~ endPage 까지 숫자를 만들어주는 역할 -->
         <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
             th:class="${page == questionList.number + 1} ? 'page-item active'" class="page-item">
-            <a class="page-link" th:text="${page}" th:href="@{/question/list(page=${page},sort=${sort},size=${size})}"></a>
+            <a class="page-link" th:text="${page}"
+               th:href="@{/question/list(page=${page},sort=${sort},size=${size},search=${search},category=${category})}"></a>
         </li>
 
         <!-- 다음 페이지 요청
@@ -63,13 +59,14 @@
             getNumber() 값은 2임.
             따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
         <li th:class="${questionList.last} ? 'disabled'">
-            <a class="page-link" th:href="${questionList.last} ? '#' : @{/question/list(page=${questionList.number + 2},sort=${sort},size=${size})}">
+            <a class="page-link"
+               th:href="${questionList.last} ? '#' : @{/question/list(page=${questionList.number + 2},sort=${sort},size=${size},search=${search},category=${category})}">
                 <span>&gt;</span>
             </a>
         </li>
 
         <li class="page-item">
-            <a class="page-link" th:href="@{/question/list(page=${questionList.totalPages},sort=${sort},size=${size})}">
+            <a class="page-link" th:href="@{/question/list(page=${questionList.totalPages},sort=${sort},size=${size},search=${search},category=${category})}">
                 <span>Last</span>
             </a>
         </li>
@@ -77,7 +74,36 @@
 </div>
 
 
+<div class="wrap">
+    <div class="search">
+        <!-- 부드스트랩 검색창 -->
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <select class="form-control" id="searchType">
+                    <option th:selected="${category} == 'questionTitle'" value="questionTitle" > 제목</option>
+                    <option th:selected="${category} == 'questionWriter'" value="questionWriter">작성자</option>
+                    <option th:selected="${category} == 'questionContents'" value="questionContents">내용</option>
+                </select>
+                <input type="text" class="form-control" placeholder="Search" id="searchQ" th:value="${search}" name="search">
+                <input type="button" value="검색" class="form-control" onclick="searchList()">
+            </div>
+        </form>
+    </div>
+</div>
 
-<a href="/question/save">글작성하기</a>
+
+
+    <a href="/question/save">글작성하기</a>
 </body>
+
+<script th:inline="javascript">
+    const searchList = () => {
+        const Type = document.getElementById("searchType")
+        const category = Type.options[Type.selectedIndex].value;
+        const search = document.getElementById("searchQ").value;
+        location.href = "/question/list?category="+category+"&search="+search;
+    }
+
+</script>
+
 </html>
