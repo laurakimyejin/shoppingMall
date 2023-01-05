@@ -14,6 +14,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .aa {
+            display: inline-block;
+            transition: .3s;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            transition: color .3s;
+        }
+        .aa:hover {
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+        }
+    </style>
     <div id="wrap">
         <!--s:header-->
         <div id="header_bg"> <!--#1366bf-->
@@ -37,17 +50,15 @@
                             </li>
                             <li><a th:href="@{/cart/list(userId=${session.member.userId})}">장바구니</a></li>
                             <li><a href="/question/list">고객센터</a></li>
-                            <div th:if="${session.member.userId.toString().equals('admin')}">
-                            <li><a href="/member/admin">관리자페이지</a></li>
-                            </div>
+                            <li th:if="${session.member.userId.toString().equals('admin')}" ><a href="/member/admin">관리자페이지</a></li>
                         </div>
 
 
                         <div th:unless="${session.member}">
                             <li><a href="/member/login">로그인</a></li>
-                            <li><a href="/member/save">회원가입</a></li>
-                            <li><a href="/question/list">고객센터</a></li>
-                            <li><a href="/order">주문하기</a></li>
+                            <li><a  href="/member/save">회원가입</a></li>
+                            <li><a  href="/question/list">고객센터</a></li>
+                            <li><a  href="/order">주문하기</a></li>
                         </div>
                     </div>
                 </ul>
@@ -60,28 +71,10 @@
                         </div>
 
                         <ul style="margin-left: 100px;">
-
-                            <li><a href="#">소형 식물</a></li>
-                            <li><a href="#">중형 식물</a></li>
-                            <li><a href="#">대형 식물</a></li>
-                            <li><a href="/item/main">전체상품</a></li>
-
-                            <!--                        <li id="search_icon2">-->
-                            <!--                            <a href="/item/search">-->
-                            <!--                                <img th:src="@{/img/icon_search.png}" alt=""></a>-->
-                            <!--                        </li>-->
-
-                            <!--                        <li>-->
-                            <!--                            <form href="/item/search" method="post" id="search_form">-->
-
-                            <!--                                <fieldset>-->
-                            <!--                                    <legend>검색창</legend>-->
-                            <!--                                    <p><input type="search" name="q" value="검색어를 입력하세요" ></p>-->
-                            <!--                                    <p><input type="submit" value="검색" name="search_click"></p>-->
-
-                            <!--                                </fieldset>-->
-                            <!--                            </form>-->
-                            <!--                        </li>-->
+                            <li><a class="aa" href="#">소형 식물</a></li>
+                            <li><a class="aa" href="#">중형 식물</a></li>
+                            <li><a class="aa" href="#">대형 식물</a></li>
+                            <li><a class="aa" href="/item/main">전체상품</a></li>
                         </ul>
                     </nav>
                 </div>
