@@ -61,7 +61,7 @@ public class MemberController {
     @PostMapping("/save")
     public String save(@ModelAttribute MemberDTO memberDTO) {
         memberService.save(memberDTO);
-        return "index";
+        return "redirect:/";
     }
 
     //인터셉터
@@ -173,14 +173,14 @@ public class MemberController {
         member.setAccessToken(memberDTO.getAccessToken());
         session.setAttribute("member", member);
         session.setAttribute("access_token", memberDTO.getAccessToken());
-        return "index";
+        return "redirect:/";
     }
 
     //일반 로그아웃
     @GetMapping(value = "/logout")
     public String kakaoLogout(HttpSession session) {
         session.invalidate();
-        return "index";
+        return "redirect:/";
     }
 
     //카카오 로그아웃

@@ -39,7 +39,7 @@ public class OrderController {
         System.out.println("orderDTO = " + orderDTO + ", model = " + model);
         orderService.save(orderDTO);
         model.addAttribute("order", orderDTO);
-        return "/index";
+        return "redirect:/";
     }
 
     //개인주문목록
