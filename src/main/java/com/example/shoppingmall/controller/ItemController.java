@@ -33,7 +33,7 @@ public class ItemController {
     }
     //상품 메인
     @GetMapping("/item/main")
-    public String findAll(@PageableDefault(page = 1,size = 1)Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort){
+    public String findAll(@PageableDefault(page = 1,size = 5)Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort){
         Page<ItemDTO> itemDTOList = itemService.findAll(pageable, sort);
         model.addAttribute("itemList",itemDTOList);
         int blockLimit = 3;
