@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<!--  <link rel="stylesheet" th:href="@{/css/save.css}">-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
   <!--ajax cdn-->
@@ -12,50 +11,52 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-  <link rel="stylesheet" th:href="@{/style/save.css}" type="text/css">
+  <link rel="stylesheet" th:href="@{/css/save.css}" type="text/css">
 </head>
-<body>
+<body style="background-color: white">
 <th:block th:replace="commonPages/header :: header"></th:block>
 
 <div class="main">
 <header id="header">
   <h1 class="tit mt-5">회원가입</h1>
 </header>
-<form name="join" action="/member/save" method="post" >
+<form name="join" action="/member/save" method="post">
   <fieldset>
+    <div class="join_form">
     <div class="id-container">
       <label for="uid">아이디</label>
       <input type="text" class="width-450 form-control" name="UserId" id="uid" placeholder="아이디를 입력해주세요">
-      <input type="button" class="btn btn-success mt-2" name="checkId" onclick="check_id()" value="아이디 중복확인">
+      <input type="button" class="btn btn-success" name="checkId" onclick="check_id()" value="아이디 중복확인">
       <span id="idError"></span>
     </div>
     <div class="password-container">
-      <label for="pwd" class="mt-4">비밀번호</label>
+      <label for="pwd" >비밀번호</label>
       <input type="password" class="width-450 form-control" name="memberPassword" id="pwd" placeholder="비밀번호 입력 (문자, 숫자 포함 8~12자)">
       <span id="pwdError"></span>
-      <label for="rePwd" class="mt-4">비밀번호 확인</label>
+    </div>
+      <div>
+      <label for="rePwd" >비밀번호 확인</label>
       <input type="password" class="width-450 form-control" name="memberPassword2" id="rePwd" onblur="check_pwd()" placeholder="비밀번호 재입력">
       <span id="rePwdError"></span>
     </div>
     <div class=name-container>
-      <label for="uname" class="mt-4">이름</label>
+      <label for="uname" >이름</label>
       <input type="text" class="width-450 form-control" name="memberName" id="uname" onblur="check_name()" placeholder="이름을 입력해주세요">
       <span id="nameError"></span>
-      </span>
     </div>
-
     <div class=mobile-container>
-      <label for="memberMobile" class="mt-4">전화번호</label>
-      <input type="text" class="width-450 form-control" name="memberMobile" id="memberMobile" onblur="check_mobile()" placeholder="휴대폰 번호 입력 ('-' 제외 11자리 입력)">
+      <label for="memberMobile" >전화번호</label>
+      <input type="text" class="width-450 form-control" name="memberMobile" id="memberMobile" onblur="check_mobile()" placeholder="휴대폰 번호 입력 ('-' 포함 13자리 입력)">
       <span id="mobileError"></span>
     </div>
-
+    </div>
     <div class=email-container>
-      <label for="memberEmail" class="mt-4">이메일</label>
-      <input type="text" class="width-450 form-control" name="memberEmail" id="memberEmail" onblur="check_email()"placeholder="이메일 주소 입력 (___@___ 형식으로 입력)">
+      <label for="memberEmail" >이메일</label>
+      <input type="text" class="width-450 form-control" name="memberEmail" id="memberEmail" onblur="check_email()" placeholder="이메일 주소 입력 (___@___ 형식으로 입력)">
       <span id="emailError"></span>
     </div>
 
+    <div class="exform_txt"><label>표시는 필수적으로 입력해주셔야 가입이 가능합니다.</label></div>
 
     <div class="btn-container">
       <button type="submit" id="joinBtn" class="width-half height-30 form-control form-group group btn-group btn btn-success mt-4" name="join">회원가입</button>
@@ -79,12 +80,12 @@ const check_id = () => {
         userId: id
       },
       dataType: "text",
-      success: function (result) {
+      success: function (loginResult) {
         console.log("성공");
-        console.log(result);
-        if (result == "success") {
+        console.log(loginResult);
+        if (loginResult == "success") {
           $("#joinBtn").removeAttr("disabled");
-          alert("회원가입가능")
+          alert("사용할 수 있는 아이디입니다.")
 
         } else {
           $("#joinBtn").attr("disabled", "disabled");
@@ -156,7 +157,10 @@ const check_email = () => {
   const email = document.getElementById("memberEmail").value;
   const emailCheck = document.getElementById("emailError");
   const regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
-  if (!regExp.test(email)) {
+  if(email == ""){
+    $("#joinBtn").removeAttr("disabled");
+    emailCheck.innerHTML = ""
+  } else if (!regExp.test(email)) {
     $("#joinBtn").attr("disabled", "disabled");
     document.getElementById("memberEmail").value = "";
     emailCheck.innerHTML = "이메일은 ____@____ 형식으로 입력해주세요."
