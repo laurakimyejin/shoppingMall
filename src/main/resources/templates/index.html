@@ -76,7 +76,7 @@
                                         <p class="read"><a th:href="@{/item/(itemId=${item.id})}"
                                                            th:text="${item.itemName}"></a>
                                         </p>
-                                        <em th:text="${item.itemPrice}"></em>
+                                        <em th:text="${#numbers.formatCurrency(item.itemPrice)}"></em>
                                         </p>
                                     </a>
                                     </li>
