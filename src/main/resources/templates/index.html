@@ -70,8 +70,9 @@
                             <div class="swiper-slide" th:each="item: ${itemList}">
 
                                     <li><a th:href="@{/item/(itemId=${item.id})}">
-                                        <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="200"
-                                             height="150">
+                                        <div th:if="${item.fileAttachedItem == 1}">
+                                            <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="200" height="150">
+                                        </div>
                                         <p><img th:src="@{/img/new.png}" alt="new">
                                         <p class="read"><a th:href="@{/item/(itemId=${item.id})}"
                                                            th:text="${item.itemName}"></a>

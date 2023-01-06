@@ -1,0 +1,23 @@
+*{
+    font-family: 'Jua', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.main{
+    width: 400px;
+    height: 409px;
+    left: 411px;
+    top: 85px;
+    /*가운데 정렬 margin: auto*/
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.exform_txt{padding:12px 0 19px 0; text-align:right;color:#9a9a9a;font-size:13px;border-bottom:1px solid #ececec;}
+.exform_txt label{display: inline-block;position:relative;  padding-left:10px}
+.exform_txt label:after{content:'*';position:absolute;left:0;top:0; color:#f95427; font-size: 13px; font-weight: bold;}
+
+label{margin-top: 25px}
+.join_form label:after{content:'*';left:0;top:0; color:#f95427; font-size: 13px; font-weight: bold;}
