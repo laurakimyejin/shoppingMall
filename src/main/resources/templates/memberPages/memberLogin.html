@@ -38,10 +38,11 @@
         <section>
             <a id="kakao-login-btn" role="button" class="btn">
                 <img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="200px" height="40px"
-                     style="width: 200px;"/>
+                     style="width: 420px;"/>
+
             </a>
             <div>
-                <a href="/member/join" class="btn btn-primary">회원가입</a>
+                <p class="mt-5">회원이 아니신가요? <a href="/member/save" class="btn btn-dark" style="color: white">가입하기</a></p>
             </div>
         </section>
     </article>
@@ -66,7 +67,7 @@
             dataType: "text",
             success: function (result) {
                 if (result == "ok") {
-                    alert("로그인성공")
+                    // alert("로그인성공")
                      location.href = "/";
                      // window.location.replace('url');
                 } else {
@@ -97,7 +98,7 @@
                         var accessToken = authObj.access_token;
                         //scope: 카카오 로그인 동의항목
                         scopes : ['account_email', 'profile_nickname'];
-                        alert("로그인 성공")
+                        // alert("로그인 성공")
                         kakao(userId, memberEmail, memberName, accessToken);
                     }
                 })
