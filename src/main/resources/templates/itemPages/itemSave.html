@@ -4,11 +4,29 @@
     <meta charset="UTF-8">
     <title>save</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!--  폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <style>
+        *{
+            font-family: 'Jua', sans-serif;
+            font-family: 'Nanum Gothic', sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
         #item_save_form{
+            width: 600px;
+            height: 409px;
+            left: 411px;
+            top: 85px;
+            /*가운데 정렬 margin: auto*/
+            margin-top: 100px;
             margin-left: auto;
             margin-right: auto;
-            margin-top: 100px;
+        }
+        label{
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -16,15 +34,38 @@
 <th:block th:replace="commonPages/header :: header"></th:block>
 <div class="container" id="item_save_form">
     <form action="/item/save" method="post" enctype="multipart/form-data">
-        <input type="text" name="itemName" placeholder="상품명" class="form-control">
-        <input type="text" name="itemPrice" placeholder="상품가격" class="form-control">
-        <textarea name="itemContents" cols="30" rows="10" placeholder="상품 설명" class="form-control"></textarea>
+        <div>
+        <label for="itemName">상품명</label>
+        <input type="text" name="itemName" id="itemName" placeholder="상품명" class="form-control">
+        </div>
+
+        <!--업로드 이미지 미리보기-->
+        <div class="box1">
+            <img id="preview" width="350" height="370">
+        </div>
+
+        <div>
+        <label for="itemPrice">상품가격</label>
+        <input type="text" name="itemPrice" id="itemPrice" placeholder="상품가격" class="form-control">
+        </div>
+
+        <div>
+        <label for="itemContents">상품설명</label>
+        <textarea name="itemContents" id="itemContents" cols="30" rows="10" placeholder="상품 설명" class="form-control"></textarea>
+        </div>
+
+        <div>
         <input type="file" name="itemFile" class="form-control" multiple>
-        <select name="itemCategory" class="form-select" style="font-size: 12px; width: 200px; height: 35px">
+        </div>
+
+        <div>
+        <select name="itemCategory" class="form-select" style="font-size: 12px; width: 200px; height: 35px;">
             <option value="small" selected>소형 식물</option>
             <option value="middle">중형 식물</option>
             <option value="large">대형 식물</option>
         </select>
+        </div>
+
         <input type="submit" value="저장" class="btn btn-primary">
     </form>
 </div>
