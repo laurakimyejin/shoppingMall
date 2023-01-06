@@ -93,12 +93,6 @@ public class MemberController {
 
     }
 
-    //마이페이지
-    @GetMapping("/myPage")
-    public String myPage() {
-        return "/memberPages/myPage";
-    }
-
     //관리자 페이지
     @GetMapping("/admin")
     public String admin() {
@@ -132,12 +126,6 @@ public class MemberController {
         return "memberPages/memberDetail";
     }
 
-    //내가 쓴 글
-    @GetMapping("/write")
-    public String Write() {
-        return "memberPages/memberWrite";
-    }
-
     //정보수정 클릭 시 비밀번호 확인 화면
     @GetMapping("/password")
     public String passwordCheck(Model model, HttpSession session) {
@@ -162,7 +150,7 @@ public class MemberController {
         String memberPassword = memberDTO.getMemberPasswordUpdate();
         memberDTO.setMemberPassword(memberPassword);
         memberService.update(memberDTO);
-        return "/memberPages/myPage";
+        return "index";
     }
 
     //카카오 로그인
