@@ -1,9 +1,13 @@
 package com.example.shoppingmall.controller;
 
+import com.example.shoppingmall.dto.CartItemDTO;
 import com.example.shoppingmall.dto.ItemDTO;
+import com.example.shoppingmall.dto.MemberDTO;
 import com.example.shoppingmall.dto.OrderDTO;
 import com.example.shoppingmall.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -11,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -32,6 +37,33 @@ public class OrderController {
         model.addAttribute("item", itemDTO);
         return "orderPages/orderSave";
     }
+
+
+//    카트리스트에서 주문페이지 이동하기
+    @GetMapping("/order/cart")
+    public String saveFormCart(@RequestParam("cartId") Long id,@RequestParam("userId")String userId,@RequestParam("itemPriceTotal")int itemPriceTotal, Model model) {
+        System.out.println("id = " + id + ", userId = " + userId + ", model = " + model);
+        List<CartItemDTO>cartItemDTOList = orderService.findCartById(id,userId);
+        System.out.println("cartItemDTOList = " + cartItemDTOList);
+        model.addAttribute("cartList",cartItemDTOList);
+        model.addAttribute("itemPriceTotal",itemPriceTotal);
+        return "orderPages/orderSave2";
+    }
+
+    @PostMapping("/order/save2")
+    public String save2(@RequestParam("cartList")JSONArray itemDTOList, Model model , HttpSession session) throws JSONException {
+        Object member = session.getAttribute("member");
+        member = (MemberDTO) member;
+        String userId = ((MemberDTO) member).getUserId();
+        System.out.println("userId11 = " + session.getAttribute("member"));
+        System.out.println("userId22 = " + userId);
+        System.out.println("itemDTOList2 = " + itemDTOList + ", model = " + model);
+        orderService.save2(itemDTOList,userId);
+        return "index";
+    }
+
+
+
 
     //주문하기
     @PostMapping("/order/save")

@@ -10,6 +10,7 @@
 <body>
 <th:block th:replace="commonPages/header :: header"></th:block>
 <div th:unless="${cartList == 'empty'}" class="cart_table">
+    <input type="hidden" id="cartId" th:value="${cartList[0].id}">
     <p>장바구니</p>
 
     <ul class="cart_list">
@@ -74,11 +75,11 @@
     }
     //주문하기
     const orderFn = () => {
-        console.log("orderItem 호출");
-        const loc = document.getElementById("loc");
-        loc.action = "/order/save";
-        const form = document.querySelector('form');
-        form.submit();
+        let itemPriceTotal = document.querySelector(".item_price_total").innerHTML
+        console.log("주문하기");
+        const cartId = document.getElementById("cartId").value;
+        const userId = [[${session.member.userId}]];
+       location.href = "/order/cart?cartId="+cartId+"&userId="+userId+"&itemPriceTotal="+itemPriceTotal;
     }
     //장바구니 삭제
     const deleteFn = (find) => {
