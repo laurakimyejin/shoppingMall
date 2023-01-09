@@ -2,6 +2,7 @@ package com.example.shoppingmall.controller;
 
 import com.example.shoppingmall.dto.CartDTO;
 import com.example.shoppingmall.dto.CartItemDTO;
+import com.example.shoppingmall.dto.CommentDTO;
 import com.example.shoppingmall.dto.ItemDTO;
 import com.example.shoppingmall.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,14 @@ public class CartController {
         model.addAttribute("item", itemDTO);
         return "redirect:/cart/list?userId=" + userId;
     }
+
+    @GetMapping("/saved")
+    public @ResponseBody String cartSave(@ModelAttribute ItemDTO itemDTO){
+        System.out.println("장바구니저장itemDTO = " + itemDTO);
+        cartService.save(itemDTO);
+        return "성공";
+    }
+
     //장바구니 리스트
     @GetMapping("/list")
     public String listForm(@RequestParam("userId") String userId,Model model) {
@@ -43,9 +52,9 @@ public class CartController {
 
     //장바구니 삭제
     @GetMapping("/delete")
-    public @ResponseBody List<CartItemDTO> delete(@RequestParam("cartId")Long id){
-        List<CartItemDTO>cartItemDTOList = cartService.delete(id);
-        return cartItemDTOList;
+    public @ResponseBody String delete(@RequestParam("cartId")Long id){
+        cartService.delete(id);
+        return "success";
     }
 
     //장바구니 수정

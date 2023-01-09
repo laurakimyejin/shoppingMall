@@ -25,9 +25,9 @@
             </tr>
             <tr>
                 <th>상품명</th>
-                <input type="hidden" name="id" th:value="${item.id}">
-                <input type="hidden" name="userId" th:value="${session.member.userId}">
-                <td><input type="text" name="itemName" th:value="${item.itemName}" class="form-control" readonly></td>
+                <input type="hidden" name="id" th:value="${item.id}" id="itemId">
+                <input type="hidden" name="userId" th:value="${session.member.userId}" id="userId">
+                <td><input type="text" name="itemName" th:value="${item.itemName}" id="itemName"  class="form-control" readonly></td>
             </tr>
             <tr>
                 <th>가격</th>
@@ -135,16 +135,37 @@
 <script th:inline="javascript">
     //장바구니
     const cart = () => {
+        console.log("장바구니 호출")
+        const id = document.getElementById("itemId").value;
+        const cartCount = document.getElementById("itemCountInput").value;
+        const itemName = document.getElementById("itemName").value;
+        const userId = document.getElementById("userId").value;
+        $.ajax({
+            type: "get",
+            url: "/cart/saved",
+            data: {
+                id : id,
+                userId: userId,
+                itemName: itemName,
+                cartCount: cartCount,
+            },
+            dataType: "text",
+            success: function (success) {
+                console.log(success);
+                if (confirm("장바구니에 담겼습니다.  장바구니로 이동하시겠습니까?") == true) {
+                    location.href = "/cart/list?userId=" + userId;
+                } else {
 
-        if ( confirm("장바구니에 담겼습니다.  장바구니로 이동하시겠습니까?")==true){
-            const loc = document.getElementById("loc");
-            loc.action = "/cart/save";
-            const form = document.querySelector('form');
-            form.submit();
-        }else {
+                }
 
-        }
+
+            },
+            error: function () {
+                console.log("실패");
+            }
+        });
     }
+
     //바로구매
     const orderItem = () => {
         console.log("orderItem 호출");
@@ -215,7 +236,7 @@
                 document.getElementById('commentContents').value = '';
                 let output2 = "<ul class=\"pagination justify-content-center\">\n";
                 output2 += "<li class=\"page-item\">\n";
-                output2 += "<a class=\"page-link\" href=\"/item/?page=1&itemId="+itemId+"\">"
+                output2 += "<a class=\"page-link\" href=\"/item/?page=1&itemId=" + itemId + "\">"
                 document.getElementById('comment-page').innerHTML = output2;
 
             },
