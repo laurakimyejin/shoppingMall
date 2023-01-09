@@ -47,6 +47,8 @@
     </ul>
 </div>
 
+<input type="hidden" id="cartList" th:value="${cartList.size()}">
+
 
 <div class="cart_table">
     <div class="cart_total_area">
@@ -80,7 +82,15 @@
     }
     //장바구니 삭제
     const deleteFn = (find) => {
+        const length = document.getElementById("cartList").value;
+        console.log(length);
         const id = find.id;
+        const itemPrice = find.itemPrice;
+        let itemPriceTotal = 0;
+        const cartList = [[${cartList}]];
+        for(let i = 0; i < length; i++){
+            itemPriceTotal += cartList[i].itemPrice * cartList[i].cartCount;
+        }
 
         $.ajax({
             type:"get",
@@ -88,31 +98,33 @@
             data:{
                 cartId: id
             },
-            dataType: "json",
+            dataType: "text",
             success:function (cartResult){
                 console.log(cartResult);
-                console.log(cartResult.id);
-                console.log("성공");
+                document.querySelector(".item_price_total").innerHTML = itemPriceTotal-itemPrice;
+                document.getElementById("cartList").value = length-1;
             },
             error: function (){
                 console.log("실패");
+
             }
         });
     }
     //총 상품금액
     window.onload = function () {
+        const length = document.getElementById("cartList").value;
         let itemPriceTotal = 0;
         const cartList = [[${cartList}]];
-        for(let i = 0; i < cartList.length; i++){
+        for(let i = 0; i < length; i++){
             itemPriceTotal += cartList[i].itemPrice * cartList[i].cartCount;
         }
         document.querySelector(".item_price_total").innerHTML = itemPriceTotal;
     }
     //수량변경 시 상품금액
     const total = (cart) => {
+        const length = document.getElementById("cartList").value;
         console.log(cart)
         let orderCount = document.getElementById(cart.id + "a").value;
-        const cartId = cart.id;
         const itemPrice2 = cart.itemPrice;
         let itemPrice = itemPrice2;
         let totalPrice = orderCount * itemPrice;
@@ -121,8 +133,7 @@
 
         document.getElementById(cart.id + "price_amount").innerHTML = totalPrice;
         let itemPriceTotal = 0;
-        const cartList = [[${cartList}]];
-        for (let i = 0; i < cartList.length; i++) {
+        for (let i = 0; i < length; i++) {
             itemPriceTotal += Number(document.getElementsByName("price_amount")[i].innerHTML);
         }
         console.log(itemPriceTotal)

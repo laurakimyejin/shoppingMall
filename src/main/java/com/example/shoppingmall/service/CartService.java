@@ -39,7 +39,6 @@ public class CartService {
 
             CartItemEntity cartItemEntity = new CartItemEntity();
             cartItemEntity.setCartName(itemDTO.getItemName());
-            cartItemEntity.setCartCount(itemDTO.getItemCount());
             cartItemEntity.setCartCount(itemDTO.getCartCount());
             cartItemEntity.setCartEntity(cartEntity1);
 
