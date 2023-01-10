@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>save</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <!--  폰트-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap"
+          rel="stylesheet">
     <style>
-        *{
+        * {
             font-family: 'Jua', sans-serif;
             font-family: 'Nanum Gothic', sans-serif;
             font-family: 'Noto Sans KR', sans-serif;
         }
 
-        #item_save_form{
+        #item_save_form {
             width: 600px;
             height: 409px;
             left: 411px;
@@ -25,49 +28,120 @@
             margin-left: auto;
             margin-right: auto;
         }
-        label{
+
+        label {
             margin-top: 20px;
         }
+
     </style>
 </head>
-<body>
+<body style="background-color: white">
 <th:block th:replace="commonPages/header :: header"></th:block>
 <div class="container" id="item_save_form">
     <form action="/item/save" method="post" enctype="multipart/form-data">
         <div>
-        <label for="itemName">상품명</label>
-        <input type="text" name="itemName" id="itemName" placeholder="상품명" class="form-control">
+            <label for="itemName">상품명</label>
+            <input type="text" name="itemName" id="itemName" placeholder="상품명" class="form-control">
+        </div>
+        <div class="box1" style="display: inline-block">
+            <label>대표 이미지</label>
+            <div>
+            <img id="preview" width="250" height="270">
+            </div>
         </div>
 
-        <!--업로드 이미지 미리보기-->
-        <div class="box1">
-            <img id="preview" width="350" height="370">
+        <div style="display: inline-block;float: right; position: relative;">
+            <label for="itemCount">상품수량</label>
+            <input type="text" name="itemCount" id="itemCount" placeholder="상품수량" class="form-control"
+                   style="width: 100px;">
         </div>
+
+        <div style="display: inline-block;float: right;">
+            <label for="itemPrice">상품가격</label>
+            <input type="text" name="itemPrice" id="itemPrice" placeholder="상품가격" class="form-control"
+                   style="width: 150px;">
+            <div style="float: right">
+                <div><label for="itemPrice" >카테고리</label></div>
+                <select name="itemCategory" class="form-select"
+                        style="font-size: 12px; width: 200px; height: 35px;">
+                    <option value="small" selected>소형 식물</option>
+                    <option value="middle">중형 식물</option>
+                    <option value="large">대형 식물</option>
+                </select>
+            </div>
+        </div>
+
 
         <div>
-        <label for="itemPrice">상품가격</label>
-        <input type="text" name="itemPrice" id="itemPrice" placeholder="상품가격" class="form-control">
-        </div>
+            <label for="itemContents">상품설명</label>
+            <textarea name="itemContents" id="itemContents" cols="30" rows="10" placeholder="상품 설명"
+                      class="form-control"></textarea>
 
-        <div>
-        <label for="itemContents">상품설명</label>
-        <textarea name="itemContents" id="itemContents" cols="30" rows="10" placeholder="상품 설명" class="form-control"></textarea>
-        </div>
-
-        <div>
-        <input type="file" name="itemFile" class="form-control" multiple>
-        </div>
-
-        <div>
-        <select name="itemCategory" class="form-select" style="font-size: 12px; width: 200px; height: 35px;">
-            <option value="small" selected>소형 식물</option>
-            <option value="middle">중형 식물</option>
-            <option value="large">대형 식물</option>
-        </select>
-        </div>
-
-        <input type="submit" value="저장" class="btn btn-primary">
-    </form>
+        <input style="display: block;" type="file" id="inputMultipleImage" multiple onchange="readURL(this)">
+<!--        <div id="multipleContainer" style="width: 300px; height: 150px;"></div>-->
+<input type="submit" value="저장" class="btn btn-success">
+</form>
 </div>
 </body>
+<script type="text/javascript">
+    function readURL(input){
+        if(input.files && input.files[0]){
+            var reader = new FileReader();
+            reader.onload=function (e){
+                document.getElementById("preview").src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }else{
+            document.getElementById("preview").src="";
+        }
+    }
+
+    // function readMultipleImage(input) {
+    //     const multipleContainer = document.getElementById('multipleContainer')
+    //
+    //     if (input.files) {
+    //         console.log(input.files)
+    //         const fileArr = Array.from(input.files)
+    //         const $colDiv1 = document.createElement('div')
+    //         const $colDiv2 = document.createElement('div')
+    //         $colDiv1.classList.add('column')
+    //         $colDiv2.classList.add('column')
+    //         fileArr.forEach((file, index) => {
+    //             const reader = new FileReader()
+    //             const $imgDiv = document.createElement('div')
+    //             const $img = document.createElement('img')
+    //             $img.classList.add('image')
+    //             const $label = document.createElement('label')
+    //             $label.classList.add('image-label')
+    //             $label.textContent = file.name
+    //             $imgDiv.appendChild($img)
+    //             $imgDiv.appendChild($label)
+    //             reader.onload = e => {
+    //                 $img.src = e.target.result
+    //
+    //                 //$imgDiv.style.width = ($img.naturalWidth) * 0.2 + "px"
+    //                 //$imgDiv.style.height = ($img.naturalHeight) * 0.2 + "px"
+    //             }
+    //
+    //             console.log(file.name)
+    //             if (index % 2 == 0) {
+    //                 $colDiv1.appendChild($imgDiv)
+    //             } else {
+    //                 $colDiv2.appendChild($imgDiv)
+    //             }
+    //
+    //             reader.readAsDataURL(file)
+    //         })
+    //         multipleContainer.appendChild($colDiv1)
+    //         multipleContainer.appendChild($colDiv2)
+    //     }
+    // }
+    //
+    // // 이벤트 리스너
+    // document.getElementById('inputMultipleImage').addEventListener('change', (e) => {
+    //     readMultipleImage(e.target);
+    // })
+
+
+</script>
 </html>
