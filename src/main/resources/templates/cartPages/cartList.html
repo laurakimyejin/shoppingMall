@@ -9,8 +9,9 @@
 </head>
 <body>
 <th:block th:replace="commonPages/header :: header"></th:block>
-<div th:unless="${cartList == 'empty'}" class="cart_table">
-    <input type="hidden" id="cartId" th:value="${cartList[0].id}">
+
+
+<div th:unless="${cartList == null}" class="cart_table">
     <p>장바구니</p>
 
     <ul class="cart_list">
@@ -23,6 +24,7 @@
         </li>
         <li th:each="cart:${cartList}">
             <div class="checkbox">
+                <input type="hidden" id="cartId" th:value="${cartList[0].id}">
                 <input type="checkbox" name="item_chk" id="item_chk01">
                 <label for="item_chk01"></label>
             </div>
@@ -77,9 +79,15 @@
     const orderFn = () => {
         let itemPriceTotal = document.querySelector(".item_price_total").innerHTML
         console.log("주문하기");
-        const cartId = document.getElementById("cartId").value;
-        const userId = [[${session.member.userId}]];
-       location.href = "/order/cart?cartId="+cartId+"&userId="+userId+"&itemPriceTotal="+itemPriceTotal;
+        const cartList = [[${cartList}]];
+        if (cartList.length == 0) {
+            alert("장바구니에 담긴 상품이 없습니다.");
+        }else {
+            const cartId = document.getElementById("cartId").value;
+            const userId = [[${session.member.userId}]];
+            location.href = "/order/cart?cartId="+cartId+"&userId="+userId+"&itemPriceTotal="+itemPriceTotal;
+        }
+
     }
     //장바구니 삭제
     const deleteFn = (find) => {
