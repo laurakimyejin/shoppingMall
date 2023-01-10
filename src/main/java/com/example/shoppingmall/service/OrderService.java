@@ -117,6 +117,7 @@ public class OrderService {
             OrderItemEntity orderItemEntity = new OrderItemEntity();
             OrderEntity orderEntity = new OrderEntity();
             ItemEntity itemEntity = itemRepository.findByItemName(itemDTOList.getJSONObject(i).getString("itemName")).get();
+            itemEntity.setItemSellCount(itemEntity.getItemSellCount() + itemDTOList.getJSONObject(i).getInt("cartCount"));
             orderEntity.setOrderStatus("주문완료");
             orderEntity.setMemberEntity(memberEntity);
             orderEntity.setOrderName(itemDTOList.getJSONObject(i).getString("itemName"));
