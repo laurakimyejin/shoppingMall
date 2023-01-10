@@ -26,6 +26,24 @@
             <td th:text="${question.questionStatus}"></td>
         </tr>
     </table>
+    <div class="wrap" style="float: right">
+        <div class="search">
+            <!-- 부드스트랩 검색창 -->
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <select class="form-control" id="searchType">
+                        <option th:selected="${category} == 'questionTitle'" value="questionTitle" > 제목</option>
+                        <option th:selected="${category} == 'questionWriter'" value="questionWriter">작성자</option>
+                        <option th:selected="${category} == 'questionContents'" value="questionContents">내용</option>
+                    </select>
+                    <input type="text" class="form-control" placeholder="Search" id="searchQ" th:value="${search}" name="search">
+                    <input type="button" value="검색" class="form-control" onclick="searchList()">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <a style="float: left" href="/question/save" role="button">글작성하기</a>
 </div>
 
 
@@ -74,26 +92,10 @@
 </div>
 
 
-<div class="wrap">
-    <div class="search">
-        <!-- 부드스트랩 검색창 -->
-        <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-                <select class="form-control" id="searchType">
-                    <option th:selected="${category} == 'questionTitle'" value="questionTitle" > 제목</option>
-                    <option th:selected="${category} == 'questionWriter'" value="questionWriter">작성자</option>
-                    <option th:selected="${category} == 'questionContents'" value="questionContents">내용</option>
-                </select>
-                <input type="text" class="form-control" placeholder="Search" id="searchQ" th:value="${search}" name="search">
-                <input type="button" value="검색" class="form-control" onclick="searchList()">
-            </div>
-        </form>
-    </div>
-</div>
 
 
 
-    <a href="/question/save">글작성하기</a>
+
 </body>
 
 <script th:inline="javascript">
