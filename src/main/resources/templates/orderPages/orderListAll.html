@@ -25,9 +25,9 @@
             <td th:text="${order.orderName}"></td>
             <td>
                 <select>
-                    <option value="americano" th:text="${order.orderStatus}"></option>
-                    <option value="caffe latte">배송준비</option>
-                    <option value="cafe au lait">배송완료</option>
+                    <option value="order" th:text="${order.orderStatus}"></option>
+                    <option value="ready">배송준비</option>
+                    <option value="done">배송완료</option>
                 </select>
             </td>
             <td th:text="${order.memberName}"></td>
