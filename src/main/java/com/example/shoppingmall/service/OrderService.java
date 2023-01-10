@@ -107,32 +107,21 @@ public class OrderService {
 
     public void save2(JSONArray itemDTOList, String userId) throws JSONException {
         MemberEntity memberEntity = memberRepository.findByUserId(userId).get();
-        OrderEntity orderEntity = new OrderEntity();
-        orderEntity.setOrderStatus("주문완료");
-        orderEntity.setOrderName(itemDTOList.getJSONObject(0).getString("itemName"));
-        orderEntity.setMemberEntity(memberEntity);
-        List<OrderItemEntity>orderItemEntityList = new ArrayList<>();
         for (int i = 0; i < itemDTOList.length(); i++) {
             OrderItemEntity orderItemEntity = new OrderItemEntity();
+            OrderEntity orderEntity = new OrderEntity();
+            ItemEntity itemEntity = itemRepository.findByItemName(itemDTOList.getJSONObject(i).getString("itemName")).get();
+            orderEntity.setOrderStatus("주문완료");
+            orderEntity.setMemberEntity(memberEntity);
+            orderEntity.setOrderName(itemDTOList.getJSONObject(i).getString("itemName"));
             orderItemEntity.setOrderName(itemDTOList.getJSONObject(i).getString("itemName"));
             orderItemEntity.setOrderPrice(itemDTOList.getJSONObject(i).getInt("itemPrice"));
             orderItemEntity.setOrderCount(itemDTOList.getJSONObject(i).getInt("cartCount"));
-            orderItemEntityList.add(orderItemEntity);
-        }
-        orderEntity.setOrderItemEntityList(orderItemEntityList);
-        orderRepository.save(orderEntity);
-
-        List<OrderItemEntity>orderItemEntityLists = new ArrayList<>();
-        for (int i = 0; i < itemDTOList.length(); i++) {
-            OrderItemEntity orderItemEntity = new OrderItemEntity();
-            orderItemEntity.setOrderName(itemDTOList.getJSONObject(i).getString("itemName"));
-            orderItemEntity.setOrderPrice(itemDTOList.getJSONObject(i).getInt("itemPrice"));
-            orderItemEntity.setOrderCount(itemDTOList.getJSONObject(i).getInt("cartCount"));
+            orderEntity=orderRepository.save(orderEntity);
             orderItemEntity.setOrderEntity(orderEntity);
-            orderItemEntityLists.add(orderItemEntity);
-
+            orderItemEntity.setItemEntity(itemEntity);
+            orderItemRepository.save(orderItemEntity);
         }
-        orderItemRepository.saveAll(orderItemEntityLists);
 
     }
 }
