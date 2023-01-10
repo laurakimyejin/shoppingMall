@@ -67,4 +67,12 @@ public class CartController {
         return "redirect:/cart/list?userId="+cartDTO.getUserId();
     }
 
+    //장바구니 수량변경 ajax
+    @GetMapping("/change")
+    public @ResponseBody String change(@ModelAttribute CartDTO cartDTO){
+        System.out.println("cartDTO = " + cartDTO);
+        cartService.update(cartDTO);
+        return "success";
+    }
+
 }
