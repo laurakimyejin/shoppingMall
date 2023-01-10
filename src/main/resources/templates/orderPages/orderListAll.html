@@ -23,7 +23,13 @@
         <tr th:each="order: ${orderList}">
             <td th:text="${order.id}"></td>
             <td th:text="${order.orderName}"></td>
-            <td th:text="${order.orderStatus}"></td>
+            <td>
+                <select>
+                    <option value="americano" th:text="${order.orderStatus}"></option>
+                    <option value="caffe latte">배송준비</option>
+                    <option value="cafe au lait">배송완료</option>
+                </select>
+            </td>
             <td th:text="${order.memberName}"></td>
         </tr>
     </table>
