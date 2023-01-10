@@ -4,18 +4,60 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <style>
+        .contentContainer {
+            width: 500px;
+            height: 500px;
+            left: 500px;
+            top: 500px;
+            /* Rectangle 1 */
+        }
+
+        td {
+            width: 200px;
+        }
+
+        th {
+            width: 20px;
+        }
+
+        .main {
+            width: 600px;
+            margin-top: 200px;
+            margin-left: 500px;
+        }
+
+        textarea {
+            width: 500px;
+            height: 200px;
+        }
+
+    </style>
 </head>
 <body>
 <th:block th:replace="commonPages/header :: header"></th:block>
-    <div>
-        <form action="/question/save" method="post" class="">
-            <input type="hidden" th:value="${session.member.id}" readonly name="memberId">
-            <input type="text" th:value="${session.member.memberName}" readonly name="questionName">
-            <input type="text" name="questionTitle" placeholder="제목">
-            <textarea name="questionContents" cols="30" rows="10" placeholder="내용"></textarea>
-            <input type="submit" value="저장">
-        </form>
-    </div>
+
+
+<div class="main">
+        <div class="contentContainer">
+            <form action="/question/save" method="post" class="">
+                <input type="hidden" th:value="${session.member.id}" readonly name="memberId">
+                <table class="table">
+                    <tr>
+                        <th>작성자</th>
+                        <td><input type="text" th:value="${session.member.memberName}" readonly name="questionName">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>제목</th>
+                        <td><input type="text" name="questionTitle" placeholder="제목"></td>
+                    </tr>
+                </table>
+                <textarea name="questionContents" cols="30" rows="10" placeholder="내용"></textarea>
+                <input type="submit" value="저장">
+            </form>
+        </div>
+</div>
 
 
 </body>
