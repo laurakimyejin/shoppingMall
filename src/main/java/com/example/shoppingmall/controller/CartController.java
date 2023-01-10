@@ -1,15 +1,13 @@
 package com.example.shoppingmall.controller;
 
-import com.example.shoppingmall.dto.CartDTO;
-import com.example.shoppingmall.dto.CartItemDTO;
-import com.example.shoppingmall.dto.CommentDTO;
-import com.example.shoppingmall.dto.ItemDTO;
+import com.example.shoppingmall.dto.*;
 import com.example.shoppingmall.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -28,10 +26,14 @@ public class CartController {
     }
 
     @GetMapping("/saved")
-    public @ResponseBody String cartSave(@ModelAttribute ItemDTO itemDTO){
+    public @ResponseBody String cartSave(@ModelAttribute ItemDTO itemDTO , HttpSession session){
+        Object member = session.getAttribute("member");
+        member = (MemberDTO) member;
+        String userId = ((MemberDTO) member).getUserId();
+        itemDTO.setUserId(userId);
         System.out.println("장바구니저장itemDTO = " + itemDTO);
         cartService.save(itemDTO);
-        return "성공";
+        return userId;
     }
 
     //장바구니 리스트
