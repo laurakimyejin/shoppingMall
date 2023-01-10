@@ -26,8 +26,8 @@
             <tr>
                 <th>상품명</th>
                 <input type="hidden" name="id" th:value="${item.id}" id="itemId">
-                <input type="hidden" name="userId" th:value="${session.member.userId}" id="userId">
-                <td><input type="text" name="itemName" th:value="${item.itemName}" id="itemName"  class="form-control" readonly></td>
+                <td><input type="text" name="itemName" th:value="${item.itemName}" id="itemName" class="form-control"
+                           readonly></td>
             </tr>
             <tr>
                 <th>가격</th>
@@ -54,8 +54,16 @@
             </tr>
         </table>
     </form>
-    <input type="button" value="장바구니" onclick="cart()">
-    <input type="button" value="바로구매" onclick="orderItem()">
+    <div th:if="${session.member} != null">
+        <input type="button" value="장바구니" onclick="cart()">
+        <input type="button" value="바로구매" onclick="orderItem()">
+        <input type="hidden" value="loginOk" name="loginCheck">
+    </div>
+    <div th:unless="${session.member}">
+        <input type="button" value="장바구니" onclick="cart()">
+        <input type="button" value="바로구매" onclick="orderItem()">
+        <input type="hidden" value="loginNo" name="loginCheck">
+    </div>
 </div>
 
 <div class="container mt-5" id="comment-list">
@@ -139,32 +147,36 @@
         const id = document.getElementById("itemId").value;
         const cartCount = document.getElementById("itemCountInput").value;
         const itemName = document.getElementById("itemName").value;
-        const userId = document.getElementById("userId").value;
-        $.ajax({
-            type: "get",
-            url: "/cart/saved",
-            data: {
-                id : id,
-                userId: userId,
-                itemName: itemName,
-                cartCount: cartCount,
-            },
-            dataType: "text",
-            success: function (success) {
-                console.log(success);
-                if (confirm("장바구니에 담겼습니다.  장바구니로 이동하시겠습니까?") == true) {
-                    location.href = "/cart/list?userId=" + userId;
-                } else {
+        const loginCheck = document.getElementsByName("loginCheck")[0].value;
+        if (loginCheck == 'loginOk'){
+            $.ajax({
+                type: "get",
+                url: "/cart/saved",
+                data: {
+                    id: id,
+                    itemName: itemName,
+                    cartCount: cartCount,
+                },
+                dataType: "text",
+                success: function (userId) {
+                    console.log(userId);
+                    if (confirm("장바구니에 담겼습니다.  장바구니로 이동하시겠습니까?") == true) {
+                        location.href = "/cart/list?userId=" + userId;
+                    } else {
 
+                    }
+
+
+                },
+                error: function () {
+                    console.log("실패");
                 }
-
-
-            },
-            error: function () {
-                console.log("실패");
-            }
-        });
+            });
+        }else {
+            alert("로그인이 필요합니다.");
+        }
     }
+
 
     //바로구매
     const orderItem = () => {
