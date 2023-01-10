@@ -6,6 +6,8 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <script th:src="@{/js/axios.min.js}"></script>
+    <!--ajax cdn-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!--  //시간설정-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <style>
@@ -41,10 +43,6 @@
             <div class="contentContainer">
                 <table class="table">
                     <tr>
-                        <th>번호</th>
-                        <td th:text="${question.id}"></td>
-                    </tr>
-                    <tr>
                         <th>작성자</th>
                         <td th:text="${question.questionName}"></td>
                     </tr>
@@ -64,7 +62,7 @@
                     <textarea class="form-control" rows="5" th:text="${question.questionContents}"></textarea>
                 </div>
                 <div>
-                    <input id="replyContents" type="text" name="replyContents" class="form-control" style="display: inline">
+                    <input id="replyContents" type="text" value="" name="replyContents" class="form-control" style="display: inline">
                     <button type="button" class="btn btn-primary" onclick="reply()">댓글달기</button>
                 </div>
 
@@ -97,6 +95,7 @@
 </body>
 <script th:inline="javascript">
     const reply = () => {
+        console.log("reply");
         const memberId = [[${session.member.id}]];
         const writer = [[${session.member.memberName}]];
         const contents = document.getElementById("replyContents").value;
@@ -127,7 +126,7 @@
                 output += "</table>";
 
                 document.getElementById('comment-list').innerHTML = output;
-                document.getElementById('commentContents').value = '';
+                document.getElementById('replyContents').value = '';
 
             },
             error: function () {
