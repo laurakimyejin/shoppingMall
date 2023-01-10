@@ -105,8 +105,14 @@ public class OrderService {
         return cartItemDTOList;
     }
 
+    @Transactional
     public void save2(JSONArray itemDTOList, String userId) throws JSONException {
         MemberEntity memberEntity = memberRepository.findByUserId(userId).get();
+        memberEntity.setPostcode(itemDTOList.getJSONObject(0).getString("postcode"));
+        memberEntity.setMemberAddress(itemDTOList.getJSONObject(0).getString("memberAddress"));
+        memberEntity.setDetailAddress(itemDTOList.getJSONObject(0).getString("detailAddress"));
+        memberEntity.setExtraAddress(itemDTOList.getJSONObject(0).getString("extraAddress"));
+        memberRepository.save(memberEntity);
         for (int i = 0; i < itemDTOList.length(); i++) {
             OrderItemEntity orderItemEntity = new OrderItemEntity();
             OrderEntity orderEntity = new OrderEntity();

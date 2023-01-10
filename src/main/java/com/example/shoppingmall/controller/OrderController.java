@@ -51,7 +51,7 @@ public class OrderController {
     }
 
     @PostMapping("/order/save2")
-    public String save2(@RequestParam("cartList")JSONArray itemDTOList, Model model , HttpSession session) throws JSONException {
+    public @ResponseBody String save2(@RequestParam("cartList")JSONArray itemDTOList, Model model , HttpSession session) throws JSONException {
         Object member = session.getAttribute("member");
         member = (MemberDTO) member;
         String userId = ((MemberDTO) member).getUserId();
@@ -59,7 +59,7 @@ public class OrderController {
         System.out.println("userId22 = " + userId);
         System.out.println("itemDTOList2 = " + itemDTOList + ", model = " + model);
         orderService.save2(itemDTOList,userId);
-        return "index";
+        return "success";
     }
 
 
