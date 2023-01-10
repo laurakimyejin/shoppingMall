@@ -42,7 +42,7 @@
                     <div>
                         <div th:if="${session.member} != null">
 
-                            <li th:if="${session.access_token} != null"><a onclick="logout()" role="button">카카오 로그아웃</a></li>
+                            <li th:if="${session.access_token} != null"><a onclick="logout()" href="#" role="button">카카오 로그아웃</a></li>
                             <li th:if="${session.access_token} == null"><a href="/member/logout" role="button">로그아웃</a></li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">

@@ -12,13 +12,13 @@
 <div class="container" id="question-list">
     <table class="table table-striped table-hover text-center">
         <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>날자</th>
-            <th>답변여부</th>
+            <th style="text-align: center">번호</th>
+            <th style="text-align: center">제목</th>
+            <th style="text-align: center">작성자</th>
+            <th style="text-align: center">날자</th>
+            <th style="text-align: center">답변여부</th>
         </tr>
-        <tr th:each="question: ${questionList}">
+        <tr style="text-align: center" th:each="question: ${questionList}">
             <td th:text="${question.id}"></td>
             <td><a th:href="@{|/question/${question.id}|}" th:text="${question.questionTitle}"></a></td>
             <td th:text="${question.questionName}"></td>
