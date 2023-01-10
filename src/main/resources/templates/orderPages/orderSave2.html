@@ -126,6 +126,10 @@
 </body>
 <script th:inline="javascript">
     const test = () => {
+        const memberAddress = document.getElementById("sample6_address").value;
+        const detailAddress = document.getElementById("sample6_detailAddress").value;
+        const extraAddress = document.getElementById("sample6_extraAddress").value;
+        const postcode = document.getElementById("sample6_postcode").value;
         console.log("test");
         let aJsonArray = new Array();
         for (let i = 0; i < [[${cartList}]].length; i++) {
@@ -135,6 +139,10 @@
             aJson.itemPrice = [[${cartList}]][i].itemPrice;
             aJson.cartCount = [[${cartList}]][i].cartCount;
             aJson.itemImage = [[${cartList}]][i].itemImage;
+            aJson.memberAddress = memberAddress;
+            aJson.detailAddress = detailAddress;
+            aJson.extraAddress = extraAddress;
+            aJson.postcode = postcode;
             aJson.totalPrice = aJson.itemPrice * aJson.cartCount;
             aJsonArray.push(aJson);
         }
@@ -145,9 +153,10 @@
             data: {
                 "cartList": JSON.stringify(aJsonArray)
             },
-            dataType: "json",
+            dataType: "text",
             success: function (res) {
-                console.log("성공");
+                console.log(res);
+                location.href = "/";
 
 
             },
@@ -184,8 +193,8 @@
             buyer_postcode: postcode,
         }, function (rsp) { // callback
             if (rsp.success) {
-                form.submit();
                 console.log(rsp);
+                test();
                 var msg = '결제가 완료되었습니다.\n';
                 msg += '고유ID : ' + rsp.imp_uid + "\n";
                 msg += '상점 거래ID : ' + rsp.merchant_uid + "\n";
