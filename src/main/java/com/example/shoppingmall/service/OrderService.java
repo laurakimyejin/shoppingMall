@@ -119,6 +119,7 @@ public class OrderService {
             ItemEntity itemEntity = itemRepository.findByItemName(itemDTOList.getJSONObject(i).getString("itemName")).get();
             itemEntity.setItemSellCount(itemEntity.getItemSellCount() + itemDTOList.getJSONObject(i).getInt("cartCount"));
             orderEntity.setOrderStatus("주문완료");
+            orderEntity.setReview("리뷰작성");
             orderEntity.setMemberEntity(memberEntity);
             orderEntity.setOrderName(itemDTOList.getJSONObject(i).getString("itemName"));
             orderItemEntity.setOrderName(itemDTOList.getJSONObject(i).getString("itemName"));
@@ -129,7 +130,17 @@ public class OrderService {
             orderItemEntity.setItemEntity(itemEntity);
             orderItemRepository.save(orderItemEntity);
         }
+        for (int i = 0; i < itemDTOList.length(); i++) {
+            CartItemEntity cartItemEntity = cartItemRepository.findById(itemDTOList.getJSONObject(i).getLong("id")).get();
+            cartItemRepository.delete(cartItemEntity);
+        }
 
+    }
+
+    public void update(Long id, String status) {
+        OrderEntity orderEntity=orderRepository.findById(id).get();
+        orderEntity.setOrderStatus(status);
+        orderRepository.save(orderEntity);
     }
 }
 

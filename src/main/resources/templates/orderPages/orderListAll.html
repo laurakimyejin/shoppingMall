@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>main</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!--    ajax cdn-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <th:block th:replace="commonPages/header :: header"></th:block>
@@ -24,10 +26,11 @@
             <td th:text="${order.id}"></td>
             <td th:text="${order.orderName}"></td>
             <td>
-                <select>
-                    <option value="order" th:text="${order.orderStatus}"></option>
-                    <option value="ready">배송준비</option>
-                    <option value="done">배송완료</option>
+                <select th:onchange="orderStatus([[${order}]])" th:id="${order.id}">
+                    <option selected value="now" th:text="${order.orderStatus}"></option>
+                    <option value="주문완료">주문완료</option>
+                    <option value="배송준비">배송준비</option>
+                    <option value="배송완료">배송완료</option>
                 </select>
             </td>
             <td th:text="${order.memberName}"></td>
@@ -78,4 +81,29 @@
 </div>
 
 </body>
+<script th:inline="javascript">
+    const orderStatus = (order) => {
+        console.log("orderStatus");
+        let s = document.getElementById(order.id)
+        let status = s.options[s.selectedIndex].value
+            $.ajax({
+                url: '/order/status',
+                type: 'post',
+                data: {
+                    id: order.id,
+                    status: status
+                },
+                dataType: "text",
+                success: function (data) {
+                    alert("변경되었습니다.")
+                },
+                error: function (error) {
+                    alert(error)
+                }
+            })
+
+
+    }
+
+</script>
 </html>

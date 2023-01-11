@@ -84,6 +84,7 @@
             alert("장바구니에 담긴 상품이 없습니다.");
         }else {
             const cartId = document.getElementById("cartId").value;
+            console.log(cartId);
             const userId = [[${session.member.userId}]];
             location.href = "/order/cart?cartId="+cartId+"&userId="+userId+"&itemPriceTotal="+itemPriceTotal;
         }
@@ -109,6 +110,7 @@
             },
             dataType: "text",
             success:function (cartResult){
+                console.log(id)
                 console.log(cartResult);
                 document.querySelector(".item_price_total").innerHTML = itemPriceTotal-itemPrice;
                 document.getElementById("cartList").value = length-1;
