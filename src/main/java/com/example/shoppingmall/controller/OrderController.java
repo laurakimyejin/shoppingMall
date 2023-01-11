@@ -49,6 +49,18 @@ public class OrderController {
         return "orderPages/orderSave2";
     }
 
+    //카트리스트에서 체크박스로 선택 주문하기
+    @PostMapping ("/order/cart2")
+    public @ResponseBody String saveFormCart2(@RequestParam("cartList")JSONArray itemDTOList, HttpSession session) throws JSONException {
+        Object member = session.getAttribute("member");
+        System.out.println("체크값만 넘기기 = " + itemDTOList);
+        member = (MemberDTO) member;
+        String userId = ((MemberDTO) member).getUserId();
+        orderService.checkOrder(userId,itemDTOList);
+        return "success";
+    }
+
+
     @PostMapping("/order/save2")
     public @ResponseBody String save2(@RequestParam("cartList")JSONArray itemDTOList, Model model , HttpSession session) throws JSONException {
         Object member = session.getAttribute("member");
@@ -59,6 +71,16 @@ public class OrderController {
         System.out.println("itemDTOList2 = " + itemDTOList + ", model = " + model);
         orderService.save2(itemDTOList,userId);
         return "success";
+    }
+
+    @GetMapping("/order/cart3")
+    public String save3(@RequestParam("userId")String userId,Model model){
+        List<CartItemDTO>cartItemDTOList=orderService.findByOrderReady(userId);
+        int itemPriceTotal=cartItemDTOList.get(0).getItemPriceTotal();
+        model.addAttribute("cartList",cartItemDTOList);
+        model.addAttribute("itemPriceTotal",itemPriceTotal);
+
+        return "orderPages/orderSave2";
     }
 
 
