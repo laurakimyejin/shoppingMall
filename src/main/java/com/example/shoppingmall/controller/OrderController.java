@@ -41,9 +41,8 @@ public class OrderController {
 
 //    카트리스트에서 주문페이지 이동하기
     @GetMapping("/order/cart")
-    public String saveFormCart(@RequestParam("cartId") Long id,@RequestParam("userId")String userId,@RequestParam("itemPriceTotal")int itemPriceTotal, Model model) {
-        System.out.println("id = " + id + ", userId = " + userId + ", model = " + model);
-        List<CartItemDTO>cartItemDTOList = orderService.findCartById(id,userId);
+    public String saveFormCart(@RequestParam("userId")String userId,@RequestParam("itemPriceTotal")int itemPriceTotal, Model model) {
+        List<CartItemDTO>cartItemDTOList = orderService.findCartById(userId);
         System.out.println("cartItemDTOList = " + cartItemDTOList);
         model.addAttribute("cartList",cartItemDTOList);
         model.addAttribute("itemPriceTotal",itemPriceTotal);
