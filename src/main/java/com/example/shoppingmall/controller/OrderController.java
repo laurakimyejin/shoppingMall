@@ -100,6 +100,7 @@ public class OrderController {
         return "orderPages/orderListAll";
     }
 
+//    주문상태 변경
     @PostMapping("/order/status")
     public @ResponseBody String status(@RequestParam("id")Long id,@RequestParam("status")String status){
         orderService.update(id,status);

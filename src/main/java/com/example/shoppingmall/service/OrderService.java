@@ -130,6 +130,10 @@ public class OrderService {
             orderItemEntity.setItemEntity(itemEntity);
             orderItemRepository.save(orderItemEntity);
         }
+        for (int i = 0; i < itemDTOList.length(); i++) {
+            CartItemEntity cartItemEntity = cartItemRepository.findById(itemDTOList.getJSONObject(i).getLong("id")).get();
+            cartItemRepository.delete(cartItemEntity);
+        }
 
     }
 
