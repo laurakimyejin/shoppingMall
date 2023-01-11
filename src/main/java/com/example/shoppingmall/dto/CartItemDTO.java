@@ -17,5 +17,6 @@ public class CartItemDTO {
     private int itemCount;
     private int cartCount;
     private String itemImage;
+    private int itemPriceTotal;
 
 }

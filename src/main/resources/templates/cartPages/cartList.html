@@ -95,6 +95,15 @@
 
     //체크박스
     const checkBox = (cart) => {
+        const length = document.getElementById("cartList").value;
+        let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        const allChk = document.getElementById('all_chk');
+        if (checkboxes.length-1 == length) {
+            allChk.checked = true;
+        } else {
+            allChk.checked = false;
+        }
+
         checkPrice();
     }
 
@@ -106,13 +115,46 @@
     //주문하기
     const orderFn = () => {
         let itemPriceTotal = document.querySelector(".item_price_total").innerHTML
+        const length = document.getElementById("cartList").value;
         console.log("주문하기");
         const cartList = [[${cartList}]];
         if (cartList.length == 0) {
             alert("장바구니에 담긴 상품이 없습니다.");
         } else {
             const userId = [[${session.member.userId}]];
-            location.href = "/order/cart?userId=" + userId + "&itemPriceTotal=" + itemPriceTotal;
+            let cartIdList = [[${cartIdList}]];
+            let aJsonArray = new Array();
+            for (let i = 0; i < length ; i++) {
+                let b = document.getElementById(cartList[i].id)
+                console.log(b.checked)
+                if(b.checked == true){
+                    aJson = new Object();
+                    aJson.id = cartList[i].id;
+                    aJson.itemName = cartList[i].itemName;
+                    aJson.itemPrice = cartList[i].itemPrice;
+                    aJson.cartCount = cartList[i].cartCount;
+                    aJson.itemImage = cartList[i].itemImage;
+                    aJson.itemPriceTotal = itemPriceTotal;
+                    aJsonArray.push(aJson);
+                }
+            }
+            console.log(aJsonArray);
+            $.ajax({
+                type: "post",
+                url: "/order/cart2",
+                data: {
+                    "cartList": JSON.stringify(aJsonArray)
+                },
+                dataType: "text",
+                success: function (data) {
+                    console.log("성공");
+                    location.href = "/order/cart3?userId="+userId;
+                },
+                error: function (err) {
+                    console.log("실패");
+                }
+            });
+            // location.href = "/order/cart?userId=" + userId + "&itemPriceTotal=" + itemPriceTotal;
         }
 
     }
@@ -162,7 +204,7 @@
                 document.querySelector(".item_price_total").innerHTML = sum;
             }
         }
-        if (checkboxes.length == 1 && allChk.checked == true) {
+        if (checkboxes.length == 0 && allChk.checked == true) {
             document.querySelector(".item_price_total").innerHTML = 0;
             allChk.checked = false;
         }else if(checkboxes.length == 0){
