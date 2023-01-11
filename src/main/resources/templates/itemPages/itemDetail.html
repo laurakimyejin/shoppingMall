@@ -5,8 +5,7 @@
     <title>detail</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/style/style3.css}" type="text/css">
-    <script th:src="@{/js/axios.min.js}"></script>
-    <script src="/resources/js/jquery.js"></script>
+<!--    <script src="/resources/js/jquery.js"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!--    시간설정-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -31,6 +30,7 @@
         /*이미지, 글씨 사이 간격*/
         .information{
             margin-left: 500px;
+            margin-bottom: 100px;
         }
         .image-form{
             position: absolute;
@@ -51,6 +51,11 @@
         .text-form{
             display: inline-block;
         }
+        /*작은 이미지 폼*/
+        .smImage-form{
+            float: left;
+        }
+
     </style>
 </head>
 <body style="background-color: white">
@@ -61,11 +66,12 @@
 <!--                <th>파일</th>-->
                 <div>
                     <input type="hidden" th:value="${item.storedFileNameItem.get(0)}" name="itemImage" >
-                    <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="300" height="300">
+                    <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="300" height="300" id="lgImage">
                 </div>
-                <div th:each="fileName: ${item.storedFileNameItem}" >
-                    <img th:src="@{|/upload/${fileName}}" alt="" width="50" height="50">
+                <div th:each="fileName: ${item.storedFileNameItem}">
+                    <img th:src="@{|/upload/${fileName}}" alt="" width="50" height="50" class="smImage-form" id="smImage">
                 </div>
+
             </div>
 
         <div class="information">
@@ -189,6 +195,14 @@
 </body>
 
 <script th:inline="javascript">
+    //이미지 전환
+
+    $(document).ready(function(){
+        $("#smImage").click(function(){
+            $("#lgImage").hide();
+            $("#smImage").show();
+        });
+    });
     //장바구니
     const cart = () => {
         console.log("장바구니 호출")
@@ -203,7 +217,7 @@
                 data: {
                     id: id,
                     itemName: itemName,
-                    cartCount: cartCount,
+                    cartCount: cartCount
                 },
                 dataType: "text",
                 success: function (userId) {
