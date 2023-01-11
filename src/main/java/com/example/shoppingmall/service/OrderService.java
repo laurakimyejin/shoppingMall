@@ -86,7 +86,7 @@ public class OrderService {
     }
 
     @Transactional
-    public List<CartItemDTO> findCartById(Long id, String userId) {
+    public List<CartItemDTO> findCartById(String userId) {
         MemberEntity memberEntity = memberRepository.findByUserId(userId).get();
         CartEntity cartEntity = cartRepository.findByMemberEntity(memberEntity).get();
         List<CartItemEntity> cartEntityList = cartItemRepository.findByCartEntity(cartEntity);
