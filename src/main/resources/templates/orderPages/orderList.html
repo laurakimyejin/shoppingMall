@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <link rel="stylesheet" th:href="@{/css/starRating.css}" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -26,11 +25,9 @@
         </tr>
         <tr th:each="order: ${orderList}">
             <td th:text="${order.id}"></td>
-            <td th:text="${order.orderName}"></td>
             <td><a th:href="@{/items(orderName=${order.orderName})}" th:text="${order.orderName}"></a></td>
             <td th:text="${order.orderStatus}"></td>
-            <div th:if="${order.orderStatus == '배송완료'}">
-                <td>
+            <ui th:if="${order.orderStatus == '배송완료'}">
                 <td th:if="${order.review} == '리뷰작성'">
                     <button type="button" th:id="${order.id}" class="btn btn-secondary" data-toggle="modal" data-target="#myModal"
                             th:data-id="${order.id}" th:onclick="modal([[${order.id}]])"> [[${order.review}]]
@@ -39,7 +36,7 @@
                 <td th:unless="${order.review} == '리뷰작성'">
                     <input type="button" class="btn btn-secondary" disabled value="등록완료">
                 </td>
-            </div>
+            </ui>
         </tr>
     </table>
 </div>

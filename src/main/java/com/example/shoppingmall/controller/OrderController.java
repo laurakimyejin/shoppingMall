@@ -100,6 +100,12 @@ public class OrderController {
         return "orderPages/orderListAll";
     }
 
+    @PostMapping("/order/status")
+    public @ResponseBody String status(@RequestParam("id")Long id,@RequestParam("status")String status){
+        orderService.update(id,status);
+        return "success";
+    }
+
 
 
 
