@@ -132,7 +132,7 @@
                     aJson.cartItemId = cartList[i].id;
                     aJson.itemName = cartList[i].itemName;
                     aJson.itemPrice = cartList[i].itemPrice;
-                    aJson.cartCount = cartList[i].cartCount;
+                    aJson.cartCount = document.getElementById(cartList[i].id + "a").value;
                     aJson.itemImage = cartList[i].itemImage;
                     aJson.itemPriceTotal = itemPriceTotal;
                     aJsonArray.push(aJson);
@@ -253,6 +253,7 @@
         }
         console.log(itemPriceTotal)
         document.querySelector(".item_price_total").innerHTML = itemPriceTotal;
+        checkPrice();
     }
 
     //개별 아이템 삭제

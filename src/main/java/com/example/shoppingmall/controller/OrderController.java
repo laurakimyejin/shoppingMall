@@ -59,6 +59,15 @@ public class OrderController {
         orderService.checkOrder(userId,itemDTOList);
         return "success";
     }
+    @GetMapping("/order/cart3")
+    public String save3(@RequestParam("userId")String userId,Model model){
+        List<CartItemDTO>cartItemDTOList=orderService.findByOrderReady(userId);
+        int itemPriceTotal=cartItemDTOList.get(0).getItemPriceTotal();
+        model.addAttribute("cartList",cartItemDTOList);
+        model.addAttribute("itemPriceTotal",itemPriceTotal);
+
+        return "orderPages/orderSave2";
+    }
 
 
     @PostMapping("/order/save2")
@@ -72,17 +81,6 @@ public class OrderController {
         orderService.save2(itemDTOList,userId);
         return "success";
     }
-
-    @GetMapping("/order/cart3")
-    public String save3(@RequestParam("userId")String userId,Model model){
-        List<CartItemDTO>cartItemDTOList=orderService.findByOrderReady(userId);
-        int itemPriceTotal=cartItemDTOList.get(0).getItemPriceTotal();
-        model.addAttribute("cartList",cartItemDTOList);
-        model.addAttribute("itemPriceTotal",itemPriceTotal);
-
-        return "orderPages/orderSave2";
-    }
-
 
 
 

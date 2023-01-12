@@ -18,7 +18,7 @@ public class OrderReadyEntity extends BaseEntity {
     private String orderName;
 
     @Column
-    private int orderCount;
+    private int cartCount;
 
     @Column
     private int orderPrice;

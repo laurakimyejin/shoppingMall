@@ -155,7 +155,7 @@ public class OrderService {
             orderReadyEntity.setMemberEntity(memberEntity);
             orderReadyEntity.setOrderName(itemDTOList.getJSONObject(i).getString("itemName"));
             orderReadyEntity.setOrderPrice(itemDTOList.getJSONObject(i).getInt("itemPrice"));
-            orderReadyEntity.setOrderCount(itemDTOList.getJSONObject(i).getInt("cartCount"));
+            orderReadyEntity.setCartCount(itemDTOList.getJSONObject(i).getInt("cartCount"));
             orderReadyEntity.setItemPriceTotal(itemDTOList.getJSONObject(i).getInt("itemPriceTotal"));
             orderReadyEntity.setItemImage(itemDTOList.getJSONObject(i).getString("itemImage"));
             orderReadyEntity.setCartItemId(itemDTOList.getJSONObject(i).getLong("cartItemId"));
@@ -173,7 +173,7 @@ public class OrderService {
             CartItemDTO cartItemDTO = new CartItemDTO();
             cartItemDTO.setItemName(orderReadyEntity.getOrderName());
             cartItemDTO.setItemPrice(orderReadyEntity.getOrderPrice());
-            cartItemDTO.setCartCount(orderReadyEntity.getOrderCount());
+            cartItemDTO.setCartCount(orderReadyEntity.getCartCount());
             cartItemDTO.setItemPriceTotal(orderReadyEntity.getItemPriceTotal());
             cartItemDTO.setItemImage(orderReadyEntity.getItemImage());
             cartItemDTO.setId(orderReadyEntity.getCartItemId());
