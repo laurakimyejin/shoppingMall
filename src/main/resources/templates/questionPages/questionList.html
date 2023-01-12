@@ -68,7 +68,7 @@
         <!-- startPage ~ endPage 까지 숫자를 만들어주는 역할 -->
         <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
             th:class="${page == questionList.number + 1} ? 'page-item active'" class="page-item">
-            <a class="page-link" th:text="${page}"
+            <a th:if="${page != 0}" class="page-link" th:text="${page}"
                th:href="@{/question/list(page=${page},sort=${sort},size=${size},search=${search},category=${category})}"></a>
         </li>
 
@@ -83,7 +83,7 @@
             </a>
         </li>
 
-        <li class="page-item">
+        <li class="page-item" th:class="${questionList.last} ? 'disabled'">
             <a class="page-link" th:href="@{/question/list(page=${questionList.totalPages},sort=${sort},size=${size},search=${search},category=${category})}">
                 <span>Last</span>
             </a>
