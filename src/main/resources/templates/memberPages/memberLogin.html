@@ -68,7 +68,7 @@
             success: function (result) {
                 if (result == "ok") {
                     // alert("로그인성공")
-                     location.href = "/";
+                     location.href = "/member/login2?redirectURL=" + url;
                      // window.location.replace('url');
                 } else {
                     alert("아이디 또는 비밀번호를 다시 확인해주세요")

@@ -26,9 +26,11 @@ public class QuestionController {
     public String questionList(@PageableDefault(page = 1,size = 3) Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort
             , @RequestParam(required = false , value = "search", defaultValue = "") String search,
                                @RequestParam(required = false , value = "category", defaultValue = "") String category){
-        System.out.println("pageable = " + pageable + ", model = " + model + ", sort = " + sort + ", search = " + search + ", category = " + category);
         Page<QuestionDTO> questionDTOList = questionService.findAll(pageable, sort , search , category);
         model.addAttribute("questionList",questionDTOList);
+        if(questionDTOList.getTotalElements() == 0){
+            model.addAttribute("message","null");
+        }
         int blockLimit = 3;
         int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = ((startPage + blockLimit - 1) < questionDTOList.getTotalPages()) ? startPage + blockLimit - 1 : questionDTOList.getTotalPages();

@@ -35,6 +35,9 @@ public class ItemController {
     @GetMapping("/item/main")
     public String findAll(@PageableDefault(page = 1,size = 5)Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort){
         Page<ItemDTO> itemDTOList = itemService.findAll(pageable, sort);
+        if(itemDTOList.getTotalElements() == 0){
+            model.addAttribute("message","null");
+        }
         model.addAttribute("itemList",itemDTOList);
         int blockLimit = 3;
         int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
