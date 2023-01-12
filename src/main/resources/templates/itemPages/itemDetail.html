@@ -26,37 +26,43 @@
         }
 
         /*이미지, 글씨 가운데 오도록*/
-        .container{
+        .container {
             margin-top: 100px;
             margin-right: auto;
             margin-left: auto;
         }
+
         /*이미지, 글씨 사이 간격*/
-        .information{
+        .information {
             margin-left: 500px;
             margin-bottom: 100px;
         }
-        .image-form{
+
+        .image-form {
             position: absolute;
         }
+
         /*가격 폼*/
-        .price-form{
+        .price-form {
             color: seagreen;
             font-weight: bold;
             font-size: large;
         }
+
         /*가격, 구매수량, 택배배송, 총 상품 금액 글씨 폼*/
-        label{
+        label {
             margin-top: 20px;
             display: inline-block;
 
         }
+
         /*label 값 폼*/
-        .text-form{
+        .text-form {
             display: inline-block;
         }
+
         /*작은 이미지 폼*/
-        .smImage-form{
+        .smImage-form {
             float: left;
         }
 
@@ -80,14 +86,16 @@
 
         </div>
 
-            </div>
+    </div>
 
     <div class="information">
         <div>
             <!--<th>상품명</th>-->
-                <input type="hidden" name="id" th:value="${item.id}" id="itemId">
-               <h2 id="itemName" th:text="${item.itemName}"></h2>
-            </div>
+            <input type="hidden" name="id" th:value="${item.id}" id="itemId">
+            <input type="hidden" name="itemPrice" th:value="${item.itemPrice}">
+            <input type="hidden" name="itemName" th:value="${item.itemName}">
+            <h2 id="itemName" name th:text="${item.itemName}"></h2>
+        </div>
         <div>
             <label style="margin-right: 65px">가격</label>
             <p th:text="${item.itemPrice}+'원'" class="price-form text-form"></p>

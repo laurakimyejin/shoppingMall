@@ -43,7 +43,7 @@
 
 
 <div class="container">
-    <table class="table table-striped table-hover text-center mt-5">
+    <table class="table table-striped table-hover text-center mt-5" th:if="${message} != 'null'">
         <div>
             <div th:each="item: ${itemList}">
                 <div class="item  col-xs-3 col-md-4">
@@ -86,7 +86,7 @@
         <div th:if="${!session.isEmpty()} and ${session.member.userId} == 'admin' ">
             <a href="/item/save" class="btn-success">상품등록</a>
         </div>
-        <ul class="pagination justify-content-center">
+        <ul th:if="${message} != 'null'" class="pagination justify-content-center">
             <li class="page-item">
                 <!--첫페이지 요청 링크-->
                 <a class="page-link" th:href="@{/item/main(page=1 ,sort=${sort} , size=${size})}">
