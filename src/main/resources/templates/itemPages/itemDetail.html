@@ -19,6 +19,49 @@
     <link rel="stylesheet" th:href="@{/css/starRatingItemDetail.css}" type="text/css">
     <script th:src="app.js"></script>
 
+    <style>
+        * {
+            font-family: 'Jua', sans-serif;
+            font-family: 'Nanum Gothic', sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        /*이미지, 글씨 가운데 오도록*/
+        .container{
+            margin-top: 100px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        /*이미지, 글씨 사이 간격*/
+        .information{
+            margin-left: 500px;
+            margin-bottom: 100px;
+        }
+        .image-form{
+            position: absolute;
+        }
+        /*가격 폼*/
+        .price-form{
+            color: seagreen;
+            font-weight: bold;
+            font-size: large;
+        }
+        /*가격, 구매수량, 택배배송, 총 상품 금액 글씨 폼*/
+        label{
+            margin-top: 20px;
+            display: inline-block;
+
+        }
+        /*label 값 폼*/
+        .text-form{
+            display: inline-block;
+        }
+        /*작은 이미지 폼*/
+        .smImage-form{
+            float: left;
+        }
+
+    </style>
 </head>
 <body style="background-color: white">
 <th:block th:replace="commonPages/header :: header"></th:block>
@@ -35,12 +78,14 @@
         </div>
     </div>
 
+            </div>
+
     <div class="information">
         <div>
             <!--<th>상품명</th>-->
-            <input type="hidden" name="id" th:value="${item.id}" id="itemId">
-            <h2 th:text="${item.itemName}"></h2>
-        </div>
+                <input type="hidden" name="id" th:value="${item.id}" id="itemId">
+               <h2 id="itemName" th:text="${item.itemName}"></h2>
+            </div>
         <div>
             <label style="margin-right: 65px">가격</label>
             <p th:text="${item.itemPrice}+'원'" class="price-form text-form"></p>
@@ -166,9 +211,10 @@
     //장바구니
     const cart = () => {
         console.log("장바구니 호출")
+        console.log([[${item}]])
         const id = document.getElementById("itemId").value;
         const cartCount = document.getElementById("itemCountInput").value;
-        const itemName = document.getElementById("itemName").value;
+        const itemName = document.getElementById("itemName").textContent;
         const loginCheck = document.getElementsByName("loginCheck")[0].value;
         if (loginCheck == 'loginOk') {
             $.ajax({

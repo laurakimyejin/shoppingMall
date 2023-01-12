@@ -34,7 +34,7 @@ public class ItemDTO {
     private String itemImage;
     private String userId;
     private int cartCount;
-    private Long cartId;
+    private Long cartItemId;
 
     public static ItemDTO toItemDTO(ItemEntity itemEntity){
         ItemDTO itemDTO = new ItemDTO();
