@@ -12,7 +12,9 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         //요청 객체                //응답 객체
-        String requestURL = request.getRequestURI();
+//        String requestURL = request.getRequestURI();
+//        이전페이지 요청
+        String requestURL = request.getHeader("referer");
         //request에서 제공하는 메서드, 요청한 주소 가져와 준다.
         System.out.println("requestURL = " + requestURL);
         HttpSession session = request.getSession();
