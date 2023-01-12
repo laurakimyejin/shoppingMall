@@ -78,7 +78,7 @@
             <div>
             <!--<th>상품명</th>-->
                 <input type="hidden" name="id" th:value="${item.id}" id="itemId">
-               <h2 th:text="${item.itemName}"></h2>
+               <h2 th:text="${item.itemName}" id="itemName"></h2>
             </div>
         <div>
             <label style="margin-right: 65px">가격</label>
@@ -208,7 +208,7 @@
         console.log("장바구니 호출")
         const id = document.getElementById("itemId").value;
         const cartCount = document.getElementById("itemCountInput").value;
-        const itemName = document.getElementById("itemName").value;
+        const itemName = document.getElementById("itemName").textContent;
         const loginCheck = document.getElementsByName("loginCheck")[0].value;
         if (loginCheck == 'loginOk'){
             $.ajax({

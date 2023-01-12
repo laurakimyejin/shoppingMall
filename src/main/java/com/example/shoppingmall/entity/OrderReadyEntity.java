@@ -29,6 +29,9 @@ public class OrderReadyEntity extends BaseEntity {
     @Column
     private String itemImage;
 
+    @Column
+    private Long cartItemId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;

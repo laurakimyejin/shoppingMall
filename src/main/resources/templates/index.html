@@ -62,34 +62,34 @@
         </article>
 
         <div id="intro_bg">
-            <section>
-                <h2>최신 상품</h2>
-                <div id="pdt">
-                    <div class="swiper-container">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide" th:each="item: ${itemList}">
+<!--            <section>-->
+<!--                <h2>최신 상품</h2>-->
+<!--                <div id="pdt">-->
+<!--                    <div class="swiper-container">-->
+<!--                        <div class="swiper-wrapper">-->
+<!--                            <div class="swiper-slide" th:each="item: ${itemList}">-->
 
-                                    <li><a th:href="@{/item/(itemId=${item.id})}">
-                                        <div th:if="${item.fileAttachedItem == 1}">
-                                            <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="200" height="150">
-                                        </div>
-                                        <p><img th:src="@{/img/new.png}" alt="new">
-                                        <p class="read"><a th:href="@{/item/(itemId=${item.id})}"
-                                                           th:text="${item.itemName}"></a>
-                                        </p>
-                                        <em th:text="${#numbers.formatCurrency(item.itemPrice)}"></em>
-                                        </p>
-                                    </a>
-                                    </li>
+<!--                                    <li><a th:href="@{/item/(itemId=${item.id})}">-->
+<!--                                        <div th:if="${item.fileAttachedItem == 1}">-->
+<!--                                            <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="200" height="150">-->
+<!--                                        </div>-->
+<!--                                        <p><img th:src="@{/img/new.png}" alt="new">-->
+<!--                                        <p class="read"><a th:href="@{/item/(itemId=${item.id})}"-->
+<!--                                                           th:text="${item.itemName}"></a>-->
+<!--                                        </p>-->
+<!--                                        <em th:text="${#numbers.formatCurrency(item.itemPrice)}"></em>-->
+<!--                                        </p>-->
+<!--                                    </a>-->
+<!--                                    </li>-->
 
-                            </div>
-                        </div>
-                        <div class="swiper-pagination"></div>
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
-                    </div>
-                </div>
-            </section><!--px-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="swiper-pagination"></div>-->
+<!--                        <div class="swiper-button-prev"></div>-->
+<!--                        <div class="swiper-button-next"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </section>&lt;!&ndash;px&ndash;&gt;-->
         </div>
     </div>
     <!--e:section-->

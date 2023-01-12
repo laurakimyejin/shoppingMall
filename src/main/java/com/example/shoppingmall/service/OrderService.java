@@ -36,6 +36,7 @@ public class OrderService {
         itemRepository.save(itemEntity1);
         if (memberEntity1.isPresent()) {
             MemberEntity memberEntity2 = memberEntity1.get();
+            orderRepository.deleteByMemberEntity(memberEntity2);
             memberEntity2.setMemberAddress(orderDTO.getMemberAddress());
             memberEntity2.setDetailAddress(orderDTO.getDetailAddress());
             memberEntity2.setExtraAddress(orderDTO.getExtraAddress());
@@ -114,6 +115,7 @@ public class OrderService {
         memberEntity.setDetailAddress(itemDTOList.getJSONObject(0).getString("detailAddress"));
         memberEntity.setExtraAddress(itemDTOList.getJSONObject(0).getString("extraAddress"));
         memberRepository.save(memberEntity);
+
         for (int i = 0; i < itemDTOList.length(); i++) {
             OrderItemEntity orderItemEntity = new OrderItemEntity();
             OrderEntity orderEntity = new OrderEntity();
@@ -131,10 +133,12 @@ public class OrderService {
             orderItemEntity.setItemEntity(itemEntity);
             orderItemRepository.save(orderItemEntity);
         }
+
         for (int i = 0; i < itemDTOList.length(); i++) {
-            CartItemEntity cartItemEntity = cartItemRepository.findById(itemDTOList.getJSONObject(i).getLong("id")).get();
+            CartItemEntity cartItemEntity = cartItemRepository.findById(itemDTOList.getJSONObject(i).getLong("cartItemId")).get();
             cartItemRepository.delete(cartItemEntity);
         }
+        orderReadyRepository.deleteByMemberEntity(memberEntity);
 
     }
 
@@ -154,6 +158,7 @@ public class OrderService {
             orderReadyEntity.setOrderCount(itemDTOList.getJSONObject(i).getInt("cartCount"));
             orderReadyEntity.setItemPriceTotal(itemDTOList.getJSONObject(i).getInt("itemPriceTotal"));
             orderReadyEntity.setItemImage(itemDTOList.getJSONObject(i).getString("itemImage"));
+            orderReadyEntity.setCartItemId(itemDTOList.getJSONObject(i).getLong("cartItemId"));
             orderReadyRepository.save(orderReadyEntity);
 
         }
@@ -171,6 +176,7 @@ public class OrderService {
             cartItemDTO.setCartCount(orderReadyEntity.getOrderCount());
             cartItemDTO.setItemPriceTotal(orderReadyEntity.getItemPriceTotal());
             cartItemDTO.setItemImage(orderReadyEntity.getItemImage());
+            cartItemDTO.setId(orderReadyEntity.getCartItemId());
             cartItemDTOList.add(cartItemDTO);
         }
         return cartItemDTOList;
