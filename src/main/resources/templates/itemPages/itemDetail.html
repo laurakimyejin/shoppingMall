@@ -5,7 +5,6 @@
     <title>detail</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/style/style3.css}" type="text/css">
-<!--    <script src="/resources/js/jquery.js"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!--    시간설정-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -15,44 +14,55 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap"
           rel="stylesheet">
+    <!--  별점-->
+    <link rel="stylesheet" th:href="@{/css/starRatingItemDetail.css}" type="text/css">
+    <script th:src="app.js"></script>
+
     <style>
         * {
             font-family: 'Jua', sans-serif;
             font-family: 'Nanum Gothic', sans-serif;
             font-family: 'Noto Sans KR', sans-serif;
         }
+
         /*이미지, 글씨 가운데 오도록*/
-        .container{
+        .container {
             margin-top: 100px;
             margin-right: auto;
             margin-left: auto;
         }
+
         /*이미지, 글씨 사이 간격*/
-        .information{
+        .information {
             margin-left: 500px;
             margin-bottom: 100px;
         }
-        .image-form{
+
+        .image-form {
             position: absolute;
         }
+
         /*가격 폼*/
-        .price-form{
+        .price-form {
             color: seagreen;
             font-weight: bold;
             font-size: large;
         }
+
         /*가격, 구매수량, 택배배송, 총 상품 금액 글씨 폼*/
-        label{
+        label {
             margin-top: 20px;
             display: inline-block;
 
         }
+
         /*label 값 폼*/
-        .text-form{
+        .text-form {
             display: inline-block;
         }
+
         /*작은 이미지 폼*/
-        .smImage-form{
+        .smImage-form {
             float: left;
         }
 
@@ -61,64 +71,67 @@
 <body style="background-color: white">
 <th:block th:replace="commonPages/header :: header"></th:block>
 
-    <form action="#" method="get" id="loc" class="container">
-            <div th:if="${item.fileAttachedItem == 1}" class="image-form">
-<!--                <th>파일</th>-->
-                <div>
-                    <input type="hidden" th:value="${item.storedFileNameItem.get(0)}" name="itemImage" >
-                    <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="300" height="300" id="lgImage">
-                </div>
-                <div th:each="fileName: ${item.storedFileNameItem}">
-                    <img th:src="@{|/upload/${fileName}}" alt="" width="50" height="50" class="smImage-form" id="smImage">
-                </div>
+<form action="#" method="get" id="loc" class="container">
+    <div th:if="${item.fileAttachedItem == 1}" class="image-form">
+        <!--                <th>파일</th>-->
+        <div>
+            <input type="hidden" th:value="${item.storedFileNameItem.get(0)}" name="itemImage">
+            <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="300" height="300" id="lgImage">
+        </div>
+        <div th:each="fileName: ${item.storedFileNameItem}">
+            <img th:src="@{|/upload/${fileName}}" alt="" width="50" height="50" class="smImage-form"
+                 th:onclick="imageClick([[${fileName}]])">
+        </div>
+        <div>
 
-            </div>
+        </div>
 
-        <div class="information">
-            <div>
+    </div>
+
+    <div class="information">
+        <div>
             <!--<th>상품명</th>-->
-                <input type="hidden" name="id" th:value="${item.id}" id="itemId">
-               <h2 th:text="${item.itemName}"></h2>
-            </div>
+            <input type="hidden" name="id" th:value="${item.id}" id="itemId">
+            <h2 th:text="${item.itemName}"></h2>
+        </div>
         <div>
             <label style="margin-right: 65px">가격</label>
             <p th:text="${item.itemPrice}+'원'" class="price-form text-form"></p>
         </div>
-            <div>
-                <label style="margin-right: 40px">구매수량</label>
-                    <input type="number" id="itemCountInput" min="1" max="100" value="1" name="cartCount"
-                           onchange="total()" class="text-form">
-            </div>
-            <div>
-                <label style="margin-right: 40px">택배배송</label>
-                <p class="text-form">무료배송</p>
-            </div>
-            <div style="margin-bottom: 20px;">
-                <label style="margin-right: 20px">총 상품 금액</label>
-                <div id="totalPrice" class="text-form"></div>
-            </div>
-
-
-    <div th:if="${session.member} != null">
-        <input type="button" class="btn btn-outline-dark" value="장바구니" onclick="cart()">
-        <input type="button" class="btn btn-success" value="바로구매" onclick="orderItem()">
-        <input type="hidden" value="loginOk" name="loginCheck">
-    </div>
-    <div th:unless="${session.member}">
-        <input type="button" class="btn btn-outline-dark" value="장바구니" onclick="cart()">
-        <input type="button" class="btn btn-success" value="구매하기" onclick="orderItem()">
-        <input type="hidden" value="loginNo" name="loginCheck">
-    </div>
+        <div>
+            <label style="margin-right: 40px">구매수량</label>
+            <input type="number" id="itemCountInput" min="1" max="100" value="1" name="cartCount"
+                   onchange="total()" class="text-form">
         </div>
-    </form>
+        <div>
+            <label style="margin-right: 40px">택배배송</label>
+            <p class="text-form">무료배송</p>
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label style="margin-right: 20px">총 상품 금액</label>
+            <div id="totalPrice" class="text-form"></div>
+        </div>
+
+
+        <div th:if="${session.member} != null">
+            <input type="button" class="btn btn-outline-dark" value="장바구니" onclick="cart()">
+            <input type="button" class="btn btn-success" value="바로구매" onclick="orderItem()">
+            <input type="hidden" value="loginOk" name="loginCheck">
+        </div>
+        <div th:unless="${session.member}">
+            <input type="button" class="btn btn-outline-dark" value="장바구니" onclick="cart()">
+            <input type="button" class="btn btn-success" value="구매하기" onclick="orderItem()">
+            <input type="hidden" value="loginNo" name="loginCheck">
+        </div>
+    </div>
+</form>
 <!--        </div>-->
 <!--</div>-->
 
-<div style="text-align: center; margin-top: 100px;" >
+<div style="text-align: center; margin-top: 100px;">
     <!--                <th>설명</th>-->
     <div th:text="${item.itemContents}"></div>
 </div>
-
 
 
 <div class="container mt-5" id="comment-list">
@@ -128,17 +141,20 @@
     <div th:unless="${commentList == 'empty'}">
         <table class="table">
             <tr>
+                <th>주문후기</th>
                 <th>작성자</th>
-                <th>내용</th>
                 <th>작성시간</th>
                 <th>별점</th>
 
             </tr>
             <tr th:each="comment: ${commentList}">
-                <td th:text="${comment.commentWriter}"></td>
                 <td th:text="${comment.commentContents}"></td>
-                <td th:text="*{#temporals.format(comment.commentCreatedDate,'yyyy-MM-dd HH:mm:ss')}"></td>
-                <td th:text="${comment.starCount}"></td>
+                <td th:text="${comment.commentWriter}"></td>
+                <td th:text="*{#temporals.format(comment.commentCreatedDate,'yyyy-MM-dd HH:mm')}"
+                    style="margin-left: 50px;width: 166px;"></td>
+                <div class="star-container">
+                    <td th:text="${comment.starCount}"></td>
+                </div>
             </tr>
         </table>
         <div class="container">
@@ -196,13 +212,14 @@
 
 <script th:inline="javascript">
     //이미지 전환
+    const imageClick = (item) => {
+        console.log(item);
+        const smImage = item;
+        console.log(smImage);
+        console.log(smImage[0]);
+        $("#lgImage").attr("src", "/upload/" + smImage);
+    }
 
-    $(document).ready(function(){
-        $("#smImage").click(function(){
-            $("#lgImage").hide();
-            $("#smImage").show();
-        });
-    });
     //장바구니
     const cart = () => {
         console.log("장바구니 호출")
@@ -210,7 +227,7 @@
         const cartCount = document.getElementById("itemCountInput").value;
         const itemName = document.getElementById("itemName").value;
         const loginCheck = document.getElementsByName("loginCheck")[0].value;
-        if (loginCheck == 'loginOk'){
+        if (loginCheck == 'loginOk') {
             $.ajax({
                 type: "get",
                 url: "/cart/saved",
@@ -234,7 +251,7 @@
                     console.log("실패");
                 }
             });
-        }else {
+        } else {
             alert("로그인이 필요합니다.");
         }
     }
