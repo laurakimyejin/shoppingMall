@@ -18,7 +18,7 @@ public class OrderReadyEntity extends BaseEntity {
     private String orderName;
 
     @Column
-    private int orderCount;
+    private int cartCount;
 
     @Column
     private int orderPrice;
@@ -28,6 +28,9 @@ public class OrderReadyEntity extends BaseEntity {
 
     @Column
     private String itemImage;
+
+    @Column
+    private Long cartItemId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

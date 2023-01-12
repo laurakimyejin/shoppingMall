@@ -9,5 +9,7 @@ import java.util.List;
 public interface OrderReadyRepository extends JpaRepository<OrderReadyEntity, Long> {
 
     List<OrderReadyEntity> findByMemberEntity(MemberEntity memberEntity);
+
+    void deleteByMemberEntity(MemberEntity memberEntity);
 }
 

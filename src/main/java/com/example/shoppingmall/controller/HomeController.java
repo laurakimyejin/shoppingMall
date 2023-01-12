@@ -23,6 +23,9 @@ public class HomeController {
     @GetMapping("/")
     public String findAll(@PageableDefault(page = 1) Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort){
         Page<ItemDTO> itemDTOList = itemService.findAll(pageable, sort);
+        if (itemDTOList.isEmpty()){
+            model.addAttribute("message", "null");
+        }
         model.addAttribute("itemList",itemDTOList);
         int blockLimit = 3;
         int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
