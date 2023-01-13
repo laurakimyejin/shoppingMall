@@ -61,8 +61,8 @@
             <input type="text" name="itemPrice" id="itemPrice" placeholder="상품가격" class="form-control"
                    style="width: 150px;">
             <div style="float: right">
-                <div><label for="itemPrice" >카테고리</label></div>
-                <select name="itemCategory" class="form-select"
+                <div><label for="itemCategory" >카테고리</label></div>
+                <select name="itemCategory" class="form-select" id="itemCategory"
                         style="font-size: 12px; width: 200px; height: 35px;">
                     <option value="small" selected>소형 식물</option>
                     <option value="middle">중형 식물</option>
@@ -76,6 +76,7 @@
             <label for="itemContents">상품설명</label>
             <textarea name="itemContents" id="itemContents" cols="30" rows="10" placeholder="상품 설명"
                       class="form-control"></textarea>
+        </div>
 
         <input style="display: block;" type="file" name="itemFile" id="inputMultipleImage" multiple onchange="readURL(this)">
 <!--        <div id="multipleContainer" style="width: 300px; height: 150px;"></div>-->
