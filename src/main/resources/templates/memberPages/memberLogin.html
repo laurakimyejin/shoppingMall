@@ -6,7 +6,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!--    카카오 로그인 api-->
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/css/login.css}">
     <axios cdn="https://unpkg.com/axios/dist/axios.min.js"></axios>
@@ -39,12 +38,11 @@
             <a id="kakao-login-btn" role="button" class="btn">
                 <img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="200px" height="40px"
                      style="width: 420px;"/>
-
             </a>
-            <div>
-                <p class="mt-5">회원이 아니신가요? <a href="/member/save" class="btn btn-dark" style="color: white">가입하기</a></p>
-            </div>
         </section>
+        <div>
+            <p class="mt-5">회원이 아니신가요? <a href="/member/save" class="btn-dark" style="font-weight: bold;">가입하기</a></p>
+        </div>
     </article>
     <article class="join">
         <h1>join-us</h1>
