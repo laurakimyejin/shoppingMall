@@ -71,7 +71,7 @@ public class MemberController {
         return "memberPages/memberLogin";
     }
 
-    //    인터셉터
+    //인터셉터
     @GetMapping("/login2")
     public String login2(@RequestParam(value = "redirectURL", defaultValue = "/") String redirectURL, Model model) {
         model.addAttribute("redirectURL", redirectURL);
