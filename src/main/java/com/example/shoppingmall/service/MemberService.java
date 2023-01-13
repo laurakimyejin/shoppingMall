@@ -20,6 +20,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final CartRepository cartRepository;
 
+
+
     public Long save(MemberDTO memberDTO) {
         Long savedId = memberRepository.save(MemberEntity.toSaveEntity(memberDTO)).getId();
         Optional<MemberEntity> memberEntity = memberRepository.findById(savedId);
@@ -86,6 +88,7 @@ public class MemberService {
     public MemberDTO findByUserId(String userId) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByUserId(userId);
         if (optionalMemberEntity.isPresent()) {
+
             return MemberDTO.toDTO(optionalMemberEntity.get());
         } else {
             return null;

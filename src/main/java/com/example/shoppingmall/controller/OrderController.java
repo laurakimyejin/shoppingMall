@@ -87,9 +87,10 @@ public class OrderController {
     //주문하기
     @PostMapping("/order/save")
     public String save(@ModelAttribute OrderDTO orderDTO, Model model) {
-        System.out.println("orderDTO = " + orderDTO + ", model = " + model);
+        System.out.println("시작orderDTO = " + orderDTO + ", model = " + model);
         orderService.save(orderDTO);
         model.addAttribute("order", orderDTO);
+        System.out.println("저장후orderDTO = " + orderDTO + ", model = " + model);
         return "redirect:/";
     }
 
