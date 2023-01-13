@@ -35,6 +35,7 @@
             height: 50px;
             object-fit: cover;
         }
+
     </style>
 </head>
 <body style="background-color: white">
@@ -57,14 +58,16 @@
                 <td class="box"><img class="profile" th:src="@{|/upload/${item.itemImage}}" alt=""></td>
                 <td><input id="itemName" type="text" name="orderName" th:value="${item.itemName}" class="form-control"
                            readonly></td>
-                <td><input type="text" name="itemPrice" th:value="${item.itemPrice}+'원'" class="form-control" readonly>
+                <td><input type="hidden" name="itemPrice" th:value="${item.itemPrice}" class="form-control" readonly>
+                    <input type="text" th:value="${item.itemPrice}+'원'" class="form-control" readonly>
                 </td>
                 <td><input type="number" id="itemCountInput" min="1" max="100" th:value="${item.cartCount}"
                            name="orderCount" onchange="total()" style="padding-left: 20px">
                 </td>
                 <td>무료</td>
-                <td><input type="text" th:value="${item.itemPrice * item.cartCount}+'원'" name="orderPrice"
+                <td><input type="hidden" th:value="${item.itemPrice * item.cartCount}" name="orderPrice"
                            id="totalPrice" readonly>
+                    <input type="text" th:value="${item.itemPrice * item.cartCount}+'원'"readonly>
                 </td>
             </tr>
         </table>
@@ -100,7 +103,7 @@
                     </div>
                 </section>
 
-                <section>
+                <section style="position: relative">
                     <div>
                         <input type="text" id="sample6_postcode" placeholder="우편번호" name="postcode">
                         <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
@@ -121,9 +124,15 @@
         </article>
     </form>
     </article>
+    <input type="button" onclick="testPay()" value="결제테스트">
 </div>
 </body>
 <script th:inline="javascript">
+    const testPay = () => {
+        const form = document.querySelector("form");
+        form.submit();
+    }
+
     function requestPay() {
         const itemName = document.getElementById("itemName").value;
         let totalPrice = document.getElementById("totalPrice").value;
