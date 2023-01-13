@@ -1,0 +1,19 @@
+
+.star-container {
+    display: flex;
+    width: 350px;
+    flex-direction: row-reverse;
+}
+
+.star {
+}
+
+.star:after {
+    content: "\f005";
+    font-family: fontAwesome;
+    position: relative;
+    /*top: 7px;*/
+    font-size: 20px;
+    color: gold;
+    opacity: 1;
+}
