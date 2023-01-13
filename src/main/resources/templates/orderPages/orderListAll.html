@@ -27,10 +27,9 @@
             <td th:text="${order.orderName}"></td>
             <td>
                 <select th:onchange="orderStatus([[${order}]])" th:id="${order.id}">
-                    <option selected value="now" th:text="${order.orderStatus}"></option>
-                    <option value="주문완료">주문완료</option>
-                    <option value="배송준비">배송준비</option>
-                    <option value="배송완료">배송완료</option>
+                    <option th:selected="${order.orderStatus} == '주문완료'" value="주문완료">주문완료</option>
+                    <option th:selected="${order.orderStatus} == '배송준비'" value="배송준비">배송준비</option>
+                    <option th:selected="${order.orderStatus} == '배송완료'" value="배송완료">배송완료</option>
                 </select>
             </td>
             <td th:text="${order.memberName}"></td>

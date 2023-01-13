@@ -33,8 +33,10 @@ public class ItemController {
     }
     //상품 메인
     @GetMapping("/item/main")
-    public String findAll(@PageableDefault(page = 1,size = 5)Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort){
-        Page<ItemDTO> itemDTOList = itemService.findAll(pageable, sort);
+    public String findAll(@PageableDefault(page = 1,size = 5)Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort
+            , @RequestParam(required = false , value = "search", defaultValue = "") String search,
+                          @RequestParam(required = false , value = "category", defaultValue = "") String category){
+        Page<ItemDTO> itemDTOList = itemService.findAll(pageable, sort, search , category);
         if(itemDTOList.getTotalElements() == 0){
             model.addAttribute("message","null");
         }
@@ -47,6 +49,8 @@ public class ItemController {
         model.addAttribute("sort", sort);
         model.addAttribute("size", pageable.getPageSize());
         model.addAttribute("page", pageable.getPageNumber());
+        model.addAttribute("search", search);
+        model.addAttribute("category", category);
         return "itemPages/itemMain";
     }
     //상품 상세조회

@@ -1,8 +1,10 @@
 package com.example.shoppingmall.service;
 
 import com.example.shoppingmall.dto.ItemDTO;
+import com.example.shoppingmall.dto.QuestionDTO;
 import com.example.shoppingmall.entity.ItemEntity;
 import com.example.shoppingmall.entity.ItemFileEntity;
+import com.example.shoppingmall.entity.QuestionEntity;
 import com.example.shoppingmall.repository.CommentRepository;
 import com.example.shoppingmall.repository.ItemFileRepository;
 import com.example.shoppingmall.repository.ItemRepository;
@@ -53,15 +55,21 @@ public class ItemService {
     }
 
     @Transactional
-    public Page<ItemDTO> findAll(Pageable pageable, String sort) {
+    public Page<ItemDTO> findAll(Pageable pageable, String sort, String search, String category) {
         int page = pageable.getPageNumber() - 1;
         int pageLimit = pageable.getPageSize();
         Page<ItemEntity> itemEntityList = itemRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, sort)));
         if (sort.equals("itemPrice")) {
-            itemEntityList = itemRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.ASC, sort)));
+            itemEntityList = itemRepository.findByItemNameContaining(search,PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.ASC, sort)));
             Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
             return itemDTOList;
         }
+        if (category.equals("itemName")) {
+            itemEntityList = itemRepository.findByItemNameContaining(search, PageRequest.of(page, pageLimit, Sort.by(sort).descending()));
+            Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
+            return itemDTOList;
+        }
+
         Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
         return itemDTOList;
     }
