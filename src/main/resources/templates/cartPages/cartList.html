@@ -95,6 +95,7 @@
 
     //체크박스
     const checkBox = (cart) => {
+        console.log("check박스 클릭")
         const length = document.getElementById("cartList").value;
         let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
         const allChk = document.getElementById('all_chk');
@@ -103,7 +104,7 @@
         } else {
             allChk.checked = false;
         }
-
+        console.log("체크박스 이프문 실행완료")
         checkPrice();
     }
 
@@ -182,6 +183,7 @@
                 console.log(cartResult);
                 document.querySelector(".item_price_total").innerHTML = itemPriceTotal - itemPrice;
                 document.getElementById("cartList").value = length - 1;
+                location.href= "/cart/list?userId="+[[${session.member.userId}]];
             },
             error: function () {
                 console.log("실패");

@@ -61,9 +61,13 @@
                 <div>
                     <textarea class="form-control" rows="5" th:text="${question.questionContents}"></textarea>
                 </div>
-                <div>
+                <div th:if="${session.member.userId} == 'admin'">
                     <input id="replyContents" type="text" value="" name="replyContents" class="form-control" style="display: inline">
-                    <button type="button" class="btn btn-primary" onclick="reply()">댓글달기</button>
+                    <button type="button" class="btn btn-primary" style="display: inline" onclick="reply()">댓글달기</button>
+                    <button type="button" class="btn btn-default" style="float:right ; display: inline" onclick="questionList()">목록으로</button>
+                </div>
+                <div th:unless="${session.member.userId} == 'admin'" style="display: inline">
+                    <button type="button" class="btn btn-default" style="float:right ; display: inline" onclick="questionList()">목록으로</button>
                 </div>
 
             </div>
@@ -94,6 +98,10 @@
 
 </body>
 <script th:inline="javascript">
+    const questionList = () => {
+      location.href = "/question/list";
+    }
+
     const reply = () => {
         console.log("reply");
         const memberId = [[${session.member.id}]];
