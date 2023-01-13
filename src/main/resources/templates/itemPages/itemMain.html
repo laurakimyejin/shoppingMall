@@ -16,9 +16,9 @@
             <a th:href="@{/item/main(page=${page} ,sort='id' , size=${size})}"
                th:style="${sort.equals('id')} ? 'color: red' " style="color: black">최신순</a>
             <a th:href="@{/item/main(page=${page} ,sort='itemPrice' , size=${size})}"
-               th:style="${sort.equals('itemPrice')} ? 'color: red' "  style="color: black">낮은가격순</a>
+               th:style="${sort.equals('itemPrice')} ? 'color: red' " style="color: black">낮은가격순</a>
             <a th:href="@{/item/main(page=${page} ,sort='itemSellCount' , size=${size})}"
-               th:style="${sort.equals('itemSellCount')} ? 'color: red' "  style="color: black">판매순</a>
+               th:style="${sort.equals('itemSellCount')} ? 'color: red' " style="color: black">판매순</a>
         </div>
 
 
@@ -44,9 +44,9 @@
 
 <div class="container">
     <table class="table table-striped table-hover text-center mt-5" th:if="${message} != 'null'">
-        <div>
+        <div style="text-align: center">
             <div th:each="item: ${itemList}">
-                <div class="item  col-xs-3 col-md-4">
+                <div class="item  col-xs-3 col-md-4" style="width: 240px">
                     <div class="thumbnail">
                         <div th:if="${item.fileAttachedItem == 1}">
                             <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="200" height="150">
@@ -54,23 +54,21 @@
                         <div th:if="${item.fileAttachedItem == 0}">
                             이미지 미등록
                         </div>
-                        <div th:text="${item.itemPrice}">
-                        </div>
-                        <div class="category">
-                            <h5 th:text="${item.itemCategory}"></h5>
-                        </div>
+                        <p class="read"><a  style=" font: italic 1em Georgia, serif ; color: green;" th:href="@{/item/(itemId=${item.id})}"
+                                           th:text="${item.itemName}"></a></p>
+
                         <div class="caption">
                             <div class="row">
-                                <div class="col-xs-12 col-md-6">
-                                    <p class="read"><a th:href="@{/item/(itemId=${item.id})}"
-                                                       th:text="${item.itemName}"></a></p>
+                                <div class="col-xs-12 col-md-8" style="text-align: center">
+                                    <div style="text-decoration-color: chartreuse;padding-left: 65px;text-align: center">
+                                        <em  style=" font: italic bold 1.5em/1em Georgia, serif ;" th:text="${#numbers.formatCurrency(item.itemPrice)}"></em>
+                                    </div>
                                     <div th:if="${!session.isEmpty()} and ${session.member.userId} == 'admin' ">
                                         <button class="btn btn-warning" th:onclick="updateReq([[${item}]])">상품 수정
                                         </button>
                                         <button class="btn btn-warning" th:onclick="deleteReq([[${item}]])">상품 삭제
                                         </button>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -79,7 +77,6 @@
             </div>
         </div>
     </table>
-
 
 
     <div class="container" style="text-align: center">
