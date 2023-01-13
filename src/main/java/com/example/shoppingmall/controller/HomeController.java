@@ -21,8 +21,10 @@ public class HomeController {
     final ItemService itemService;
 
     @GetMapping("/")
-    public String findAll(@PageableDefault(page = 1) Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort){
-        Page<ItemDTO> itemDTOList = itemService.findAll(pageable, sort);
+    public String findAll(@PageableDefault(page = 1) Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort
+            , @RequestParam(required = false , value = "search", defaultValue = "") String search,
+                          @RequestParam(required = false , value = "category", defaultValue = "") String category){
+        Page<ItemDTO> itemDTOList = itemService.findAll(pageable, sort , search , category);
         if (itemDTOList.isEmpty()){
             model.addAttribute("message", "null");
         }
