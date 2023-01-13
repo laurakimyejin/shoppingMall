@@ -1,7 +1,7 @@
 
 .star-container {
     display: flex;
-    width: 350px;
+    width: 100px;
     flex-direction: row-reverse;
 }
 
