@@ -67,9 +67,9 @@ a:active { color: red;}
 button {
     height: 3rem;
     font-size: 1rem;
-    padding: 10px 30px;
-    border: 1px solid #ccc;
-    background: rgb(99,102,106);
+    /*padding: 10px 30px;*/
+    /*border: 1px solid #ccc;*/
+    /*background: rgb(99,102,106);*/
     color: white;
     transition: 0.2s;
 }
