@@ -110,11 +110,10 @@
                     <input type="hidden" id="sample6_extraAddress" placeholder="참고항목" name="extraAddress">
                 </section>
 
-
                 <section>
                     <div>
-                        <!--<button id="check_module" type="button" onclick="requestPay()">테스트 결제</button>-->
-                        <a id="check_module" role="button" onclick="requestPay()"><img th:src="@{/img/kakaoPayLogo.jpg}" width="60px" height="30px" style="width: 60px;"></a>
+                        <button id="check_module" type="button" onclick="requestPay()"><img th:src="@{/img/kakaoPayLogo.jpg}" width="60px" height="30px" style="width: 60px;"></button>
+<!--                        <a id="check_module" role="button" onclick="requestPay()"><img th:src="@{/img/kakaoPayLogo.jpg}" width="60px" height="30px" style="width: 60px;"></a>-->
                     </div>
                 </section>
 
@@ -125,7 +124,6 @@
 </div>
 </body>
 <script th:inline="javascript">
-
     function requestPay() {
         const itemName = document.getElementById("itemName").value;
         let totalPrice = document.getElementById("totalPrice").value;
@@ -137,34 +135,39 @@
         const extraAddress = document.getElementById("sample6_extraAddress").value;
         const postcode = document.getElementById("sample6_postcode").value;
         const form = document.querySelector("form");
-        IMP.init('imp05030142'); //iamport 대신 자신의 "가맹점 식별코드"를 사용
-        IMP.request_pay({
-            pg: "kakaopay",
-            pay_method: "card",
-            merchant_uid: 'merchant_' + new Date().getTime(),
-            name: itemName,
-            amount: totalPrice,
-            buyer_email: memberEmail,
-            buyer_name: memberName,
-            buyer_tel: memberMobile,
-            buyer_addr: memberAddress + detailAddress + extraAddress,
-            buyer_postcode: postcode,
-        }, function (rsp) { // callback
-            if (rsp.success) {
-                form.submit();
-                console.log(rsp);
-                var msg = '결제가 완료되었습니다.\n';
-                msg += '고유ID : ' + rsp.imp_uid + "\n";
-                msg += '상점 거래ID : ' + rsp.merchant_uid + "\n";
-                msg += '결제 금액 : ' + rsp.paid_amount + '원\n';
-                msg += '카드 승인번호 : ' + rsp.apply_num;
-            } else {
-                console.log(rsp);
-                var msg = '결제에 실패하였습니다.\n';
-                msg += '에러내용 : ' + rsp.error_msg;
-            }
-            alert(msg);
-        });
+
+        if (memberAddress === "" || detailAddress === "" || postcode === "") {
+            alert("주소를 입력해주세요.");
+        } else {
+            IMP.init('imp05030142'); //iamport 대신 자신의 "가맹점 식별코드"를 사용
+            IMP.request_pay({
+                pg: "kakaopay",
+                pay_method: "card",
+                merchant_uid: 'merchant_' + new Date().getTime(),
+                name: itemName,
+                amount: totalPrice,
+                buyer_email: memberEmail,
+                buyer_name: memberName,
+                buyer_tel: memberMobile,
+                buyer_addr: memberAddress + detailAddress + extraAddress,
+                buyer_postcode: postcode,
+            }, function (rsp) { // callback
+                if (rsp.success) {
+                    form.submit();
+                    console.log(rsp);
+                    var msg = '결제가 완료되었습니다.\n';
+                    msg += '고유ID : ' + rsp.imp_uid + "\n";
+                    msg += '상점 거래ID : ' + rsp.merchant_uid + "\n";
+                    msg += '결제 금액 : ' + rsp.paid_amount + '원\n';
+                    msg += '카드 승인번호 : ' + rsp.apply_num;
+                } else {
+                    console.log(rsp);
+                    var msg = '결제에 실패하였습니다.\n';
+                    msg += '에러내용 : ' + rsp.error_msg;
+                }
+                alert(msg);
+            });
+        }
     }
 
 
