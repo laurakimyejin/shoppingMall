@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!--  폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap"
+          rel="stylesheet">
     <style>
-        .contentContainer {
-            width: 500px;
-            height: 500px;
-            left: 500px;
-            top: 500px;
-            /* Rectangle 1 */
+        *{
+            font-family: 'Jua', sans-serif;
+            font-family: 'Nanum Gothic', sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .main{
+            width: 600px;
+            height: 409px;
+            left: 411px;
+            top: 85px;
+            /*가운데 정렬 margin: auto*/
+            margin-left: auto;
+            margin-right: auto;
         }
 
         td {
@@ -21,12 +33,6 @@
             width: 20px;
         }
 
-        .main {
-            width: 600px;
-            margin-top: 200px;
-            margin-left: 500px;
-        }
-
         textarea {
             width: 500px;
             height: 200px;
@@ -34,7 +40,7 @@
 
     </style>
 </head>
-<body>
+<body style="background-color: white">
 <th:block th:replace="commonPages/header :: header"></th:block>
 
 
@@ -45,16 +51,16 @@
                 <table class="table">
                     <tr>
                         <th>작성자</th>
-                        <td><input type="text" th:value="${session.member.memberName}" readonly name="questionName">
+                        <td><input type="text" th:value="${session.member.memberName}" readonly name="questionName" class="form-control">
                         </td>
                     </tr>
                     <tr>
                         <th>제목</th>
-                        <td><input type="text" name="questionTitle" placeholder="제목"></td>
+                        <td><input type="text" name="questionTitle" placeholder="제목" class="form-control"></td>
                     </tr>
                 </table>
-                <textarea name="questionContents" cols="30" rows="10" placeholder="내용"></textarea>
-                <input type="submit" value="저장">
+                <textarea name="questionContents" cols="30" rows="10" placeholder="내용을 입력하세요." class="form-control"></textarea>
+                <input type="submit" value="저장" class="btn btn-success" style="margin-top: 10px;float: right">
             </form>
         </div>
 </div>

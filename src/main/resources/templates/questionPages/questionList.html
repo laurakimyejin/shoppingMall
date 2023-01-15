@@ -5,9 +5,33 @@
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
+    <!--  폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap"
+          rel="stylesheet">
+    <style>
+        *{
+            font-family: 'Jua', sans-serif;
+            font-family: 'Nanum Gothic', sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        span{
+            color: seagreen;
+        }
+        .pagination>.active>a,
+        .pagination>.active>a:focus,
+        .pagination>.active>a:hover,
+        .pagination>.active>span,
+        .pagination>.active>span:focus,
+        .pagination>.active>span:hover {
+            /*css 우선순위 강제적용*/
+            background-color: seagreen !important;
+            border-color: seagreen !important;
+        }
+    </style>
 </head>
-<body>
+<body style="background-color: white">
 <th:block th:replace="commonPages/header :: header"></th:block>
 <div class="container" id="question-list">
     <table class="table table-striped table-hover text-center" th:if="${message} != 'null'">
@@ -15,14 +39,14 @@
             <th style="text-align: center">번호</th>
             <th style="text-align: center">제목</th>
             <th style="text-align: center">작성자</th>
-            <th style="text-align: center">날자</th>
-            <th style="text-align: center">답변여부</th>
+            <th style="text-align: center; width: 116px;">날짜</th>
+            <th style="text-align: center; width: 116px;">답변여부</th>
         </tr>
         <tr style="text-align: center" th:each="question: ${questionList}">
             <td th:text="${question.id}"></td>
             <td><a th:href="@{|/question/${question.id}|}" th:text="${question.questionTitle}"></a></td>
             <td th:text="${question.questionName}"></td>
-            <td th:text="*{#temporals.format(question.getQuestionCreatedTime(), 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="*{#temporals.format(question.getQuestionCreatedTime(), 'yyyy-MM-dd')}"></td>
             <td th:text="${question.questionStatus}"></td>
         </tr>
     </table>
@@ -43,7 +67,7 @@
         </div>
     </div>
 
-    <a style="float: left" href="/question/save" role="button">글작성하기</a>
+    <a style="float: left; margin-top: 20px" href="/question/save" role="button" class="btn btn-success">문의하기</a>
 </div>
 
 
@@ -90,12 +114,6 @@
         </li>
     </ul>
 </div>
-
-
-
-
-
-
 </body>
 
 <script th:inline="javascript">
