@@ -16,6 +16,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +28,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+
+import static com.example.shoppingmall.repository.ItemRepository.entityManager;
 
 @Service
 @RequiredArgsConstructor
@@ -60,7 +66,7 @@ public class ItemService {
         int pageLimit = pageable.getPageSize();
         Page<ItemEntity> itemEntityList = itemRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, sort)));
         if (sort.equals("itemPrice")) {
-            itemEntityList = itemRepository.findByItemNameContaining(search,PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.ASC, sort)));
+            itemEntityList = itemRepository.findByItemNameContaining(search, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.ASC, sort)));
             Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
             return itemDTOList;
         }
@@ -128,6 +134,74 @@ public class ItemService {
             return null;
         }
     }
+
+    @Transactional
+    public Page<ItemDTO> findSmall(Pageable pageable, String sort, String search, String category) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = pageable.getPageSize();
+        Page<ItemEntity> itemEntityList = itemRepository.findByItemCategory("small", PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, sort)));
+        if (sort.equals("itemPrice")) {
+            itemEntityList = itemRepository.findByItemNameContainingAndItemCategory(search, "small", PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.ASC, sort)));
+            Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
+            return itemDTOList;
+        }
+        if (category.equals("itemName")) {
+            itemEntityList = itemRepository.findByItemNameContainingAndItemCategory(search, "small", PageRequest.of(page, pageLimit, Sort.by(sort).descending()));
+            Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
+            return itemDTOList;
+        }
+
+        Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
+        return itemDTOList;
+    }
+
+
+    @Transactional
+    public Page<ItemDTO> findMedium(Pageable pageable, String sort, String search, String category) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = pageable.getPageSize();
+        Page<ItemEntity> itemEntityList = itemRepository.findByItemCategory("middle", PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, sort)));
+        if (sort.equals("itemPrice")) {
+            System.out.println("1번");
+            itemEntityList = itemRepository.findByItemCategoryAndItemNameLike("middle",search,PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.ASC, sort)));
+            Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
+            return itemDTOList;
+        }
+        if (category.equals("itemName")) {
+            System.out.println("2번");
+            itemEntityList = itemRepository.findByItemCategoryAndItemNameLike("middle",search, PageRequest.of(page, pageLimit, Sort.by(sort).descending()));
+            Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
+            return itemDTOList;
+
+        }
+        System.out.println("3번");
+        Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
+        return itemDTOList;
+    }
+
+
+    @Transactional
+    public Page<ItemDTO> findLarge(Pageable pageable, String sort, String search, String category) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = pageable.getPageSize();
+        Page<ItemEntity> itemEntityList = itemRepository.findByItemCategory("large", PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, sort)));
+        if (sort.equals("itemPrice")) {
+            itemEntityList = itemRepository.findByItemNameContainingAndItemCategory(search,"large",PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.ASC, sort)));
+            Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
+            return itemDTOList;
+        }
+        if (category.equals("itemName")) {
+            itemEntityList = itemRepository.findByItemNameContainingAndItemCategory(search,"large", PageRequest.of(page, pageLimit, Sort.by(sort).descending()));
+            Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
+            return itemDTOList;
+        }
+
+        Page<ItemDTO> itemDTOList = itemEntityList.map(ItemDTO::toItemDTO);
+        return itemDTOList;
+    }
+
+
+
 
 
 }

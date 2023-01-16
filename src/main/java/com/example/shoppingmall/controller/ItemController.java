@@ -125,4 +125,79 @@ public class ItemController {
         return "itemPages/itemDetail";
     }
 
-}
+    @GetMapping("/item/small")
+    public String findSmall(@PageableDefault(page = 1,size = 5)Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort
+            , @RequestParam(required = false , value = "search", defaultValue = "") String search,
+                          @RequestParam(required = false , value = "category", defaultValue = "") String category){
+        Page<ItemDTO> itemDTOList = itemService.findSmall(pageable, sort, search , category);
+        if(itemDTOList.getTotalElements() == 0){
+            model.addAttribute("message","null");
+        }
+        model.addAttribute("itemList",itemDTOList);
+        int blockLimit = 3;
+        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = ((startPage + blockLimit - 1) < itemDTOList.getTotalPages()) ? startPage + blockLimit - 1 : itemDTOList.getTotalPages();
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("sort", sort);
+        model.addAttribute("size", pageable.getPageSize());
+        model.addAttribute("page", pageable.getPageNumber());
+        model.addAttribute("search", search);
+        model.addAttribute("category", category);
+        return "itemPages/itemSmall";
+    }
+
+    @GetMapping("/item/medium")
+    public String findMedium(@PageableDefault(page = 1,size = 5)Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort
+            , @RequestParam(required = false , value = "search", defaultValue = "") String search,
+                            @RequestParam(required = false , value = "category", defaultValue = "") String category) {
+        System.out.println("pageable = " + pageable + ", model = " + model + ", sort = " + sort + ", search = " + search + ", category = " + category);
+        Page<ItemDTO> itemDTOList = itemService.findMedium(pageable, sort, search, category);
+        if (itemDTOList.getTotalElements() == 0) {
+            model.addAttribute("message", "null");
+        }
+        model.addAttribute("itemList", itemDTOList);
+        int blockLimit = 3;
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = ((startPage + blockLimit - 1) < itemDTOList.getTotalPages()) ? startPage + blockLimit - 1 : itemDTOList.getTotalPages();
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("sort", sort);
+        model.addAttribute("size", pageable.getPageSize());
+        model.addAttribute("page", pageable.getPageNumber());
+        model.addAttribute("search", search);
+        model.addAttribute("category", category);
+        return "itemPages/itemMedium";
+    }
+
+        @GetMapping("/item/large")
+        public String findLarge(@PageableDefault(page = 1,size = 5)Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort
+                , @RequestParam(required = false , value = "search", defaultValue = "") String search,
+                @RequestParam(required = false , value = "category", defaultValue = "") String category){
+            Page<ItemDTO> itemDTOList = itemService.findLarge(pageable, sort, search , category);
+            if(itemDTOList.getTotalElements() == 0){
+                model.addAttribute("message","null");
+            }
+            model.addAttribute("itemList",itemDTOList);
+            int blockLimit = 3;
+            int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+            int endPage = ((startPage + blockLimit - 1) < itemDTOList.getTotalPages()) ? startPage + blockLimit - 1 : itemDTOList.getTotalPages();
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+            model.addAttribute("sort", sort);
+            model.addAttribute("size", pageable.getPageSize());
+            model.addAttribute("page", pageable.getPageNumber());
+            model.addAttribute("search", search);
+            model.addAttribute("category", category);
+            return "itemPages/itemLarge";
+        }
+    }
+
+
+
+
+
+
+
+
+
