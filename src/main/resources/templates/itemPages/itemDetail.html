@@ -25,7 +25,7 @@
     <div th:if="${item.fileAttachedItem == 1}" class="image-form">
         <!--                <th>파일</th>-->
         <div>
-            <input type="hidden" th:value="${item.storedFileNameItem.get(0)}" name="itemImage">
+            <input type="hidden" th:value="${item.storedFileNameItem.get(0)}" name="itemImage" id="itemImage">
             <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="300" height="300" id="lgImage">
         </div>
         <div th:each="fileName: ${item.storedFileNameItem}">
@@ -244,5 +244,30 @@
             document.getElementById("totalPrice").innerHTML = totalPrice + "원";
         }
     }
+
+    //최근본상품을 페이지호출시 쿠키에저장
+
+
+   window.onload = function(){
+        console.log("최근본상품 호출");
+        const itemId = document.getElementById("itemId").value;
+        const itemImage = document.getElementById("itemImage").value;
+        const item = {
+            itemId: itemId,
+            itemImage: itemImage
+        }
+        console.log(item);
+        const itemJson = JSON.stringify(item);
+        console.log(itemJson);
+        const cookie = document.cookie;
+        console.log(cookie);
+        if (cookie == "") {
+            document.cookie = "item=" + itemJson;
+        } else {
+            document.cookie = "item=" + itemJson;
+        }
+    }
+
+
 </script>
 </html>
