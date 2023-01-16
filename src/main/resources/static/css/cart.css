@@ -30,3 +30,9 @@
 .cart_table .btn_box{padding: 4rem; text-align: center}
 .cart_table .btn_box .btn{padding: 10px 0; width: 24%; margin: 0 1%;}
 .cart_table .btn_box .black-btn{float: none}
+
+* {
+    font-family: 'Jua', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+}

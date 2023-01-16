@@ -47,10 +47,11 @@
         <table class="table">
             <tr>
                 <th>상품</th>
-                <th style="padding-left: 250px;">상품이름</th>
-                <th style="width: 136px;">상품가격</th>
-                <th style="width: 56px;">상품수량</th>
-                <th style="width: 58px;">총가격</th>
+                <th style="padding-left: 150px;">상품이름</th>
+                <th style="width: 136px; padding-left: 40px">상품가격</th>
+                <th style="width: 56px; padding-left: 40px;">상품수량</th>
+                <th style="width: 116px; padding-left: 50px;">배송비</th>
+                <th style="width: 216px; padding-left: 60px;">총가격</th>
             </tr>
             <tr th:each="item: ${cartList}">
                 <input type="hidden" name="cartItemId" th:value="${item.id}">
@@ -62,29 +63,30 @@
                 <td>
                     <input type="number" id="itemCountInput" min="1" max="100" th:value="${item.cartCount}"
                            name="orderCount"
-                           th:onchange="total([[${item}]])" readonly>
+                           th:onchange="total([[${item}]])" style="padding-left: 50px" readonly>
                 </td>
+                <td style="padding-left: 55px;">무료</td>
                 <td>
                     <input type="text" th:value="${item.itemPrice * item.cartCount}+'원'" name="orderPrice"
-                           th:id="totalPrice+${item.id}"
+                           th:id="totalPrice+${item.id}" style="padding-left: 50px;"
                            readonly>
                 </td>
 
             </tr>
-            <tr>
-                <td colspan="4">총 결제금액</td>
-                <td><input type="text" name="itemPriceTotal" id="itemPriceTotal" th:value="${itemPriceTotal}+'원'" readonly>
-                </td>
-            </tr>
         </table>
+                <h3 style="float: left">총 결제금액</h3>
+                <h2 name="itemPriceTotal" id="itemPriceTotal" th:text="${itemPriceTotal}+'원'" style="float: right;color: seagreen; font-weight: bold">
+                </h2>
+
+
 
 
         <article class="as">
 
-            <article class="info">
+            <article class="info" style="margin-top: 30px">
 
                 <header>
-                    <h2>주문 신청</h2>
+                    <h2 style="padding-top: 150px;"> 주문 신청</h2>
 
                     <div>
                         <p>①&nbsp고객정보 입력</p>
@@ -103,6 +105,10 @@
                         <input type="text" th:value="${session.member.memberMobile}" readonly style="display: block"
                                name="memberMobile" id="memberMobile">
                     </div>
+                    <div>
+                    <input type="text" th:value="${session.member.memberEmail}" readonly style="display: block"
+                           name="memberEmail" id="memberEmail">
+                    </div>
                 </section>
 
 
@@ -119,9 +125,8 @@
 
                 <section>
                     <div>
-                        <input type="text" th:value="${session.member.memberEmail}" readonly style="display: block"
-                               name="memberEmail" id="memberEmail">
-                        <button id="check_module" type="button" onclick="requestPay()">테스트 결제</button>
+                        <button id="check_module" type="button" onclick="requestPay()"><img th:src="@{/img/kakaoPayLogo.jpg}" width="60px" height="30px" style="width: 60px;"></button>
+<!--                        <a id="check_module" role="button" onclick="requestPay()"><img th:src="@{/img/kakaoPayLogo.jpg}" width="60px" height="30px" style="width: 60px;"></a>-->
                     </div>
                 </section>
             </article>
@@ -186,34 +191,38 @@
         const extraAddress = document.getElementById("sample6_extraAddress").value;
         const postcode = document.getElementById("sample6_postcode").value;
         const form = document.querySelector("form");
-        IMP.init('imp05030142'); //iamport 대신 자신의 "가맹점 식별코드"를 사용
-        IMP.request_pay({
-            pg: "kakaopay",
-            pay_method: "card",
-            merchant_uid: 'merchant_' + new Date().getTime(),
-            name: itemName,
-            amount: totalPrice,
-            buyer_email: memberEmail,
-            buyer_name: memberName,
-            buyer_tel: memberMobile,
-            buyer_addr: memberAddress + detailAddress + extraAddress,
-            buyer_postcode: postcode,
-        }, function (rsp) { // callback
-            if (rsp.success) {
-                console.log(rsp);
-                test();
-                var msg = '결제가 완료되었습니다.\n';
-                msg += '고유ID : ' + rsp.imp_uid + "\n";
-                msg += '상점 거래ID : ' + rsp.merchant_uid + "\n";
-                msg += '결제 금액 : ' + rsp.paid_amount + '원\n';
-                msg += '카드 승인번호 : ' + rsp.apply_num;
-            } else {
-                console.log(rsp);
-                var msg = '결제에 실패하였습니다.\n';
-                msg += '에러내용 : ' + rsp.error_msg;
-            }
-            alert(msg);
-        });
+        if (memberAddress === "" || detailAddress === "" || postcode === "") {
+            alert("주소를 입력해주세요.");
+        } else {
+            IMP.init('imp05030142'); //iamport 대신 자신의 "가맹점 식별코드"를 사용
+            IMP.request_pay({
+                pg: "kakaopay",
+                pay_method: "card",
+                merchant_uid: 'merchant_' + new Date().getTime(),
+                name: itemName,
+                amount: totalPrice,
+                buyer_email: memberEmail,
+                buyer_name: memberName,
+                buyer_tel: memberMobile,
+                buyer_addr: memberAddress + detailAddress + extraAddress,
+                buyer_postcode: postcode,
+            }, function (rsp) { // callback
+                if (rsp.success) {
+                    console.log(rsp);
+                    test();
+                    var msg = '결제가 완료되었습니다.\n';
+                    msg += '고유ID : ' + rsp.imp_uid + "\n";
+                    msg += '상점 거래ID : ' + rsp.merchant_uid + "\n";
+                    msg += '결제 금액 : ' + rsp.paid_amount + '원\n';
+                    msg += '카드 승인번호 : ' + rsp.apply_num;
+                } else {
+                    console.log(rsp);
+                    var msg = '결제에 실패하였습니다.\n';
+                    msg += '에러내용 : ' + rsp.error_msg;
+                }
+                alert(msg);
+            });
+        }
     }
 
 

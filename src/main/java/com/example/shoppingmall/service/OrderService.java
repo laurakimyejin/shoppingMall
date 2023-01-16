@@ -30,13 +30,17 @@ public class OrderService {
     private final OrderReadyRepository orderReadyRepository;
 
     public void save(OrderDTO orderDTO) {
+        System.out.println("세이브넘어옴orderDTO = " + orderDTO);
         Optional<MemberEntity> memberEntity1 = memberRepository.findById(orderDTO.getMemberId());
         ItemEntity itemEntity1 = itemRepository.findById(orderDTO.getItemId()).get();
         itemEntity1.setItemSellCount(itemEntity1.getItemSellCount() + orderDTO.getOrderCount());
+        System.out.println("구매수량"+orderDTO.getOrderCount());
+        System.out.println("재고수량"+itemEntity1.getItemCount());
+        itemEntity1.setItemCount(itemEntity1.getItemCount() - orderDTO.getOrderCount());
         itemRepository.save(itemEntity1);
         if (memberEntity1.isPresent()) {
             MemberEntity memberEntity2 = memberEntity1.get();
-            orderRepository.deleteByMemberEntity(memberEntity2);
+//            orderRepository.deleteByMemberEntity(memberEntity2);
             memberEntity2.setMemberAddress(orderDTO.getMemberAddress());
             memberEntity2.setDetailAddress(orderDTO.getDetailAddress());
             memberEntity2.setExtraAddress(orderDTO.getExtraAddress());
@@ -121,6 +125,7 @@ public class OrderService {
             OrderEntity orderEntity = new OrderEntity();
             ItemEntity itemEntity = itemRepository.findByItemName(itemDTOList.getJSONObject(i).getString("itemName")).get();
             itemEntity.setItemSellCount(itemEntity.getItemSellCount() + itemDTOList.getJSONObject(i).getInt("cartCount"));
+            itemEntity.setItemCount(itemEntity.getItemCount() - itemDTOList.getJSONObject(i).getInt("cartCount"));
             orderEntity.setOrderStatus("주문완료");
             orderEntity.setReview("리뷰작성");
             orderEntity.setMemberEntity(memberEntity);
