@@ -51,10 +51,17 @@
 </body>
 
 <script th:inline="javascript">
+    $('#userId, #pass').on('keydown', function(e){
+        if (e.code == 'Enter'){
+            $('.btn_login').click()
+        }
+    })
+
     const memberLogin = () => {
         const email = document.getElementById("userId").value;
         const pw = document.getElementById("pass").value;
         const url = [[${redirectURL}]];
+
         $.ajax({
             type: "post",
             url: "/member/login",
