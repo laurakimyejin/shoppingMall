@@ -12,6 +12,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
   <link rel="stylesheet" th:href="@{/css/save.css}" type="text/css">
+
+
 </head>
 <body style="background-color: white">
 <th:block th:replace="commonPages/header :: header"></th:block>
@@ -53,20 +55,126 @@
     <div class=email-container>
       <label for="memberEmail" >이메일</label>
       <input type="text" class="width-450 form-control" name="memberEmail" id="memberEmail" onblur="check_email()" placeholder="이메일 주소 입력 (___@___ 형식으로 입력)">
+      <input type="button" id="checkEmail" value="이메일확인" onclick="sendEmail()">
       <span id="emailError"></span>
+    </div>
+
+    <div class=mailconfirm-container>
+      <label for="mailconfirm" >인증번호</label>
+      <input type="text" class="width-450 form-control" name="mailconfirm" id="mailconfirm" placeholder="인증번호를 입력해주세요">
+      <input type="button" id="mailconfirm2" value="인증번호확인" onclick="mailConfirm()">
     </div>
 
     <div class="exform_txt"><label>표시는 필수적으로 입력해주셔야 가입이 가능합니다.</label></div>
 
     <div class="btn-container">
-      <button type="submit" id="joinBtn" class="width-half height-30 form-control form-group group btn-group btn btn-success mt-4" name="join">회원가입</button>
+      <input onclick="joinUs()" type="button" id="joinBtn" class="width-half height-30 form-control form-group group btn-group btn btn-success mt-4" name="join" value="회원가입">
     </div>
   </fieldset>
 </form>
 </div>
+<input type="hidden" value="" id="mailconfirmCheck">
 </body>
 
 <script th:inline="javascript">
+  const joinUs = () => {
+    const uid = document.getElementById('uid').value;
+    const pwd = document.getElementById('pwd').value;
+    const rePwd = document.getElementById('rePwd').value;
+    const uname = document.getElementById('uname').value;
+    const memberMobile = document.getElementById('memberMobile').value;
+    const memberEmail = document.getElementById('memberEmail').value;
+    const mailconfirm = document.getElementById('mailconfirm').value;
+    const mailconfirmCheck = document.getElementById('mailconfirmCheck').value;
+
+    if (uid === '') {
+      alert('아이디를 입력해주세요');
+      return false;
+    }
+    if (pwd === '') {
+      alert('비밀번호를 입력해주세요');
+      return false;
+    }
+    if (rePwd === '') {
+      alert('비밀번호를 확인해주세요');
+      return false;
+    }
+    if (rePwd !== pwd) {
+      alert('비밀번호가 일치하지 않습니다.');
+      return false;
+    }
+    if (uname === '') {
+      alert('이름을 입력해주세요');
+      return false;
+    }
+    if (memberMobile === '') {
+      alert('전화번호를 입력해주세요');
+      return false;
+    }
+    if (memberMobile.length !== 13) {
+      alert('전화번호를 정확히 입력해주세요');
+      return false;
+    }
+    if (memberEmail === '') {
+      alert('이메일을 입력해주세요');
+      return false;
+    }
+    if (memberEmail.indexOf('@') === -1) {
+      alert('이메일을 정확히 입력해주세요');
+      return false;
+    }
+    if (mailconfirm === '') {
+      alert('인증번호를 입력해주세요');
+      return false;
+    }
+    if (mailconfirmCheck === '') {
+      alert('인증번호를 확인해주세요');
+      return false;
+    }
+    if (mailconfirm !== mailconfirmCheck) {
+      alert('인증번호가 일치하지 않습니다.');
+      return false;
+    }
+    document.join.submit();
+
+  }
+
+
+  const sendEmail = () => {
+    console.log("이메일 중복확인");
+    $.ajax({
+      type : "POST",
+      url : "/member/mailConfirm",
+      data : {
+        "email" : document.getElementById("memberEmail").value
+      },
+      success : function(data){
+        alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
+        document.getElementById("mailconfirmCheck").value = data;
+        console.log("data : "+data);
+
+      }
+    })
+  }
+
+
+  // 이메일 인증번호 체크 함수
+ const mailConfirm = () => {
+    const mailconfirmCheck = document.getElementById("mailconfirmCheck").value;
+    const mailconfirm = document.getElementById("mailconfirm").value;
+    if (mailconfirmCheck == mailconfirm) {
+      alert("인증번호가 일치합니다.");
+      $("#joinBtn").removeAttr("disabled");
+    } else {
+      alert("인증번호가 일치하지 않습니다.");
+      $("#joinBtn").attr("disabled", "disabled");
+    }
+
+ }
+
+
+
+
 const check_id = () => {
   console.log("호출")
   const id = document.getElementById("uid").value;
