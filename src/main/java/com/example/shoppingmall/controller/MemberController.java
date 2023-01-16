@@ -154,7 +154,8 @@ public class MemberController {
     //회원 정보 수정
     @PostMapping("/update")
     public String update(@ModelAttribute MemberDTO memberDTO) {
-        String memberPassword = memberDTO.getMemberPasswordUpdate();
+//        String memberPassword = memberDTO.getMemberPasswordUpdate();
+        String memberPassword = memberDTO.getMemberPassword();
         memberDTO.setMemberPassword(memberPassword);
         memberService.update(memberDTO);
         return "index";
