@@ -25,8 +25,6 @@ public class QuestionDTO {
     private LocalDateTime questionUpdatedTime;
     private Long memberId;
 
-
-
     public static QuestionDTO toDTO(QuestionEntity questionEntity) {
         QuestionDTO questionDTO = new QuestionDTO();
         questionDTO.setId(questionEntity.getId());
