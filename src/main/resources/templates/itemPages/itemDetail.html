@@ -55,7 +55,7 @@
             <div th:unless="${item.itemCount == 0}">
                 <label style="margin-right: 40px">구매수량</label>
             <input type="number" id="itemCountInput" min="1" max="100" value="1" name="cartCount"
-                   onchange="total()" class="text-form">
+                   th:onchange="total([[${item.itemCount}]])" class="text-form">
             </div>
         </div>
         <div>
@@ -64,7 +64,7 @@
         </div>
         <div style="margin-bottom: 20px;">
             <label style="margin-right: 20px">총 상품 금액</label>
-            <div id="totalPrice" class="text-form"></div>
+            <div style="color: seagreen ; font-size:xx-large ; font-weight: bold" id="totalPrice" class="text-form" th:text="${item.itemPrice}+'원'"></div>
         </div>
 
 
@@ -225,17 +225,24 @@
         form.submit();
     }
     //구매수량
-    const total = () => {
+    const total = (itemCount) => {
+        console.log("수량")
         const orderCount2 = document.getElementById('itemCountInput').value;
         const itemPrice2 = [[${item.itemPrice}]];
         let orderCount = orderCount2;
         let itemPrice = itemPrice2;
         let totalPrice = orderCount * itemPrice;
-        console.log(totalPrice);
-        document.getElementById("totalPrice").innerHTML = totalPrice + "원";
-        document.getElementById("totalPrice").style.color = "seagreen";
-        document.getElementById("totalPrice").style.fontSize = "xx-large";
-        document.getElementById("totalPrice").style.fontWeight = "bold";
+        console.log(itemCount)
+        console.log(orderCount)
+        if(itemCount < orderCount){
+            alert("구매수량을 초과하였습니다.")
+            let totalPrice = itemPrice * 1;
+            document.getElementById('itemCountInput').value = 1;
+            document.getElementById("totalPrice").innerHTML = totalPrice + "원";
+        }else {
+            console.log(totalPrice);
+            document.getElementById("totalPrice").innerHTML = totalPrice + "원";
+        }
     }
 </script>
 </html>
