@@ -6,9 +6,54 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!--    ajax cdn-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--  폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap"
+          rel="stylesheet">
+    <style>
+        *{
+            font-family: 'Jua', sans-serif;
+            font-family: 'Nanum Gothic', sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .main{
+            width: 800px;
+            height: 409px;
+            left: 411px;
+            top: 85px;
+            margin-top: 50px;
+            /*가운데 정렬 margin: auto*/
+            margin-left: auto;
+            margin-right: auto;
+        }
+        span{
+            color: seagreen;
+        }
+        .pagination>.active>a:focus,
+        .pagination>.active>a:hover,
+        .pagination>.active>span,
+        .pagination>.active>span:focus,
+        .pagination>.active>span:hover {
+            /*css 우선순위 강제적용*/
+            background-color: seagreen !important;
+            border-color: seagreen !important;
+        }
+        .pagination>.active>a,
+        .pagination>.active>a:focus,
+        .pagination>.active>a:hover,
+        .pagination>.active>span,
+        .pagination>.active>span:focus,
+        .pagination>.active>span:hover {
+            /*css 우선순위 강제적용*/
+            background-color: seagreen !important;
+            border-color: seagreen !important;
+        }
+    </style>
 </head>
-<body>
+<body style="background-color: white">
 <th:block th:replace="commonPages/header :: header"></th:block>
+<div class="main">
 <div th:if="${orderList == 'empty'}">
     <p>주문내역이 없습니다.</p>
 </div>
@@ -36,9 +81,9 @@
         </tr>
     </table>
 </div>
+</div>
 
-
-<div class="container">
+<div class="container" style="text-align: center">
     <ul class="pagination justify-content-center">
         <li class="page-item">
             <!--첫페이지 요청 링크-->
