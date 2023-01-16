@@ -5,6 +5,7 @@
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/fe9e42f1d2.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -20,7 +21,15 @@
         </tr>
         <tr style="text-align: center" th:each="question: ${questionList}">
             <td th:text="${question.id}"></td>
-            <td><a th:href="@{|/question/${question.id}|}" th:text="${question.questionTitle}"></a></td>
+            <td>
+                <div th:if="${session.member != null}">
+                    <a th:if="${session.member.userId == 'admin' or question.questionName == session.member.memberName }" th:href="@{|/question/${question.id}|}" th:text="${question.questionTitle}"></a>
+                    <i th:unless="${session.member.userId == 'admin' or question.questionName == session.member.memberName }" class="fa-solid fa-lock">비밀글입니다.</i>
+                </div>
+                <div th:unless="${session.member != null}">
+                    <i class="fa-solid fa-lock">비밀글입니다.</i>
+                </div>
+            </td>
             <td th:text="${question.questionName}"></td>
             <td th:text="*{#temporals.format(question.getQuestionCreatedTime(), 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${question.questionStatus}"></td>
