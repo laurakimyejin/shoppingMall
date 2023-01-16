@@ -10,14 +10,33 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!--  //시간설정-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <!--  폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap"
+          rel="stylesheet">
     <style>
-        .contentContainer {
-            width: 500px;
-            height: 500px;
-            left: 500px;
-            top: 500px;
-            /* Rectangle 1 */
+        *{
+            font-family: 'Jua', sans-serif;
+            font-family: 'Nanum Gothic', sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
         }
+        .main{
+            width: 600px;
+            height: 409px;
+            left: 411px;
+            top: 85px;
+            /*가운데 정렬 margin: auto*/
+            margin-left: auto;
+            margin-right: auto;
+        }
+        /*.contentContainer {*/
+        /*    width: 500px;*/
+        /*    height: 500px;*/
+        /*    left: 500px;*/
+        /*    top: 500px;*/
+        /*    !* Rectangle 1 *!*/
+        /*}*/
 
         td {
             width: 200px;
@@ -27,15 +46,9 @@
             width: 100px;
         }
 
-        .main {
-            width: 600px;
-            margin-top: 200px;
-            margin-left: 500px;
-        }
-
     </style>
 </head>
-<body>
+<body style="background-color: white">
 <th:block th:replace="commonPages/header :: header"></th:block>
 <div>
     <div class="main">
@@ -62,12 +75,12 @@
                     <textarea class="form-control" rows="5" th:text="${question.questionContents}"></textarea>
                 </div>
                 <div th:if="${session.member.userId} == 'admin'">
-                    <input id="replyContents" type="text" value="" name="replyContents" class="form-control" style="display: inline">
-                    <button type="button" class="btn btn-primary" style="display: inline" onclick="reply()">댓글달기</button>
-                    <button type="button" class="btn btn-default" style="float:right ; display: inline" onclick="questionList()">목록으로</button>
+                    <input id="replyContents" type="text" value="" name="replyContents" class="form-control" style="display: inline" placeholder="답변내용">
+                    <button type="button" class="btn btn-warning" style="display: inline; margin-top: 10px" onclick="reply()">답변 작성</button>
+                    <button type="button" class="btn btn-default" style="float:right ; display: inline; margin-top: 10px" onclick="questionList()">목록</button>
                 </div>
                 <div th:unless="${session.member.userId} == 'admin'" style="display: inline">
-                    <button type="button" class="btn btn-default" style="float:right ; display: inline" onclick="questionList()">목록으로</button>
+                    <button type="button" class="btn btn-default" style="float:right; display: inline; margin-top: 10px" onclick="questionList()">목록</button>
                 </div>
 
             </div>
