@@ -2,6 +2,7 @@ package com.example.shoppingmall.controller;
 
 import com.example.shoppingmall.dto.MemberDTO;
 import com.example.shoppingmall.service.MemberService;
+import com.example.shoppingmall.service.RegisterMail;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Page;
@@ -39,6 +40,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
+    private final RegisterMail registerMail;
 
     //회원가입 화면
     @GetMapping("/save")
@@ -185,6 +187,18 @@ public class MemberController {
         session.invalidate();
         return "로그아웃";
     }
+
+    // 이메일 인증
+    @PostMapping("/mailConfirm")
+    @ResponseBody
+    String mailConfirm(@RequestParam("email") String email) throws Exception {
+        System.out.println("email = " + email);
+        String code = registerMail.sendSimpleMessage(email);
+        System.out.println("인증코드 : " + code);
+        return code;
+    }
+
+
 
 
 }
