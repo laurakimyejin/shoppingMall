@@ -58,7 +58,7 @@
                 <td class="box"><img class="profile" th:src="@{|/upload/${item.itemImage}}" alt=""></td>
                 <td><input id="itemName" type="text" name="orderName" th:value="${item.itemName}" class="form-control"
                            readonly></td>
-                <td><input type="text" name="itemPrice" th:id="${item.id}" th:value="${item.itemPrice}+'원'"
+                <td><input type="text" name="itemPrice" th:id="${item.id}" th:value="${#numbers.formatInteger(item.itemPrice,0,'COMMA')}+'원'"
                            class="form-control" readonly></td>
                 <td>
                     <input type="number" id="itemCountInput" min="1" max="100" th:value="${item.cartCount}"
@@ -67,7 +67,7 @@
                 </td>
                 <td style="padding-left: 55px;">무료</td>
                 <td>
-                    <input type="text" th:value="${item.itemPrice * item.cartCount}+'원'" name="orderPrice"
+                    <input type="text" th:value="${#numbers.formatInteger(item.itemPrice * item.cartCount,0,'COMMA')}+'원'" name="orderPrice"
                            th:id="totalPrice+${item.id}" style="padding-left: 50px;"
                            readonly>
                 </td>
@@ -245,7 +245,7 @@
         }
     }
 
-
+    //총가격
     const total = (item) => {
         console.log("함수호출")
         const itemCount = document.getElementById("itemCountInput").value;

@@ -15,7 +15,7 @@
 <body style="background-color: white">
 <th:block th:replace="commonPages/header :: header"></th:block>
 
-
+<div class="main">
 <div th:unless="${cartList == null}" class="cart_table">
     <p>장바구니</p>
 
@@ -34,18 +34,22 @@
                 <label th:for="${cart.id}"></label>
             </div>
             <div class="item_detail">
-                <img th:src="@{|/upload/${cart.itemImage}}" alt="" width="50" height="50">
+                <img th:src="@{|/upload/${cart.itemImage}}" alt="" width="50" height="50" style="width: 50px">
                 <p class="name"><strong th:text="${cart.itemName}"></strong></p>
                 <!--                <p class="txt">텍스트</p>-->
             </div>
             <div class="opt_info">
-                <strong class="price_unit" th:text="${cart.itemPrice}"></strong>원
+                <strong class="price_unit" th:text="${#numbers.formatInteger(cart.itemPrice,0,'COMMA')}"></strong>원
+<!--                <strong class="price_unit" th:text="${cart.itemPrice}"></strong>원-->
                 <input class="number" type="number" th:id="${cart.id}+'a'" min="1" max="100"
                        th:value="${cart.cartCount}"
                        name="orderCount" th:onchange="total([[${cart}]])">
                 <div class="total_p">
                     <strong class="price_amount" th:id="${cart.id+'price_amount'}" name="price_amount"
                             th:text="${cart.itemPrice}*${cart.cartCount}"></strong>원
+<!--                    th:text="${#numbers.formatInteger(cart.itemPrice*cart.cartCount,0,'COMMA')}"></strong>원-->
+
+
                     <span class="del_li_btn">
                         <img
                                 th:src="@{https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_del_circle.svg}"
@@ -63,7 +67,7 @@
     <div class="cart_total_area">
         <p>결제 정보</p>
         <div class="cart_total_price">
-            <p>총 상품금액 <strong class="item_price_total" id="item_price_total"></strong>원 <span class="plus_ic"></span>
+            <p>총 결제금액 <strong class="item_price_total" id="item_price_total"></strong>원 <span class="plus_ic"></span>
             </p>
         </div>
     </div>
@@ -74,10 +78,12 @@
     </div>
 
 </div>
+</div>
 </body>
 
 
 <script th:inline="javascript">
+
     //전체체크박스
     const checkAll = (cartList) => {
         const length = document.getElementById("cartList").value;
@@ -118,9 +124,10 @@
     const goBack = () => {
         location.href = "/item/main";
     }
+
     //주문하기
     const orderFn = () => {
-        let itemPriceTotal = document.querySelector(".item_price_total").innerHTML
+        let itemPriceTotal = document.querySelector(".item_price_total").innerHTML;
         const length = document.getElementById("cartList").value;
         console.log("주문하기");
         const cartList = [[${cartList}]];
@@ -201,14 +208,18 @@
         console.log("총 상품금액");
         const length = document.getElementById("cartList").value;
         let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-        const allChk = document.getElementById('all_chk');
+        const allChk = document.getElementById(
+            'all_chk');
         console.log(checkboxes);
         const cartList2 = [[${cartList}]];
         let sum = 0;
         for (let i = 0; i < length; i++) {
             if (document.getElementById(cartList2[i].id).checked == true) {
                 sum += Number(document.getElementById(cartList2[i].id + 'price_amount').textContent);
+                //총 상품금액에 콤마찍기
+                // const money = Number(sum).toLocaleString();
                 document.querySelector(".item_price_total").innerHTML = sum;
+
             }
         }
         if (checkboxes.length == 0 && allChk.checked == true) {

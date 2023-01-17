@@ -44,7 +44,8 @@
         <div>
             <label style="margin-right: 65px">가격</label>
             <input type="hidden" name="itemPrice" th:value="${item.itemPrice}">
-            <p th:text="${item.itemPrice}+'원'" class="price-form text-form"></p>
+            <p th:text="${#numbers.formatInteger(item.itemPrice,0,'COMMA')}+'원'" class="price-form text-form"></p>
+<!--            <p th:text="${item.itemPrice}+'원'" class="price-form text-form"></p>-->
         </div>
         <div>
 
@@ -64,7 +65,8 @@
         </div>
         <div style="margin-bottom: 20px;">
             <label style="margin-right: 20px">총 상품 금액</label>
-            <div style="color: seagreen ; font-size:xx-large ; font-weight: bold" id="totalPrice" class="text-form" th:text="${item.itemPrice}+'원'"></div>
+            <div style="color: seagreen ; font-size:xx-large ; font-weight: bold" id="totalPrice" class="text-form" th:text="${#numbers.formatInteger(item.itemPrice,0,'COMMA')}+'원'"></div>
+<!--            <div style="color: seagreen ; font-size:xx-large ; font-weight: bold" id="totalPrice" class="text-form" th:text="${item.itemPrice}+'원'"></div>-->
         </div>
 
 
@@ -232,16 +234,19 @@
         let orderCount = orderCount2;
         let itemPrice = itemPrice2;
         let totalPrice = orderCount * itemPrice;
+        let result = totalPrice.toLocaleString();
         console.log(itemCount)
         console.log(orderCount)
         if(itemCount < orderCount){
             alert("구매수량을 초과하였습니다.")
             let totalPrice = itemPrice * 1;
             document.getElementById('itemCountInput').value = 1;
-            document.getElementById("totalPrice").innerHTML = totalPrice + "원";
+            document.getElementById("totalPrice").innerHTML = result + "원";
+            // document.getElementById("totalPrice").innerHTML = totalPrice + "원";
         }else {
             console.log(totalPrice);
-            document.getElementById("totalPrice").innerHTML = totalPrice + "원";
+            document.getElementById("totalPrice").innerHTML = result + "원";
+            // document.getElementById("totalPrice").innerHTML = totalPrice + "원";
         }
     }
 

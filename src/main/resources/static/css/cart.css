@@ -36,3 +36,12 @@
     font-family: 'Nanum Gothic', sans-serif;
     font-family: 'Noto Sans KR', sans-serif;
 }
+
+.main{
+    width: 1000px;
+    height: 409px;
+
+    /*가운데 정렬 margin: auto*/
+    margin-left: auto;
+    margin-right: auto;
+}
