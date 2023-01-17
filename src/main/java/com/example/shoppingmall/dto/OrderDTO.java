@@ -1,14 +1,17 @@
 package com.example.shoppingmall.dto;
 
+import com.example.shoppingmall.entity.BaseEntity;
 import com.example.shoppingmall.entity.OrderEntity;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDTO {
+public class OrderDTO extends BaseEntity {
     private Long id;
     private String userId;
     private int orderCount;
@@ -24,6 +27,7 @@ public class OrderDTO {
     private String memberName;
     private int orderPrice;
     private String review = "리뷰작성";
+    private LocalDateTime orderCreatedTime;
 
     public static <U> U toOderDTO(OrderEntity orderEntity) {
         OrderDTO orderDTO = new OrderDTO();
@@ -41,6 +45,7 @@ public class OrderDTO {
         orderDTO.setOrderPrice(orderEntity.getOrderItemEntityList().get(0).getOrderPrice());
         orderDTO.setMemberName(orderEntity.getMemberEntity().getMemberName());
         orderDTO.setPostcode(orderEntity.getMemberEntity().getPostcode());
+        orderDTO.setOrderCreatedTime(orderEntity.getCreatedTime());
         return (U) orderDTO;
     }
 }

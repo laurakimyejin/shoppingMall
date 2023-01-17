@@ -59,7 +59,8 @@
                 <td><input id="itemName" type="text" name="orderName" th:value="${item.itemName}" class="form-control"
                            readonly></td>
                 <td><input type="hidden" name="itemPrice" th:value="${item.itemPrice}" class="form-control" readonly>
-                    <input type="text" th:value="${item.itemPrice}+'원'" class="form-control" readonly>
+                    <input type="text" th:value="${#numbers.formatInteger(item.itemPrice,0,'COMMA')}+'원'" class="form-control" readonly>
+<!--                    <input type="text" th:value="${item.itemPrice}+'원'" class="form-control" readonly>-->
                 </td>
                 <td><input type="number" id="itemCountInput" min="1" max="100" th:value="${item.cartCount}"
                            name="orderCount" onchange="total()" style="padding-left: 20px">
@@ -67,7 +68,8 @@
                 <td>무료</td>
                 <td><input type="hidden" th:value="${item.itemPrice * item.cartCount}" name="orderPrice"
                            id="totalPrice" readonly>
-                    <input type="text" th:value="${item.itemPrice * item.cartCount}+'원'"readonly>
+                    <input type="text" th:value="${#numbers.formatInteger(item.itemPrice * item.cartCount,0,'COMMA')}+'원'" readonly>
+<!--                    <input type="text" th:value="${item.itemPrice * item.cartCount}+'원'" readonly>-->
                 </td>
             </tr>
         </table>

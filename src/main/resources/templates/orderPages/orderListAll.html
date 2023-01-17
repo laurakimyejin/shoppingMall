@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!--    ajax cdn-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--  //시간설정-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <!--  폰트-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,6 +65,7 @@
         <tr>
             <th>주문번호</th>
             <th>상품이름</th>
+            <th>주문날짜</th>
             <th>배송상태</th>
             <th>구매자</th>
 
@@ -70,6 +73,8 @@
         <tr th:each="order: ${orderList}">
             <td th:text="${order.id}"></td>
             <td th:text="${order.orderName}"></td>
+            <td th:text="*{#temporals.format(order.getOrderCreatedTime(), 'yyyy-MM-dd')}"></td>
+
             <td>
                 <select th:onchange="orderStatus([[${order}]])" th:id="${order.id}">
                     <option th:selected="${order.orderStatus} == '주문완료'" value="주문완료">주문완료</option>
