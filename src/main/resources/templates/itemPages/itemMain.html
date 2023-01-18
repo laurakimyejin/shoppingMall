@@ -76,11 +76,21 @@
 
                         <div class="caption">
                             <div class="row">
-                                <div class="col-xs-12 col-md-8" style="text-align: center">
-                                    <div style="text-decoration-color: chartreuse;padding-left: 65px;text-align: center">
-                                        <em style=" font: italic bold 1.5em/1em Georgia, serif ;"
-                                            th:text="${#numbers.formatCurrency(item.itemPrice)}"></em>
+                                <div class="col-xs-12 col-md-8" >
+                                    <div th:if="${item.itemCount == 0}">
+                                        <div style="text-decoration-color: chartreuse;padding-left: 65px;">
+                                            <p style="color: red; font-weight: bold; float: left">품절</p>
+                                            <em style=" font: italic bold 1.5em/1em Georgia, serif; text-align: left"
+                                                th:text="${#numbers.formatCurrency(item.itemPrice)}"></em>
+                                        </div>
                                     </div>
+                                    <div th:unless="${item.itemCount == 0}">
+                                        <div style="text-decoration-color: chartreuse;padding-left: 65px;text-align: center">
+                                            <em style=" font: italic bold 1.5em/1em Georgia, serif ;"
+                                                th:text="${#numbers.formatCurrency(item.itemPrice)}"></em>
+                                        </div>
+                                    </div>
+
                                     <div th:if="${!session.isEmpty()} and ${session.member.userId} == 'admin' ">
                                         <button class="btn btn-warning" th:onclick="updateReq([[${item}]])">상품 수정
                                         </button>
