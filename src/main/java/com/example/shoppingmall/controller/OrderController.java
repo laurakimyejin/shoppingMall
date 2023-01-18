@@ -56,8 +56,8 @@ public class OrderController {
         System.out.println("체크값만 넘기기 = " + itemDTOList);
         member = (MemberDTO) member;
         String userId = ((MemberDTO) member).getUserId();
-        orderService.checkOrder(userId,itemDTOList);
-        return "success";
+        String result = orderService.checkOrder(userId,itemDTOList);
+        return result;
     }
     @GetMapping("/order/cart3")
     public String save3(@RequestParam("userId")String userId,Model model){
