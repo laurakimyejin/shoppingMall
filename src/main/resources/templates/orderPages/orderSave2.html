@@ -70,6 +70,7 @@
                     <input type="text" th:value="${#numbers.formatInteger(item.itemPrice * item.cartCount,0,'COMMA')}+'원'" name="orderPrice"
                            th:id="totalPrice+${item.id}" style="padding-left: 50px;"
                            readonly>
+
                 </td>
 
             </tr>
@@ -182,7 +183,7 @@
     function requestPay() {
         const list = [[${cartList}]];
         const itemName = document.getElementById("itemName").value;
-        let totalPrice = document.getElementById("itemPriceTotal").value;
+        let totalPrice = [[${itemPriceTotal}]];
         const memberEmail = document.getElementById("memberEmail").value;
         const memberName = document.getElementById("memberName").value;
         const memberMobile = document.getElementById("memberMobile").value;

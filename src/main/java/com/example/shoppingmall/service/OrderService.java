@@ -153,21 +153,26 @@ public class OrderService {
         orderRepository.save(orderEntity);
     }
 
-    public void checkOrder(String userId, JSONArray itemDTOList) throws JSONException {
+    public String checkOrder(String userId, JSONArray itemDTOList) throws JSONException {
         MemberEntity memberEntity = memberRepository.findByUserId(userId).get();
-        for (int i = 0; i < itemDTOList.length(); i++) {
-            OrderReadyEntity orderReadyEntity = new OrderReadyEntity();
-            orderReadyEntity.setMemberEntity(memberEntity);
-            orderReadyEntity.setOrderName(itemDTOList.getJSONObject(i).getString("itemName"));
-            orderReadyEntity.setOrderPrice(itemDTOList.getJSONObject(i).getInt("itemPrice"));
-            orderReadyEntity.setCartCount(itemDTOList.getJSONObject(i).getInt("cartCount"));
-            orderReadyEntity.setItemPriceTotal(itemDTOList.getJSONObject(i).getInt("itemPriceTotal"));
-            orderReadyEntity.setItemImage(itemDTOList.getJSONObject(i).getString("itemImage"));
-            orderReadyEntity.setCartItemId(itemDTOList.getJSONObject(i).getLong("cartItemId"));
-            orderReadyRepository.save(orderReadyEntity);
-
+        if (orderReadyRepository.findByMemberEntity(memberEntity).isEmpty()) {
+            for (int i = 0; i < itemDTOList.length(); i++) {
+                OrderReadyEntity orderReadyEntity = new OrderReadyEntity();
+                orderReadyEntity.setMemberEntity(memberEntity);
+                orderReadyEntity.setOrderName(itemDTOList.getJSONObject(i).getString("itemName"));
+                orderReadyEntity.setOrderPrice(itemDTOList.getJSONObject(i).getInt("itemPrice"));
+                orderReadyEntity.setCartCount(itemDTOList.getJSONObject(i).getInt("cartCount"));
+                orderReadyEntity.setItemPriceTotal(itemDTOList.getJSONObject(i).getInt("itemPriceTotal"));
+                orderReadyEntity.setItemImage(itemDTOList.getJSONObject(i).getString("itemImage"));
+                orderReadyEntity.setCartItemId(itemDTOList.getJSONObject(i).getLong("cartItemId"));
+                orderReadyRepository.save(orderReadyEntity);
+                return "ok";
+            }
+        } else {
+            return "no";
         }
 
+        return "no";
     }
 
     public List<CartItemDTO> findByOrderReady(String userId) {
