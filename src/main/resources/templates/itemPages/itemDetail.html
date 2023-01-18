@@ -21,6 +21,7 @@
 <body style="background-color: white">
 <th:block th:replace="commonPages/header :: header"></th:block>
 
+
 <form action="#" method="get" id="loc" class="container">
     <div th:if="${item.fileAttachedItem == 1}" class="image-form">
         <!--                <th>파일</th>-->
@@ -29,7 +30,8 @@
             <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="300" height="300" id="lgImage">
         </div>
         <div th:each="fileName: ${item.storedFileNameItem}">
-            <img th:src="@{|/upload/${fileName}}" alt="" width="50" height="50" class="smImage-form" th:onclick="imageClick([[${fileName}]])">
+            <img th:src="@{|/upload/${fileName}}" alt="" width="50" height="50" class="smImage-form"
+                 th:onclick="imageClick([[${fileName}]])">
         </div>
     </div>
 
@@ -39,13 +41,13 @@
             <input type="hidden" name="id" th:value="${item.id}" id="itemId">
             <input type="hidden" name="itemPrice" th:value="${item.itemPrice}">
             <input type="hidden" name="itemName" th:value="${item.itemName}">
-            <h2 id="itemName" name th:text="${item.itemName}"></h2>
+            <h2 id="itemName" th:text="${item.itemName}"></h2>
         </div>
         <div>
             <label style="margin-right: 65px">가격</label>
             <input type="hidden" name="itemPrice" th:value="${item.itemPrice}">
             <p th:text="${#numbers.formatInteger(item.itemPrice,0,'COMMA')}+'원'" class="price-form text-form"></p>
-<!--            <p th:text="${item.itemPrice}+'원'" class="price-form text-form"></p>-->
+            <!--            <p th:text="${item.itemPrice}+'원'" class="price-form text-form"></p>-->
         </div>
         <div>
 
@@ -55,8 +57,8 @@
             </div>
             <div th:unless="${item.itemCount == 0}">
                 <label style="margin-right: 40px">구매수량</label>
-            <input type="number" id="itemCountInput" min="1" max="100" value="1" name="cartCount"
-                   th:onchange="total([[${item.itemCount}]])" class="text-form">
+                <input type="number" id="itemCountInput" min="1" max="100" value="1" name="cartCount"
+                       th:onchange="total([[${item.itemCount}]])" class="text-form">
             </div>
         </div>
         <div>
@@ -65,22 +67,23 @@
         </div>
         <div style="margin-bottom: 20px;">
             <label style="margin-right: 20px">총 상품 금액</label>
-            <div style="color: seagreen ; font-size:xx-large ; font-weight: bold" id="totalPrice" class="text-form" th:text="${#numbers.formatInteger(item.itemPrice,0,'COMMA')}+'원'"></div>
-<!--            <div style="color: seagreen ; font-size:xx-large ; font-weight: bold" id="totalPrice" class="text-form" th:text="${item.itemPrice}+'원'"></div>-->
+            <div style="color: seagreen ; font-size:xx-large ; font-weight: bold" id="totalPrice" class="text-form"
+                 th:text="${#numbers.formatInteger(item.itemPrice,0,'COMMA')}+'원'"></div>
+            <!--            <div style="color: seagreen ; font-size:xx-large ; font-weight: bold" id="totalPrice" class="text-form" th:text="${item.itemPrice}+'원'"></div>-->
         </div>
 
 
         <div th:if="${session.member} != null">
             <input type="button" class="btn btn-outline-dark" value="장바구니" onclick="cart()" style="float: left">
             <div th:if="${item.itemCount != 0}">
-            <input type="button" class="btn btn-success" value="구매하기" onclick="orderItem()" style="float: left">
+                <input type="button" class="btn btn-success" value="구매하기" onclick="orderItem()" style="float: left">
             </div>
             <input type="hidden" value="loginOk" name="loginCheck">
         </div>
         <div th:unless="${session.member}">
             <input type="button" class="btn btn-outline-dark" value="장바구니" onclick="cart()" style="float: left">
             <div th:if="${item.itemCount != 0}">
-            <input type="button" class="btn btn-success" value="구매하기" onclick="orderItem()" style="float: left">
+                <input type="button" class="btn btn-success" value="구매하기" onclick="orderItem()" style="float: left">
             </div>
             <input type="hidden" value="loginNo" name="loginCheck">
         </div>
@@ -110,7 +113,8 @@
             <tr th:each="comment: ${commentList}">
                 <td th:text="${comment.commentContents}" style="padding-left: 30px;"></td>
                 <td th:text="${comment.commentWriter}" class="comment-font"></td>
-                <td th:text="*{#temporals.format(comment.commentCreatedDate,'yyyy-MM-dd HH:mm')}" class="comment-font"></td>
+                <td th:text="*{#temporals.format(comment.commentCreatedDate,'yyyy-MM-dd HH:mm')}"
+                    class="comment-font"></td>
                 <td>
                     <div class="star-container">
                         <div th:each="num : ${#numbers.sequence(1,comment.starCount)}" class="star"></div>
@@ -213,7 +217,7 @@
                 }
             });
         } else {
-           location.href = "/login";
+            location.href = "/login";
         }
     }
 
@@ -237,40 +241,38 @@
         let result = totalPrice.toLocaleString();
         console.log(itemCount)
         console.log(orderCount)
-        if(itemCount < orderCount){
+        if (itemCount < orderCount) {
             alert("구매수량을 초과하였습니다.")
             let totalPrice = itemPrice * 1;
             document.getElementById('itemCountInput').value = 1;
             document.getElementById("totalPrice").innerHTML = result + "원";
             // document.getElementById("totalPrice").innerHTML = totalPrice + "원";
-        }else {
+        } else {
             console.log(totalPrice);
             document.getElementById("totalPrice").innerHTML = result + "원";
             // document.getElementById("totalPrice").innerHTML = totalPrice + "원";
         }
     }
 
-    //최근본상품을 페이지호출시 쿠키에저장
-
-
-   window.onload = function(){
+    //최근본상품을 페이지호출시 저장
+    window.onload = function () {
         console.log("최근본상품 호출");
         const itemId = document.getElementById("itemId").value;
         const itemImage = document.getElementById("itemImage").value;
+        const itemName = document.getElementById("itemName").textContent;
         const item = {
             itemId: itemId,
-            itemImage: itemImage
+            itemImage: itemImage,
+            itemName: itemName,
+            timestamp: Date.now()
         }
         console.log(item);
-        const itemJson = JSON.stringify(item);
-        console.log(itemJson);
-        const cookie = document.cookie;
-        console.log(cookie);
-        if (cookie == "") {
-            document.cookie = "item=" + itemJson;
-        } else {
-            document.cookie = "item=" + itemJson;
-        }
+        let recentItems = JSON.parse(localStorage.getItem("recentItems")) || [];
+        if(recentItems.find(i=> i.itemId === itemId)) return;
+        recentItems.unshift(item);
+        recentItems = recentItems.slice(0, 3);
+        localStorage.setItem("recentItems", JSON.stringify(recentItems));
+        console.log(localStorage.getItem("recentItems"));
     }
 
 

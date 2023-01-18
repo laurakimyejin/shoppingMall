@@ -3,6 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>main</title>
+
+  <style>
+    #sidebar {
+      width: 100px;
+      right: 0;
+      border: 1px solid #DCDCDC;
+      border-radius: 6px;
+    }
+    #sidebar ul {
+      padding: 10px;
+    }
+  </style>
 </head>
 <body>
 <th:block th:replace="commonPages/header :: header"></th:block>
@@ -146,6 +158,31 @@
     </div>
   </div>
 </div>
+
+
+<div id="sidebar" style="position: absolute; top: 100px ; right: 50px">
+  <ul>
+    <li align="center" >
+      최근본상품
+      <br>￣￣￣￣￣
+    </li>
+
+    <li><img id="recentItemImg0" src="/img/today-top.png" alt="" width="50" height="50" ></li>
+    <li><a id="recentItemId0" href="#"></a></li>
+
+    <li><img id="recentItemImg1" src="/img/today-top.png" alt="" width="50" height="50" ></li>
+    <li><a id="recentItemId1" href="#"></a></li>
+
+    <li><img id="recentItemImg2" src="/img/today-top.png" alt="" width="50" height="50" ></li>
+    <li><a id="recentItemId2" href="#"></a></li>
+  </ul>
+</div>
+
+
+
+
+
+
 </body>
 
 <script th:inline="javascript">
@@ -172,5 +209,30 @@
     const id = deleteFn.id;
     location.href = "/item/delete/" + id;
   }
+
+  //최근본상품
+
+  const recentItems = JSON.parse(localStorage.getItem("recentItems")) || [];
+  const currentTime = Date.now();
+  const filteredRecentItems = recentItems.filter(item => currentTime - item.timestamp < 10000);
+  localStorage.setItem("recentItems", JSON.stringify(filteredRecentItems));
+  filteredRecentItems.forEach((item) => {
+    if (item != null) {
+      for (let i = 0; i < filteredRecentItems.length; i++) {
+        if (filteredRecentItems[i] != null) {
+          document.getElementById("recentItemId"+i).href = "/item/?itemId=" + filteredRecentItems[i].itemId;
+          document.getElementById("recentItemImg"+i).src = "/upload/"+filteredRecentItems[i].itemImage
+          document.getElementById("recentItemId"+i).innerHTML = filteredRecentItems[i].itemName;
+        }
+      }
+    }
+  });
+
+
+
+
+
+
+
 </script>
 </html>
