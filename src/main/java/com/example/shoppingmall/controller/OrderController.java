@@ -127,6 +127,13 @@ public class OrderController {
         return "success";
     }
 
+    //쥐문취소
+    @GetMapping("/order/cancel")
+    public String cancel(@RequestParam("memberId")Long memberId){
+        String userId = orderService.cancel(memberId);
+        return "redirect:/cart/list?userId="+userId;
+    }
+
 
 
 

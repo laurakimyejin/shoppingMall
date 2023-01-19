@@ -166,13 +166,12 @@ public class OrderService {
                 orderReadyEntity.setItemImage(itemDTOList.getJSONObject(i).getString("itemImage"));
                 orderReadyEntity.setCartItemId(itemDTOList.getJSONObject(i).getLong("cartItemId"));
                 orderReadyRepository.save(orderReadyEntity);
-                return "ok";
             }
         } else {
             return "no";
         }
 
-        return "no";
+        return "ok";
     }
 
     public List<CartItemDTO> findByOrderReady(String userId) {
@@ -190,6 +189,16 @@ public class OrderService {
             cartItemDTOList.add(cartItemDTO);
         }
         return cartItemDTOList;
+    }
+
+    @Transactional
+    public String cancel(Long memberId) {
+        MemberEntity memberEntity = memberRepository.findById(memberId).get();
+        String userId = memberEntity.getUserId();
+        System.out.println(memberEntity);
+        System.out.println("삭제전");
+        orderReadyRepository.deleteByMemberEntity(memberEntity);
+        return userId;
     }
 }
 
