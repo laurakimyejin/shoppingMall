@@ -76,7 +76,7 @@
             </tr>
         </table>
                 <h3 style="float: left">총 결제금액</h3>
-                <h2 name="itemPriceTotal" id="itemPriceTotal" th:text="${itemPriceTotal}+'원'" style="float: right;color: seagreen; font-weight: bold">
+                <h2 name="itemPriceTotal" id="itemPriceTotal" th:text="${#numbers.formatInteger(itemPriceTotal,0,'COMMA')}+'원'" style="float: right;color: seagreen; font-weight: bold">
                 </h2>
 
 
@@ -128,7 +128,7 @@
                     <div>
                         <button id="check_module" type="button" onclick="requestPay()"><img th:src="@{/img/kakaoPayLogo.jpg}" width="60px" height="30px" style="width: 60px;"></button>
 <!--                        <a id="check_module" role="button" onclick="requestPay()"><img th:src="@{/img/kakaoPayLogo.jpg}" width="60px" height="30px" style="width: 60px;"></a>-->
-                       <input class="btn btn-secondary" type="button" value="주문취소" onclick="OrderCancel()">
+                       <input class="btn btn-secondary" type="button" value="주문취소" onclick="orderCancel()">
                     </div>
                 </section>
             </article>
@@ -139,7 +139,7 @@
 <input type="button" value="테스트" onclick="test()">
 </body>
 <script th:inline="javascript">
-    const OrderCancel = () => {
+    const orderCancel = () => {
       location.href = "/order/cancel?memberId="+[[${session.member.id}]];
     }
 
