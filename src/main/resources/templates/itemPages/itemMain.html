@@ -62,7 +62,7 @@
     <table class="table table-striped table-hover text-center mt-5" th:if="${message} != 'null'">
         <div style="text-align: center">
             <div th:each="item: ${itemList}">
-                <div class="item  col-xs-3 col-md-4" style="width: 240px">
+                <div class="item  col-xs-3 col-md-4" style="width: 280px ; height: 300px">
                     <div class="thumbnail">
                         <div th:if="${item.fileAttachedItem == 1}">
                             <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="200" height="150">

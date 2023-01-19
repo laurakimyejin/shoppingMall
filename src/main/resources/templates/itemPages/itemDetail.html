@@ -74,8 +74,8 @@
 
 
         <div th:if="${session.member} != null">
-            <input type="button" class="btn btn-outline-dark" value="장바구니" onclick="cart()" style="float: left">
             <div th:if="${item.itemCount != 0}">
+                <input type="button" class="btn btn-outline-dark" value="장바구니" onclick="cart()" style="float: left">
                 <input type="button" class="btn btn-success" value="구매하기" onclick="orderItem()" style="float: left">
             </div>
             <input type="hidden" value="loginOk" name="loginCheck">
