@@ -45,9 +45,11 @@
                        th:value="${cart.cartCount}"
                        name="orderCount" th:onchange="total([[${cart}]])">
                 <div class="total_p">
-                    <strong class="price_amount" th:id="${cart.id+'price_amount'}" name="price_amount"
-                            th:text="${cart.itemPrice}*${cart.cartCount}"></strong>원
-<!--                    th:text="${#numbers.formatInteger(cart.itemPrice*cart.cartCount,0,'COMMA')}"></strong>원-->
+                    <input type="hidden" class="price_amount" th:id="${cart.id+'price_amount'}" name="price_amount"
+                            th:value="${cart.itemPrice}*${cart.cartCount}">
+                           <strong th:id="${cart.id+'price_amount2'}" th:value="${cart.itemPrice}*${cart.cartCount}" th:text="|${#numbers.formatInteger(cart.itemPrice*cart.cartCount,0,'COMMA')}|"></strong>원
+
+
 
 
                     <span class="del_li_btn">
@@ -127,7 +129,11 @@
 
     //주문하기
     const orderFn = () => {
-        let itemPriceTotal = document.querySelector(".item_price_total").innerHTML;
+
+        let itemPriceTotal2 = document.querySelector(".item_price_total").innerHTML;
+        let itemPriceTotal = itemPriceTotal2.replace(',', '');
+        console.log("정규식확인" + itemPriceTotal)
+
         const length = document.getElementById("cartList").value;
         console.log("주문하기");
         const cartList = [[${cartList}]];
@@ -220,11 +226,10 @@
         let sum = 0;
         for (let i = 0; i < length; i++) {
             if (document.getElementById(cartList2[i].id).checked == true) {
-                sum += Number(document.getElementById(cartList2[i].id + 'price_amount').textContent);
+                sum += Number(document.getElementById(cartList2[i].id + 'price_amount').value);
                 //총 상품금액에 콤마찍기
-                // const money = Number(sum).toLocaleString();
-                document.querySelector(".item_price_total").innerHTML = sum;
-
+                const money = Number(sum).toLocaleString();
+                document.querySelector(".item_price_total").innerHTML = money;
             }
         }
         if (checkboxes.length == 0 && allChk.checked == true) {
@@ -266,13 +271,15 @@
         const itemPrice2 = cart.itemPrice;
         let itemPrice = itemPrice2;
         let totalPrice = orderCount * itemPrice;
-        let a = document.getElementsByName("price_amount")[0].innerText;
+        let a = document.getElementsByName("price_amount")[0].value;
         console.log(a);
 
-        document.getElementById(cart.id + "price_amount").innerHTML = totalPrice;
+        document.getElementById(cart.id + "price_amount").value= totalPrice;
+        const money = Number(totalPrice).toLocaleString();
+        document.getElementById(cart.id + "price_amount2").textContent = money;
         let itemPriceTotal = 0;
         for (let i = 0; i < length; i++) {
-            itemPriceTotal += Number(document.getElementsByName("price_amount")[i].innerHTML);
+            itemPriceTotal += Number(document.getElementsByName("price_amount")[i].value);
         }
         console.log(itemPriceTotal)
         document.querySelector(".item_price_total").innerHTML = itemPriceTotal;
