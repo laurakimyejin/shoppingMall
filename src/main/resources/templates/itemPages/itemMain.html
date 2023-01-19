@@ -39,7 +39,7 @@
 
 
         <!--정렬 버튼-->
-        <div class="btn-group dropdown" style="right:200px ;position:relative ; float: right">
+        <div class="btn-group dropdown" style="right:40px ;position:relative ; float: right">
             <button type="button" class="dropdown-toggle active" data-bs-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="true" th:text="${size}+'개씩보기'">
@@ -108,7 +108,7 @@
 
 
     <div class="container" style="position:relative ; text-align: center">
-        <div class="search" style="position: relative ; bottom: 40px ; left: 300px">
+        <div class="search" style="position: relative ; bottom: 0px ; left: 300px">
             <!-- 부드스트랩 검색창 -->
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
@@ -122,7 +122,7 @@
             </form>
         </div>
 
-        <div style="position: relative ;  right: 260px">
+        <div style="position: relative ; bottom: -40px;  right: 260px">
             <ul th:if="${message} != 'null'" class="pagination justify-content-center">
                 <li class="page-item">
                     <!--첫페이지 요청 링크-->
