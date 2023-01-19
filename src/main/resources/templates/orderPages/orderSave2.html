@@ -128,6 +128,7 @@
                     <div>
                         <button id="check_module" type="button" onclick="requestPay()"><img th:src="@{/img/kakaoPayLogo.jpg}" width="60px" height="30px" style="width: 60px;"></button>
 <!--                        <a id="check_module" role="button" onclick="requestPay()"><img th:src="@{/img/kakaoPayLogo.jpg}" width="60px" height="30px" style="width: 60px;"></a>-->
+                       <input class="btn btn-secondary" type="button" value="주문취소" onclick="OrderCancel()">
                     </div>
                 </section>
             </article>
@@ -138,6 +139,10 @@
 <input type="button" value="테스트" onclick="test()">
 </body>
 <script th:inline="javascript">
+    const OrderCancel = () => {
+      location.href = "/order/cancel?memberId="+[[${session.member.id}]];
+    }
+
     const test = () => {
         const memberAddress = document.getElementById("sample6_address").value;
         const detailAddress = document.getElementById("sample6_detailAddress").value;
