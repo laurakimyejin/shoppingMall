@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>admin</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
     <!--  폰트-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap"
           rel="stylesheet">
+
     <style>
         *{
             font-family: 'Jua', sans-serif;
@@ -18,11 +21,11 @@
     </style>
 </head>
 <body style="background-color: white">
-<th:block th:replace="commonPages/header :: header"></th:block>
 <th:block th:replace="commonPages/sidebar :: sidebar"></th:block>
-<a href="/item/main" class="btn btn-primary">상품관리</a>
-<a href="/order/listAll" class="btn btn-primary">주문관리</a>
-<a href="/member/list" class="btn btn-primary">회원 관리</a>
-<a href="/question/list" class="btn btn-primary">고객센터 관리</a>
+
+<!--<a href="/item/main" class="btn btn-primary">상품관리</a>-->
+<!--<a href="/order/listAll" class="btn btn-primary">주문관리</a>-->
+<!--<a href="/member/list" class="btn btn-primary">회원 관리</a>-->
+<!--<a href="/question/list" class="btn btn-primary">고객센터 관리</a>-->
 </body>
 </html>

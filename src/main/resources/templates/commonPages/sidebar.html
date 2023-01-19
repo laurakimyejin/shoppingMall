@@ -1,50 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="sidebar">
-<meta charset="UTF-8">
-<title>Title</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<script src="/static/js/bootstrap.bundle.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+<!--  폰트-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap"
+      rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/sidebar.css}" type="text/css">
+<style>
+  *{
+    font-family: 'Jua', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+</style>
+</head>
+  <th:block th:replace="commonPages/header :: header"></th:block>
+<!--<th:block th:replace="commonPages/sidebar :: sidebar"></th:block>-->
 
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light " style="width: 280px;">
-  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-    <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-    <span class="fs-4">Sidebar</span>
-  </a>
-  <hr>
-  <ul class="nav nav-pills flex-column mb-auto">
-    <li class="nav-item">
-      <a href="#" class="nav-link active" aria-current="page">
-        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-        Home
-      </a>
-    </li>
-    <li>
-      <a href="#" class="nav-link link-dark">
-        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-        Dashboard
-      </a>
-    </li>
-    <li>
-      <a href="#" class="nav-link link-dark">
-        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-        Orders
-      </a>
-    </li>
-    <li>
-      <a href="#" class="nav-link link-dark">
-        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-        Products
-      </a>
-    </li>
-    <li>
-      <a href="#" class="nav-link link-dark">
-        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-        Customers
-      </a>
-    </li>
-  </ul>
+<!--msb: main sidebar-->
+<div class="msb fixed-left" id="msb" >
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <div class="brand-wrapper">
+        <!-- Brand -->
+        <div class="brand-name-wrapper">
+          <a class="navbar-brand" href="/member/admin">
+            관리자페이지
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Main Menu -->
+    <div class="side-menu-container">
+      <ul class="nav navbar-nav">
+        <li><a href="/item/main"> 상품관리</a></li>
+        <li><a href="/order/listAll"> 주문관리</a></li>
+        <li><a href="/member/list"> 회원관리</a></li>
+        <li><a href="/question/list"> 고객센터 관리</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </nav>
 </div>
 </th:block>
 </html>
