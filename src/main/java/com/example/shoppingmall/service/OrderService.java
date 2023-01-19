@@ -66,7 +66,7 @@ public class OrderService {
     @Transactional
     public List<OrderDTO> findAll(String userId) {
         MemberEntity memberEntity = memberRepository.findByUserId(userId).get();
-        List<OrderEntity> orderEntityList = orderRepository.findByMemberEntity(memberEntity);
+        List<OrderEntity> orderEntityList = orderRepository.findByMemberEntity(memberEntity,Sort.by(Sort.Direction.DESC, "id"));
         System.out.println("orderEntityList = " + orderEntityList);
         List<OrderDTO> orderDTOList = new ArrayList<>();
         for (OrderEntity orderEntity : orderEntityList) {
