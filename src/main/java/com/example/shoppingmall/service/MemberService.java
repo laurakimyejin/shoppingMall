@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -19,6 +20,8 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final CartRepository cartRepository;
+
+    private final RegisterPassword registerPassword;
 
 
 
@@ -124,6 +127,32 @@ public class MemberService {
         }
         return null;
     }
+
+    public String memberEmailDuplicateCheck(String memberEmail) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(memberEmail);
+        if (optionalMemberEntity.isPresent()) {
+            return "fail";
+        } else {
+            return "success";
+        }
+    }
+
+    public String findByMemberEmail(String email) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(email);
+        if(optionalMemberEntity.isPresent()){
+            return"success";
+        }else{
+            return "fail";
+        }
+    }
+
+    public void passwordUpdate(String memberEmail , String code) {
+        System.out.println("서비스넘어옴");
+       MemberEntity memberEntity = memberRepository.findByMemberEmail(memberEmail).get();
+       memberEntity.setMemberPassword(code);
+       memberRepository.save(memberEntity);
+    }
+
 }
 
 
