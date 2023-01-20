@@ -38,6 +38,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     //크롤링
     implementation 'org.jsoup:jsoup:1.14.2'
+    //xml -> json
 }
 
 tasks.named('test') {

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>detail</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" th:href="@{/style/style3.css}" type="text/css">
+  <link rel="stylesheet" th:href="@{/css/itemDetail.css}" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!--    시간설정-->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <!--  폰트-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap"
+        rel="stylesheet">
+  <!--  별점-->
+  <link rel="stylesheet" th:href="@{/css/star.css}" type="text/css">
+</head>
+<body style="background-color: white">
+<th:block th:replace="commonPages/header :: header"></th:block>
+
+
+<form action="#" method="get" id="loc" class="container">
+  <div class="image-form">
+    <div>
+      <img th:src="${todayFlower.imgUrl1}" alt="flower" width="300" height="300" id="lgImage">
+    </div>
+    <div>
+      <img th:src="${todayFlower.imgUrl1}" alt="flower" width="50" height="50" class="smImage-form"
+           th:onclick="imageClick([[${todayFlower.imgUrl1}]])">
+    </div>
+
+    <div>
+      <img th:src="${todayFlower.imgUrl2}" alt="flower" width="50" height="50" class="smImage-form"
+           th:onclick="imageClick([[${todayFlower.imgUrl2}]])">
+    </div>
+    <div>
+      <img th:src="${todayFlower.imgUrl3}" alt="flower" width="50" height="50" class="smImage-form"
+           th:onclick="imageClick([[${todayFlower.imgUrl3}]])">
+    </div>
+  </div>
+
+  <div class="information">
+    <div>
+      <!--<th>상품명</th>-->
+      <h2 id="itemName" th:text="${todayFlower.flowNm}"></h2>
+    </div>
+
+
+    <div>
+      <label style="margin-right: 40px">꽃이름(영문)</label>
+      <p class="text-form" th:text="${todayFlower.fEngNm}"></p>
+    </div>
+
+    <div>
+      <label style="margin-right: 40px">꽃이름(학명)</label>
+      <p class="text-form" th:text="${todayFlower.fSctNm}"></p>
+    </div>
+
+    <div>
+      <label style="margin-right: 40px">꽃말</label>
+      <p class="text-form" th:text="${todayFlower.flowLang}"></p>
+    </div>
+
+    <div>
+      <label style="margin-right: 40px">오늘의 꽃 날짜</label>
+      <p class="text-form" th:text="${todayFlower.fMonth}+'월'+${todayFlower.fDay}+'일'"></p>
+    </div>
+
+
+    <div style="margin-top: 70px; margin-bottom: 10px ;line-height: 150%">
+      <!--                <th>설명</th>-->
+      <h3>내용</h3>
+      <div th:text="${todayFlower.FContent}"></div>
+    </div>
+
+    <div style="margin-top: 70px; margin-bottom: 10px ;line-height: 150%">
+      <!--                <th>설명</th>-->
+      <h3>이용</h3>
+      <div th:text="${todayFlower.fUse}"></div>
+    </div>
+
+    <div style="margin-top: 70px; margin-bottom: 10px ;line-height: 150%">
+      <!--                <th>설명</th>-->
+      <h3>기르는법</h3>
+      <div th:text="${todayFlower.fGrow}"></div>
+    </div>
+
+    <div style="margin-top: 70px; margin-bottom: 10px ;line-height: 150%">
+      <!--                <th>설명</th>-->
+      <h3>자생지</h3>
+      <div th:text="${todayFlower.fType}"></div>
+    </div>
+
+  </div>
+</form>
+</div>
+</body>
+
+<script th:inline="javascript">
+  //이미지 클릭시 전환
+  const imageClick = (item) => {
+    console.log(item);
+    const smImage = item;
+    $("#lgImage").attr("src",smImage);
+  }
+</script>
+</html>
