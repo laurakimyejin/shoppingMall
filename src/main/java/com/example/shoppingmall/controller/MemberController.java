@@ -48,9 +48,9 @@ public class MemberController {
         return "/memberPages/memberSave";
     }
 
-    //계정 중복체크
+    //userId 중복체크
     @PostMapping("/duplicate-check-userId")
-    public @ResponseBody String emailDuplicateCheck(@RequestParam("userId") String userId) {
+    public @ResponseBody String userIdDuplicateCheck(@RequestParam("userId") String userId) {
         String checkResult = memberService.userIdDuplicateCheck(userId);
         if (checkResult.equals("success")) {
             return "success";
@@ -59,6 +59,9 @@ public class MemberController {
         }
     }
 
+
+
+
     //회원가입 처리
     @PostMapping("/save")
     public String save(@ModelAttribute MemberDTO memberDTO) {
@@ -66,7 +69,7 @@ public class MemberController {
         return "redirect:/";
     }
 
-    //인터셉터
+    //일반 로그인 화면
     @GetMapping("/login")
     public String loginForm(@RequestParam(value = "redirectURL", defaultValue = "/") String redirectURL, Model model) {
         model.addAttribute("redirectURL", redirectURL);
@@ -188,17 +191,20 @@ public class MemberController {
         return "로그아웃";
     }
 
-    // 이메일 인증
+    // 이메일 중복체크, 이메일 인증
     @PostMapping("/mailConfirm")
     @ResponseBody
     String mailConfirm(@RequestParam("email") String email) throws Exception {
-        System.out.println("email = " + email);
-        String code = registerMail.sendSimpleMessage(email);
-        System.out.println("인증코드 : " + code);
-        return code;
+        String checkResult = memberService.memberEmailDuplicateCheck(email);
+        if (checkResult.equals("success")) {
+            System.out.println("email = " + email);
+            String code = registerMail.sendSimpleMessage(email);
+            System.out.println("인증코드 : " + code);
+            return code;
+        } else {
+            return "fail";
+        }
     }
-
-
 
 
 }

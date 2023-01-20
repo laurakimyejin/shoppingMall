@@ -124,6 +124,17 @@ public class MemberService {
         }
         return null;
     }
+
+    public String memberEmailDuplicateCheck(String memberEmail) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(memberEmail);
+        if (optionalMemberEntity.isPresent()) {
+            return "fail";
+        } else {
+            return "success";
+        }
+    }
+
+
 }
 
 
