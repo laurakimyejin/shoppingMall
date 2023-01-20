@@ -3,6 +3,7 @@ package com.example.shoppingmall.controller;
 import com.example.shoppingmall.dto.MemberDTO;
 import com.example.shoppingmall.service.MemberService;
 import com.example.shoppingmall.service.RegisterMail;
+import com.example.shoppingmall.service.RegisterPassword;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Page;
@@ -41,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MemberController {
     private final MemberService memberService;
     private final RegisterMail registerMail;
+    private final RegisterPassword registerPassword;
 
     //회원가입 화면
     @GetMapping("/save")
@@ -58,9 +60,6 @@ public class MemberController {
             return "fail";
         }
     }
-
-
-
 
     //회원가입 처리
     @PostMapping("/save")
@@ -80,7 +79,7 @@ public class MemberController {
     @GetMapping("/login2")
     public String login2(@RequestParam(value = "redirectURL", defaultValue = "/") String redirectURL, Model model) {
         model.addAttribute("redirectURL", redirectURL);
-        return "redirect:"+redirectURL;
+        return "redirect:" + redirectURL;
     }
 
 //    //로그인 화면
@@ -100,9 +99,7 @@ public class MemberController {
             return "ok";
         } else {
             return "no";
-
         }
-
     }
 
     //관리자 페이지
@@ -195,9 +192,11 @@ public class MemberController {
     @PostMapping("/mailConfirm")
     @ResponseBody
     String mailConfirm(@RequestParam("email") String email) throws Exception {
+        //이메일 중복체크
         String checkResult = memberService.memberEmailDuplicateCheck(email);
         if (checkResult.equals("success")) {
             System.out.println("email = " + email);
+            //이메일 인증
             String code = registerMail.sendSimpleMessage(email);
             System.out.println("인증코드 : " + code);
             return code;
@@ -206,5 +205,34 @@ public class MemberController {
         }
     }
 
+    //비밀번호 찾기 화면
+    @GetMapping("/searchPassword")
+    public String searchPasswordForm() {
+        return "memberPages/searchPassword";
+    }
 
+    //임시비밀번호 전송
+    @PostMapping("/searchPassword")
+    public @ResponseBody String searchPassword(@RequestParam("email") String email) throws Exception {
+        //이메일 체크
+        String checkResultPassword = memberService.findByMemberEmail(email);
+        if (checkResultPassword.equals("success")) {
+            System.out.println("email = " + email);
+            //임시 비밀번호 전송
+            String code = registerPassword.sendSimpleMessage(email);
+            System.out.println("인증코드 : " + code);
+            return code;
+        }else{
+            return "fail";
+        }
+    }
+
+    //임시 비밀번호로 사용자 비밀번호 변경
+    @PostMapping("/searchPasswordUpdate")
+    public @ResponseBody void searchPasswordUpdate(@RequestParam("email")String memberEmail) throws Exception{
+        System.out.println("넘어옴");
+        String code = registerPassword.sendSimpleMessage(memberEmail);
+        System.out.println("서비스전까지");
+        memberService.passwordUpdate(memberEmail , code);
+    }
 }
