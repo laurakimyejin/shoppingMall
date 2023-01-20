@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="sidebar">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+<!--  폰트-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap"
+      rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/sidebar.css}" type="text/css">
+<style>
+  *{
+    font-family: 'Jua', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+</style>
+</head>
+  <th:block th:replace="commonPages/header :: header"></th:block>
+<!--<th:block th:replace="commonPages/sidebar :: sidebar"></th:block>-->
+
+<!--msb: main sidebar-->
+<div class="msb fixed-left" id="msb" >
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <div class="brand-wrapper">
+        <!-- Brand -->
+        <div class="brand-name-wrapper">
+          <a class="navbar-brand" href="/member/admin">
+            관리자페이지
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Main Menu -->
+    <div class="side-menu-container">
+      <ul class="nav navbar-nav">
+        <li><a href="/item/main"> 상품관리</a></li>
+        <li><a href="/order/listAll"> 주문관리</a></li>
+        <li><a href="/member/list"> 회원관리</a></li>
+        <li><a href="/question/list"> 고객센터 관리</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </nav>
+</div>
+</th:block>
+</html>

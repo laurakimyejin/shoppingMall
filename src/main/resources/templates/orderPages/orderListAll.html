@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>main</title>
+    <title>orderListAll</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!--    ajax cdn-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -54,7 +54,7 @@
     </style>
 </head>
 <body style="background-color: white">
-<th:block th:replace="commonPages/header :: header"></th:block>
+<th:block th:replace="commonPages/sidebar :: sidebar"></th:block>
 <div class="main">
 <div th:if="${orderList == 'empty'}">
     <p>주문내역이 없습니다.</p>
