@@ -108,9 +108,9 @@ public class MemberService {
         if (memberEntity2.isEmpty()) {
             MemberDTO memberDTO1 = new MemberDTO();
             memberDTO1.setMemberEmail(memberDTO.getMemberEmail());
-            memberDTO1.setUserId(memberDTO.getUserId());
+            memberDTO1.setUserId(memberDTO.getMemberName());
             memberDTO1.setMemberName(memberDTO.getMemberName());
-            memberDTO1.setMemberPassword(memberDTO1.getUserId());
+            memberDTO1.setMemberPassword(memberDTO.getUserId());
             memberDTO1.setMemberMobile("000-0000-0000");
             Long savedId = memberRepository.save(MemberEntity.toSaveEntity(memberDTO1)).getId();
             Optional<MemberEntity> memberEntity = memberRepository.findById(savedId);
