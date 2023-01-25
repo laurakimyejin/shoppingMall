@@ -4,16 +4,27 @@
     <!-- Swiper -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!--  폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap"
+          rel="stylesheet">
+
+
     <style>
-        .profile-user-img{
-            width:250px;
-            height:250px;
+        .profile-user-img {
+            width: 250px;
+            height: 250px;
             border-radius: 70%;
             overflow: hidden;
         }
-        .profile-user-img-img{
-            width:100%;
-            height:100%;
+
+        .profile-user-img-img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
@@ -73,7 +84,6 @@
             </div>
 
 
-
         </article>
 
         <div id="intro_bg" th:if="${message} != 'null'">
@@ -84,18 +94,20 @@
                         <div class="swiper-wrapper">
                             <div class="swiper-slide" th:each="item: ${itemList}">
 
-                                    <li><a th:href="@{/item/(itemId=${item.id})}">
-                                        <div th:if="${item.fileAttachedItem == 1}">
-                                            <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="200" height="150">
-                                        </div>
-                                        <p><img th:src="@{/img/new.png}" alt="new">
-                                        <p class="read"><a th:href="@{/item/(itemId=${item.id})}"
-                                                           th:text="${item.itemName}"></a>
-                                        </p>
-                                        <em style=" font: italic bold 1em Georgia, serif ;" th:text="${#numbers.formatCurrency(item.itemPrice)}"></em>
-                                        </p>
-                                    </a>
-                                    </li>
+                                <li><a th:href="@{/item/(itemId=${item.id})}">
+                                    <div th:if="${item.fileAttachedItem == 1}">
+                                        <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="200"
+                                             height="150">
+                                    </div>
+                                    <p><img th:src="@{/img/new.png}" alt="new">
+                                    <p class="read"><a th:href="@{/item/(itemId=${item.id})}"
+                                                       th:text="${item.itemName}"></a>
+                                    </p>
+                                    <em style=" font: italic bold 1em Georgia, serif ;"
+                                        th:text="${#numbers.formatCurrency(item.itemPrice)}"></em>
+                                    </p>
+                                </a>
+                                </li>
 
                             </div>
                         </div>
@@ -148,22 +160,119 @@
 </div>
 
 
-
-
-
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="today" class="modal-title">오늘의 꽃</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closer2">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="#" alt="flower" width="100%" height="100%" id="imgUrl1"><br>
+                <h3 style=" font: italic 1.5em Georgia, serif ; color: green; font-weight: bolder" id="flowNm"></h3><br>
+                <p style="font-size: 1.5em" id="flowLang"></p>
+                <p id="fcontent"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="modal-today-close">오늘그만보기</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closer">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </body>
 <script th:inline="javascript">
 
+<!--    쿠키 설정-->
+    function setCookie(name, value, expiredays) {
+        var today = new Date();
+        today.setSeconds(today.getSeconds() + expiredays);
+        document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + today.toGMTString();
+    }
+
+    //쿠키 불러오기
+    function getCookie(name) {
+        var cookie = document.cookie;
+        if (document.cookie != "") {
+            var cookie_array = cookie.split("; ");
+            for (var index in cookie_array) {
+                var cookie_name = cookie_array[index].split("=");
+                if (cookie_name[0] == "mycookie") {
+                    return cookie_name[1];
+                }
+            }
+        }
+        return;
+    }
+
+    //오늘은 그만보기
+    $("#modal-today-close").click(function () {
+        $("#myModal").modal("hide");
+        setCookie("mycookie", 'popupEnd', 10);
+    })
+
+    var checkCookie = getCookie("mycookie");
+
+    //쿠키에 따라 모달창 띄우기
+    if (checkCookie == 'popupEnd') {
+        console.log(document.cookie);
+        $("#myModal").modal("hide");
+    } else {
+        console.log(document.cookie);
+        $.ajax({
+            type: "get",
+            url: "/apis/todayFlower",
+            dataType: "json",
+            success: function (res) {
+                console.log(res);
+                const flowNm = res.flowNm;
+                const imgUrl1 = res.imgUrl1;
+                const fmonth = res.fmonth;
+                const fday = res.fday;
+                const flowLang = res.flowLang;
+                const fcontent = res.fcontent;
+
+                document.getElementById("imgUrl1").src = imgUrl1;
+                document.getElementById("flowNm").innerText = flowNm;
+                document.getElementById("flowLang").innerText = flowLang;
+                document.getElementById("fcontent").innerText = fcontent;
+                document.getElementById("today").innerText = fmonth + "월 " + fday + "일의 꽃";
+
+                $('#myModal').modal("show");
+
+            },
+            error: function (err) {
+                console.log("실패");
+            }
+        });
+
+    }
+
+
+    //모달창 닫기 1 , 2
+    $("#closer").click(function () {
+        $("#myModal").modal("hide");
+    });
+
+    $("#closer2").click(function () {
+        $("#myModal").modal("hide");
+    });
+
+
+    //장바구니
     const cart = () => {
         const form = document.querySelector('form');
         form.submit();
     }
 
+    //상품 슬라이드
     var swiper = new Swiper('.swiper-container', {
         spaceBetween: 5,
-        slidesPerView : '4', // 한 슬라이드에 보여줄 갯수
+        slidesPerView: '4', // 한 슬라이드에 보여줄 갯수
         centeredSlides: true,    //센터모드
         pagination: {
             clickable: true,
@@ -171,30 +280,21 @@
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
-        }, loop : true,
-        autoHeight : true,
+        }, loop: true,
+        autoHeight: true,
         autoplay: {     //자동슬라이드 (false-비활성화)
-            delay: 1500},
+            delay: 1500
+        },
     });
+
+
+    // 팝업창 띄우기
+    //  window.onload = function () {
+    //      let popOption = "width=500, height=500, resizable=no, scrollbars=no, status=no;";
+    //      console.log("팝업창 호출")
+    //      window.open("/apis/todayFlower", 'popup', popOption);
+    //  }
+
 
 </script>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

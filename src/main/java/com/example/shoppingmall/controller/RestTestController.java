@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStreamReader;
@@ -26,7 +27,7 @@ import java.util.*;
 @Controller
 public class RestTestController {
     @GetMapping("/apis/todayFlower")
-    public String todayFlower(String[] args , Model model) throws IOException, JSONException {
+    public @ResponseBody TodayFlowerDTO todayFlower(String[] args , Model model) throws IOException, JSONException {
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1390804/NihhsTodayFlowerInfo01/selectTodayFlower01"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=BxPNlmkbBnAJUjFreSXMImZJIgkhIw6EoT4MuSIk%2FbZIdXq6yGoV5%2FdmJ3F6f5%2FxAM94q7sxwf1tK8gG%2BJIKog%3D%3D"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("fMonth", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*월(MM), 미지정시 오늘 날짜 적용됨*/
@@ -93,7 +94,7 @@ public class RestTestController {
         todayFlowerDTO.setImgUrl3(imgUrl3);
 
         model.addAttribute("todayFlower",todayFlowerDTO);
-        return "/apiPages/todayFlower";
+        return todayFlowerDTO;
     }
 
 
