@@ -99,7 +99,7 @@ public class RestTestController {
 
 
     @GetMapping("/apis/todayFlowerList")
-    public String todayFlowerList(@RequestParam("searchType2")String searchType,@RequestParam("searchWord2")String searchWord,
+    public String todayFlowerList(@RequestParam("searchType")String searchType,@RequestParam("searchWord")String searchWord,
                                   @RequestParam(required = false , value = "pageNo", defaultValue = "1") String nowpageNo , Model model) throws IOException, JSONException {
         System.out.println("nowpageNo = " + nowpageNo);
 
@@ -181,8 +181,8 @@ public class RestTestController {
 
         model.addAttribute("todayFlowerList",todayFlowerListDTOList);
         model.addAttribute("PageNo",pageNo);
-        model.addAttribute("searchType2",searchType);
-        model.addAttribute("searchWord2",searchWord);
+        model.addAttribute("searchType",searchType);
+        model.addAttribute("searchWord",searchWord);
         System.out.println("pageNo : " + pageNo);
 
 

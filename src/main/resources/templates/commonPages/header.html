@@ -77,18 +77,18 @@
                             <img th:src="@{/img/today.jpg}" alt="top_btn">
                             <div class="search">
                                 <!-- 부트스트랩 검색창 -->
-                                <form class="navbar-form navbar-left" role="search">
+                                <div class="navbar-form navbar-left" role="search">
                                     <div class="form-group">
-                                        <select class="form-control" id="searchType2">
+                                        <select class="form-control" id="searchType">
                                             <option value="1" >꽃이름</option>
                                             <option value="4">꽃말</option>
                                             <option value="9">전체</option>
                                         </select>
-                                        <input type="text" class="form-control" placeholder="Search" id="searchWord2" th:value="${searchWord}" name="searchWord2">
+                                        <input type="text" class="form-control" placeholder="Search" id="searchWord" th:value="${searchWord}" name="searchWord">
                                         <input type="button" value="검색" class="form-control" onclick="searchQ2()">
 
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
 
@@ -113,9 +113,9 @@
     <script th:inline="javascript">
 
         const searchQ2 = () => {
-            const searchType2 = document.getElementById("searchType2").value;
-            const searchWord2 = document.getElementById("searchWord2").value;
-            location.href = "/apis/todayFlowerList?searchType2=" + searchType2 + "&searchWord2=" + searchWord2;
+            const searchType = document.getElementById("searchType").value;
+            const searchWord = document.getElementById("searchWord").value;
+            location.href = "/apis/todayFlowerList?searchType=" + searchType + "&searchWord=" + searchWord;
         }
 
 
