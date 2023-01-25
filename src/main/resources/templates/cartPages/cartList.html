@@ -131,7 +131,7 @@
     const orderFn = () => {
 
         let itemPriceTotal2 = document.querySelector(".item_price_total").innerHTML;
-        let itemPriceTotal = itemPriceTotal2.replace(',', '');
+        let itemPriceTotal = itemPriceTotal2.replace(/,/g, '');
         console.log("정규식확인" + itemPriceTotal)
 
         const length = document.getElementById("cartList").value;
