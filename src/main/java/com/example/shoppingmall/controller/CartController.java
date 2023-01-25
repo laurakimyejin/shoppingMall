@@ -17,14 +17,15 @@ public class CartController {
     private final CartService cartService;
 
     //장바구니 저장
-    @GetMapping("/save")
-    public String saveForm(@ModelAttribute ItemDTO itemDTO, Model model) {
-        String userId = itemDTO.getUserId();
-        cartService.save(itemDTO);
-        model.addAttribute("item", itemDTO);
-        return "redirect:/cart/list?userId=" + userId;
-    }
+//    @GetMapping("/save")
+//    public String saveForm(@ModelAttribute ItemDTO itemDTO, Model model) {
+//        String userId = itemDTO.getUserId();
+//        cartService.save(itemDTO);
+//        model.addAttribute("item", itemDTO);
+//        return "redirect:/cart/list?userId=" + userId;
+//    }
 
+    //장바구니 저장
     @GetMapping("/saved")
     public @ResponseBody String cartSave(@ModelAttribute ItemDTO itemDTO , HttpSession session){
         Object member = session.getAttribute("member");
@@ -60,12 +61,12 @@ public class CartController {
     }
 
     //장바구니 수정
-    @GetMapping("/update")
-    public String update(@ModelAttribute CartDTO cartDTO){
-        System.out.println("cartDTO = " + cartDTO);
-        cartService.update(cartDTO);
-        return "redirect:/cart/list?userId="+cartDTO.getUserId();
-    }
+//    @GetMapping("/update")
+//    public String update(@ModelAttribute CartDTO cartDTO){
+//        System.out.println("cartDTO = " + cartDTO);
+//        cartService.update(cartDTO);
+//        return "redirect:/cart/list?userId="+cartDTO.getUserId();
+//    }
 
     //장바구니 수량변경 ajax
     @GetMapping("/change")

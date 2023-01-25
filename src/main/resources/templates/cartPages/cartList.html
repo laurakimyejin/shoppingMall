@@ -30,7 +30,7 @@
         <li th:each="cart:${cartList}">
             <div class="checkbox">
                 <input type="checkbox" th:id="${cart.id}" checked th:value="${cart.id}" name="item_chk"
-                       th:onclick="checkBox([[${cart}]])">
+                       th:onclick="checkBox([[${cart} ]])">
                 <label th:for="${cart.id}"></label>
             </div>
             <div class="item_detail">
@@ -287,19 +287,19 @@
     }
 
     //개별 아이템 삭제
-    $('.del_li_btn').on('click', function () {
-        var recent_delete_cnt = $('.del_btn .num').text();
-        var check_delete_ck = $(this).offsetParent().parent().find('input[type="checkbox"]').is(':checked');
-        console.log(check_delete_ck);
-        if (check_delete_ck == true) {
-            recent_delete_cnt = recent_delete_cnt - 1;
-            $('.del_btn .num').text(recent_delete_cnt);
-        }
-        $(this).offsetParent().parent().remove();
-        checkPrice();
-        //console.log($(this).offsetParent().parents().find('input[type="checkbox"]').is(':checked'));
-        // pay_total_func();
-    });
+    // $('.del_li_btn').on('click', function () {
+    //     var recent_delete_cnt = $('.del_btn .num').text();
+    //     var check_delete_ck = $(this).offsetParent().parent().find('input[type="checkbox"]').is(':checked');
+    //     console.log(check_delete_ck);
+    //     if (check_delete_ck == true) {
+    //         recent_delete_cnt = recent_delete_cnt - 1;
+    //         $('.del_btn .num').text(recent_delete_cnt);
+    //     }
+    //     $(this).offsetParent().parent().remove();
+    //     checkPrice();
+    //     //console.log($(this).offsetParent().parents().find('input[type="checkbox"]').is(':checked'));
+    //     // pay_total_func();
+    // });
 
     //삭제 버튼을 누르면 지정된 상품 삭제
     // $('.del_btn').on('click', function () {
