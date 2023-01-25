@@ -149,36 +149,12 @@
 
 
 
-<div class="wrap" style="float: left">
-    <div class="search">
-        <!-- 부트스트랩 검색창 -->
-        <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-                <select class="form-control" id="searchType">
-                    <option value="1" >꽃이름</option>
-                    <option value="4">꽃말</option>
-                    <option value="9">전체</option>
-                </select>
-                <input type="text" class="form-control" placeholder="Search" id="searchWord" th:value="${search}" name="searchWord">
-                <input type="button" value="검색" class="form-control" onclick="searchQ()">
-
-            </div>
-        </form>
-    </div>
-</div>
-
 
 
 
 
 </body>
 <script th:inline="javascript">
-    const searchQ = () => {
-        const searchType = document.getElementById("searchType").value;
-        const searchWord = document.getElementById("searchWord").value;
-        location.href = "/apis/todayFlowerList?searchType=" + searchType + "&searchWord=" + searchWord;
-    }
-
 
     const cart = () => {
         const form = document.querySelector('form');

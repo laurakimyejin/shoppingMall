@@ -35,7 +35,6 @@ public class RestTestController {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -49,10 +48,10 @@ public class RestTestController {
         }
         rd.close();
         conn.disconnect();
-        System.out.println(sb.toString());
+
         JSONObject json = XML.toJSONObject(sb.toString());
         String jsonStr = json.toString(4);
-        System.out.println(jsonStr);
+
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(jsonStr);
@@ -92,7 +91,7 @@ public class RestTestController {
         todayFlowerDTO.setImgUrl1(imgUrl1);
         todayFlowerDTO.setImgUrl2(imgUrl2);
         todayFlowerDTO.setImgUrl3(imgUrl3);
-        System.out.println("최종"+todayFlowerDTO);
+
         model.addAttribute("todayFlower",todayFlowerDTO);
         return "/apiPages/todayFlower";
     }
@@ -101,8 +100,8 @@ public class RestTestController {
     @GetMapping("/apis/todayFlowerList")
     public String todayFlowerList(@RequestParam("searchType")String searchType,@RequestParam("searchWord")String searchWord,
                                   @RequestParam(required = false , value = "pageNo", defaultValue = "1") String nowpageNo , Model model) throws IOException, JSONException {
-        System.out.println("searchType : "+searchType);
-        System.out.println("searchWord : "+searchWord);
+        System.out.println("nowpageNo = " + nowpageNo);
+
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1390804/NihhsTodayFlowerInfo01/selectTodayFlowerList01"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=BxPNlmkbBnAJUjFreSXMImZJIgkhIw6EoT4MuSIk%2FbZIdXq6yGoV5%2FdmJ3F6f5%2FxAM94q7sxwf1tK8gG%2BJIKog%3D%3D"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(nowpageNo, "UTF-8")); /*페이지 번호(default : 1)*/
@@ -116,7 +115,7 @@ public class RestTestController {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
+
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -130,14 +129,14 @@ public class RestTestController {
         }
         rd.close();
         conn.disconnect();
-        System.out.println(sb.toString());
+
         JSONObject json = XML.toJSONObject(sb.toString());
         String jsonStr = json.toString(4);
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(jsonStr);
         JsonNode dataNode = rootNode.path("document").path("root").path("result");
         JsonNode dataNode2 = rootNode.path("document").path("root");
-        System.out.println(jsonStr);
+
         int numOfRows = dataNode2.path("numOfRows").asInt();
         int pageNo = dataNode2.path("pageNo").asInt();
         int resultCnt = dataNode2.path("resultCnt").asInt();
@@ -195,12 +194,13 @@ public class RestTestController {
             todayFlowerListDTO.setImgUrl3(imgUrl3);
             todayFlowerListDTOList.add(todayFlowerListDTO);
         }
-        System.out.println(todayFlowerListDTOList);
+
         model.addAttribute("todayFlowerList",todayFlowerListDTOList);
         model.addAttribute("PageNo",pageNo);
         model.addAttribute("searchType",searchType);
         model.addAttribute("searchWord",searchWord);
-        System.out.println(model);
+        System.out.println("pageNo : " + pageNo);
+
 
 
         //전체 글 갯수 조회
@@ -221,10 +221,7 @@ public class RestTestController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-        System.out.println("pageNo : " + pageNo);
-        System.out.println("maxPage : " + maxPage);
-        System.out.println("startPage : " + startPage);
-        System.out.println("endPage : " + endPage);
+
 
 
 
@@ -243,7 +240,7 @@ public class RestTestController {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
+
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -257,7 +254,7 @@ public class RestTestController {
         }
         rd.close();
         conn.disconnect();
-        System.out.println(sb.toString());
+
         JSONObject json = XML.toJSONObject(sb.toString());
         String jsonStr = json.toString(4);
         ObjectMapper objectMapper = new ObjectMapper();
@@ -297,7 +294,7 @@ public class RestTestController {
         todayFlowerDTO.setImgUrl1(imgUrl1);
         todayFlowerDTO.setImgUrl2(imgUrl2);
         todayFlowerDTO.setImgUrl3(imgUrl3);
-        System.out.println("최종"+todayFlowerDTO);
+
         model.addAttribute("todayFlower",todayFlowerDTO);
         return "/apiPages/todayFlowerView";
     }
