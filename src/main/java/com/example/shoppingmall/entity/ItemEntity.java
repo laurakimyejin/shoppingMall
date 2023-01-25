@@ -74,7 +74,6 @@ public class ItemEntity extends BaseEntity {
         itementity.setItemPrice(itemDTO.getItemPrice());
         itementity.setItemContents(itemDTO.getItemContents());
         itementity.setItemCount(itemDTO.getItemCount());
-//        itementity.setItemImage(itemDTO.getItemImage());
         itementity.setItemCategory(itemDTO.getItemCategory());
         itementity.setFileAttachedItem(1);
         return itementity;

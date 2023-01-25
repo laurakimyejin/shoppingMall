@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class OrderDTO extends BaseEntity {
     private Long id;
-    private String userId;
     private int orderCount;
     private String orderName;
     private String memberAddress;
@@ -22,14 +21,17 @@ public class OrderDTO extends BaseEntity {
     private String postcode;
     private String memberMobile;
     private String orderStatus = "배송준비";
+    private int orderPrice;
+    private LocalDateTime orderCreatedTime;
+
+    private String userId;
     private Long itemId;
     private Long memberId;
     private String memberName;
-    private int orderPrice;
     private String review = "리뷰작성";
-    private LocalDateTime orderCreatedTime;
 
-    public static <U> U toOderDTO(OrderEntity orderEntity) {
+
+    public static <U> U toOrderDTO(OrderEntity orderEntity) {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setId(orderEntity.getId());
         orderDTO.setUserId(orderEntity.getMemberEntity().getUserId());

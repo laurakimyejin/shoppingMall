@@ -23,13 +23,6 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
 
-//    주문페이지 이동
-    @GetMapping("/order")
-    public String order(){
-        return "orderPages/order";
-    }
-
-
     //주문상세페이지 이동
     @GetMapping("/order/save")
     public String saveForm(@ModelAttribute ItemDTO itemDTO, Model model) {
@@ -38,38 +31,16 @@ public class OrderController {
         return "orderPages/orderSave";
     }
 
-
-//    카트리스트에서 주문페이지 이동하기
-    @GetMapping("/order/cart")
-    public String saveFormCart(@RequestParam("userId")String userId,@RequestParam("itemPriceTotal")int itemPriceTotal, Model model) {
-        List<CartItemDTO>cartItemDTOList = orderService.findCartById(userId);
-        System.out.println("cartItemDTOList = " + cartItemDTOList);
-        model.addAttribute("cartList",cartItemDTOList);
-        model.addAttribute("itemPriceTotal",itemPriceTotal);
-        return "orderPages/orderSave2";
+    //주문하기
+    @PostMapping("/order/save")
+    public String save(@ModelAttribute OrderDTO orderDTO, Model model) {
+        System.out.println("시작orderDTO = " + orderDTO + ", model = " + model);
+        orderService.save(orderDTO);
+        model.addAttribute("order", orderDTO);
+        System.out.println("저장후orderDTO = " + orderDTO + ", model = " + model);
+        return "redirect:/";
     }
-
-    //카트리스트에서 체크박스로 선택 주문하기
-    @PostMapping ("/order/cart2")
-    public @ResponseBody String saveFormCart2(@RequestParam("cartList")JSONArray itemDTOList, HttpSession session) throws JSONException {
-        Object member = session.getAttribute("member");
-        System.out.println("체크값만 넘기기 = " + itemDTOList);
-        member = (MemberDTO) member;
-        String userId = ((MemberDTO) member).getUserId();
-        String result = orderService.checkOrder(userId,itemDTOList);
-        return result;
-    }
-    @GetMapping("/order/cart3")
-    public String save3(@RequestParam("userId")String userId,Model model){
-        List<CartItemDTO>cartItemDTOList=orderService.findByOrderReady(userId);
-        int itemPriceTotal=cartItemDTOList.get(0).getItemPriceTotal();
-        model.addAttribute("cartList",cartItemDTOList);
-        model.addAttribute("itemPriceTotal",itemPriceTotal);
-
-        return "orderPages/orderSave2";
-    }
-
-
+    //장바구니에서 주문하기
     @PostMapping("/order/save2")
     public @ResponseBody String save2(@RequestParam("cartList")JSONArray itemDTOList, Model model , HttpSession session) throws JSONException {
         Object member = session.getAttribute("member");
@@ -81,20 +52,39 @@ public class OrderController {
         orderService.save2(itemDTOList,userId);
         return "success";
     }
+    //장바구니에서 주문하기
+    @GetMapping("/order/cart3")
+    public String save3(@RequestParam("userId")String userId,Model model){
+        List<CartItemDTO>cartItemDTOList=orderService.findByOrderReady(userId);
+        int itemPriceTotal=cartItemDTOList.get(0).getItemPriceTotal();
+        model.addAttribute("cartList",cartItemDTOList);
+        model.addAttribute("itemPriceTotal",itemPriceTotal);
 
-
-
-    //주문하기
-    @PostMapping("/order/save")
-    public String save(@ModelAttribute OrderDTO orderDTO, Model model) {
-        System.out.println("시작orderDTO = " + orderDTO + ", model = " + model);
-        orderService.save(orderDTO);
-        model.addAttribute("order", orderDTO);
-        System.out.println("저장후orderDTO = " + orderDTO + ", model = " + model);
-        return "redirect:/";
+        return "orderPages/orderSave2";
     }
 
-    //개인주문목록
+//    장바구니에서 주문페이지 이동하기
+//    @GetMapping("/order/cart")
+//    public String saveFormCart(@RequestParam("userId")String userId,@RequestParam("itemPriceTotal")int itemPriceTotal, Model model) {
+//        List<CartItemDTO>cartItemDTOList = orderService.findCartById(userId);
+//        System.out.println("cartItemDTOList = " + cartItemDTOList);
+//        model.addAttribute("cartList",cartItemDTOList);
+//        model.addAttribute("itemPriceTotal",itemPriceTotal);
+//        return "orderPages/orderSave2";
+//    }
+
+    //장바구니에서 체크박스로 선택 주문하기
+    @PostMapping ("/order/cart2")
+    public @ResponseBody String saveFormCart2(@RequestParam("cartList")JSONArray itemDTOList, HttpSession session) throws JSONException {
+        Object member = session.getAttribute("member");
+        System.out.println("체크값만 넘기기 = " + itemDTOList);
+        member = (MemberDTO) member;
+        String userId = ((MemberDTO) member).getUserId();
+        String result = orderService.checkOrder(userId,itemDTOList);
+        return result;
+    }
+
+    //개인 주문목록
     @GetMapping("/order/list")
     public String list(@RequestParam("userId")String userId, Model model) {
         List<OrderDTO>orderDTOList = orderService.findAll(userId);
@@ -102,7 +92,7 @@ public class OrderController {
         return "orderPages/orderList";
     }
 
-    //모든 주문목록
+    //관리자페이지 주문목록
     @GetMapping("/order/listAll")
     public String findListAll(@PageableDefault(page = 1,size = 3) Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort)
     {
@@ -127,7 +117,7 @@ public class OrderController {
         return "success";
     }
 
-    //쥐문취소
+    //주문취소
     @GetMapping("/order/cancel")
     public String cancel(@RequestParam("memberId")Long memberId){
         String userId = orderService.cancel(memberId);
