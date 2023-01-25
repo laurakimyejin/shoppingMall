@@ -12,10 +12,11 @@ import lombok.ToString;
 
 public class CartItemDTO {
     private Long id;
+    private int cartCount;
+
     private String itemName;
     private int itemPrice;
     private int itemCount;
-    private int cartCount;
     private String itemImage;
     private int itemPriceTotal;
 
