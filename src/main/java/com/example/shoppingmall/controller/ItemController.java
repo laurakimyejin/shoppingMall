@@ -46,6 +46,7 @@ public class ItemController {
         int endPage = ((startPage + blockLimit - 1) < itemDTOList.getTotalPages()) ? startPage + blockLimit - 1 : itemDTOList.getTotalPages();
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        //sort: 정렬 관련 정보
         model.addAttribute("sort", sort);
         model.addAttribute("size", pageable.getPageSize());
         model.addAttribute("page", pageable.getPageNumber());
@@ -100,7 +101,7 @@ public class ItemController {
         return"redirect:/item/main";
     }
 
-    //주문확인에서 아이템조회
+    //주문확인에서 상품 이름으로 상세조회
     @GetMapping("/items")
     public String findById(@PageableDefault(page = 1) Pageable pageable, @RequestParam("orderName") String orderName, Model model){
         System.out.println("pageable = " + pageable + ", orderName = " + orderName + ", model = " + model);
