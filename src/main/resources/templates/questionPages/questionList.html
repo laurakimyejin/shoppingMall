@@ -52,8 +52,8 @@
             <td th:text="${question.id}"></td>
             <td>
                 <div th:if="${session.member != null}">
-                    <a th:if="${session.member.userId == 'admin' or question.questionName == session.member.memberName }" th:href="@{|/question/${question.id}|}" th:text="${question.questionTitle}"></a>
-                    <i th:unless="${session.member.userId == 'admin' or question.questionName == session.member.memberName }" class="fa-solid fa-lock">비밀글입니다.</i>
+                    <a th:if="${session.member.userId == 'admin' or question.questionName == session.member.userId }" th:href="@{|/question/${question.id}|}" th:text="${question.questionTitle}"></a>
+                    <i th:unless="${session.member.userId == 'admin' or question.questionName == session.member.userId }" class="fa-solid fa-lock">비밀글입니다.</i>
                 </div>
                 <div th:unless="${session.member != null}">
                     <i class="fa-solid fa-lock">비밀글입니다.</i>
