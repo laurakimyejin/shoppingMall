@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStreamReader;
@@ -26,7 +27,7 @@ import java.util.*;
 @Controller
 public class RestTestController {
     @GetMapping("/apis/todayFlower")
-    public String todayFlower(String[] args , Model model) throws IOException, JSONException {
+    public @ResponseBody TodayFlowerDTO todayFlower(String[] args , Model model) throws IOException, JSONException {
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1390804/NihhsTodayFlowerInfo01/selectTodayFlower01"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=BxPNlmkbBnAJUjFreSXMImZJIgkhIw6EoT4MuSIk%2FbZIdXq6yGoV5%2FdmJ3F6f5%2FxAM94q7sxwf1tK8gG%2BJIKog%3D%3D"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("fMonth", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*월(MM), 미지정시 오늘 날짜 적용됨*/
@@ -35,7 +36,6 @@ public class RestTestController {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -49,10 +49,10 @@ public class RestTestController {
         }
         rd.close();
         conn.disconnect();
-        System.out.println(sb.toString());
+
         JSONObject json = XML.toJSONObject(sb.toString());
         String jsonStr = json.toString(4);
-        System.out.println(jsonStr);
+
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(jsonStr);
@@ -92,17 +92,17 @@ public class RestTestController {
         todayFlowerDTO.setImgUrl1(imgUrl1);
         todayFlowerDTO.setImgUrl2(imgUrl2);
         todayFlowerDTO.setImgUrl3(imgUrl3);
-        System.out.println("최종"+todayFlowerDTO);
+
         model.addAttribute("todayFlower",todayFlowerDTO);
-        return "/apiPages/todayFlower";
+        return todayFlowerDTO;
     }
 
 
     @GetMapping("/apis/todayFlowerList")
-    public String todayFlowerList(@RequestParam("searchType")String searchType,@RequestParam("searchWord")String searchWord,
+    public String todayFlowerList(@RequestParam("searchType2")String searchType,@RequestParam("searchWord2")String searchWord,
                                   @RequestParam(required = false , value = "pageNo", defaultValue = "1") String nowpageNo , Model model) throws IOException, JSONException {
-        System.out.println("searchType : "+searchType);
-        System.out.println("searchWord : "+searchWord);
+        System.out.println("nowpageNo = " + nowpageNo);
+
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1390804/NihhsTodayFlowerInfo01/selectTodayFlowerList01"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=BxPNlmkbBnAJUjFreSXMImZJIgkhIw6EoT4MuSIk%2FbZIdXq6yGoV5%2FdmJ3F6f5%2FxAM94q7sxwf1tK8gG%2BJIKog%3D%3D"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(nowpageNo, "UTF-8")); /*페이지 번호(default : 1)*/
@@ -116,7 +116,7 @@ public class RestTestController {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
+
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -130,14 +130,14 @@ public class RestTestController {
         }
         rd.close();
         conn.disconnect();
-        System.out.println(sb.toString());
+
         JSONObject json = XML.toJSONObject(sb.toString());
         String jsonStr = json.toString(4);
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(jsonStr);
         JsonNode dataNode = rootNode.path("document").path("root").path("result");
         JsonNode dataNode2 = rootNode.path("document").path("root");
-        System.out.println(jsonStr);
+
         int numOfRows = dataNode2.path("numOfRows").asInt();
         int pageNo = dataNode2.path("pageNo").asInt();
         int resultCnt = dataNode2.path("resultCnt").asInt();
@@ -147,60 +147,44 @@ public class RestTestController {
                 int dataNo = dataNode.path(i).path("dataNo").asInt();
                 int fDay = dataNode.path(i).path("fDay").asInt();
                 int fMonth = dataNode.path(i).path("fMonth").asInt();
-                String fileName1 = dataNode.path(i).path("fileName1").asText();
-                String fileName2 = dataNode.path(i).path("fileName2").asText();
-                String fileName3 = dataNode.path(i).path("fileName3").asText();
                 String flowLang = dataNode.path(i).path("flowLang").asText();
                 String flowNm = dataNode.path(i).path("flowNm").asText();
                 String imgUrl1 = dataNode.path(i).path("imgUrl1").asText();
-                String imgUrl2 = dataNode.path(i).path("imgUrl2").asText();
-                String imgUrl3 = dataNode.path(i).path("imgUrl3").asText();
                 TodayFlowerListDTO todayFlowerListDTO = new TodayFlowerListDTO();
                 todayFlowerListDTO.setDataNo(dataNo);
                 todayFlowerListDTO.setFDay(fDay);
                 todayFlowerListDTO.setFMonth(fMonth);
-                todayFlowerListDTO.setFileName1(fileName1);
-                todayFlowerListDTO.setFileName2(fileName2);
-                todayFlowerListDTO.setFileName3(fileName3);
                 todayFlowerListDTO.setFlowLang(flowLang);
                 todayFlowerListDTO.setFlowNm(flowNm);
                 todayFlowerListDTO.setImgUrl1(imgUrl1);
-                todayFlowerListDTO.setImgUrl2(imgUrl2);
-                todayFlowerListDTO.setImgUrl3(imgUrl3);
                 todayFlowerListDTOList.add(todayFlowerListDTO);
         }
         } else if (resultCnt == 1) {
             int dataNo = dataNode.path("dataNo").asInt();
             int fDay = dataNode.path("fDay").asInt();
             int fMonth = dataNode.path("fMonth").asInt();
-            String fileName1 = dataNode.path("fileName1").asText();
-            String fileName2 = dataNode.path("fileName2").asText();
-            String fileName3 = dataNode.path("fileName3").asText();
             String flowLang = dataNode.path("flowLang").asText();
             String flowNm = dataNode.path("flowNm").asText();
             String imgUrl1 = dataNode.path("imgUrl1").asText();
-            String imgUrl2 = dataNode.path("imgUrl2").asText();
-            String imgUrl3 = dataNode.path("imgUrl3").asText();
             TodayFlowerListDTO todayFlowerListDTO = new TodayFlowerListDTO();
             todayFlowerListDTO.setDataNo(dataNo);
             todayFlowerListDTO.setFDay(fDay);
             todayFlowerListDTO.setFMonth(fMonth);
-            todayFlowerListDTO.setFileName1(fileName1);
-            todayFlowerListDTO.setFileName2(fileName2);
-            todayFlowerListDTO.setFileName3(fileName3);
             todayFlowerListDTO.setFlowLang(flowLang);
             todayFlowerListDTO.setFlowNm(flowNm);
             todayFlowerListDTO.setImgUrl1(imgUrl1);
-            todayFlowerListDTO.setImgUrl2(imgUrl2);
-            todayFlowerListDTO.setImgUrl3(imgUrl3);
             todayFlowerListDTOList.add(todayFlowerListDTO);
+        }else {
+            model.addAttribute("list", "no");
+            return "/apiPages/todayFlowerList";
         }
-        System.out.println(todayFlowerListDTOList);
+
         model.addAttribute("todayFlowerList",todayFlowerListDTOList);
         model.addAttribute("PageNo",pageNo);
-        model.addAttribute("searchType",searchType);
-        model.addAttribute("searchWord",searchWord);
-        System.out.println(model);
+        model.addAttribute("searchType2",searchType);
+        model.addAttribute("searchWord2",searchWord);
+        System.out.println("pageNo : " + pageNo);
+
 
 
         //전체 글 갯수 조회
@@ -221,10 +205,7 @@ public class RestTestController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-        System.out.println("pageNo : " + pageNo);
-        System.out.println("maxPage : " + maxPage);
-        System.out.println("startPage : " + startPage);
-        System.out.println("endPage : " + endPage);
+
 
 
 
@@ -243,7 +224,7 @@ public class RestTestController {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
+
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -257,7 +238,7 @@ public class RestTestController {
         }
         rd.close();
         conn.disconnect();
-        System.out.println(sb.toString());
+
         JSONObject json = XML.toJSONObject(sb.toString());
         String jsonStr = json.toString(4);
         ObjectMapper objectMapper = new ObjectMapper();
@@ -297,7 +278,7 @@ public class RestTestController {
         todayFlowerDTO.setImgUrl1(imgUrl1);
         todayFlowerDTO.setImgUrl2(imgUrl2);
         todayFlowerDTO.setImgUrl3(imgUrl3);
-        System.out.println("최종"+todayFlowerDTO);
+
         model.addAttribute("todayFlower",todayFlowerDTO);
         return "/apiPages/todayFlowerView";
     }

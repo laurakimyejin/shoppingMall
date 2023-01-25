@@ -31,12 +31,13 @@
             -webkit-transform: scale(1.1);
             transform: scale(1.1);
         }
+
     </style>
     <div id="wrap">
         <!--s:header-->
         <div id="header_bg" style="position: relative"> <!--#1366bf-->
             <header><!--1400px-->
-                <div id="my_menu"><a href="#"><img th:src="@{/img/my_icon.png}" alt="my_menu"></a></div>
+                <div id="my_menu" style="float: left"><a href="#"><img th:src="@{/img/my_icon.png}" alt="my_menu"></a></div>
                 <ul style="position: relative ; right: 100px; top: 50px"><!--언어영역-->
                     <div>
                         <div th:if="${session.member} != null">
@@ -68,19 +69,39 @@
                     </div>
                 </ul>
 
-                <div id="h_btm" style="width: 950px"> <!--로고부분헤더-->
+                <div id="h_btm" style="width: 950px; position: relative"> <!--로고부분헤더-->
                     <h1><a href="/"><img th:src="@{/img/gardening.jpg}" width="150" height="100" alt="도그쿡"></a></h1>
                     <nav>
-                        <div id="all_menu">
-                            <a href="#"><img th:src="@{/img/allmenu_icon.png}" alt="menu"></a>
+
+                        <div class="wrap" style="position: relative ; float: left">
+                            <img th:src="@{/img/today.jpg}" alt="top_btn">
+                            <div class="search">
+                                <!-- 부트스트랩 검색창 -->
+                                <form class="navbar-form navbar-left" role="search">
+                                    <div class="form-group">
+                                        <select class="form-control" id="searchType2">
+                                            <option value="1" >꽃이름</option>
+                                            <option value="4">꽃말</option>
+                                            <option value="9">전체</option>
+                                        </select>
+                                        <input type="text" class="form-control" placeholder="Search" id="searchWord2" th:value="${searchWord}" name="searchWord2">
+                                        <input type="button" value="검색" class="form-control" onclick="searchQ2()">
+
+                                    </div>
+                                </form>
+                            </div>
                         </div>
 
-                        <ul style="margin-left: 100px;">
-                            <li><a class="aa" href="/item/small">소형 식물</a></li>
-                            <li><a class="aa" href="/item/medium">중형 식물</a></li>
-                            <li><a class="aa" href="/item/large">대형 식물</a></li>
-                            <li><a class="aa" href="/item/main">전체상품</a></li>
+
+
+
+                        <ul style="margin-left: 10px;">
+                            <li style="width: 80px ; height: 100px"><a class="aa" href="/item/small">소형 식물</a></li>
+                            <li style="width: 80px ; height: 100px"><a class="aa" href="/item/medium">중형 식물</a></li>
+                            <li style="width: 80px ; height: 100px"><a class="aa" href="/item/large">대형 식물</a></li>
+                            <li style="width: 80px ; height: 100px"><a class="aa" href="/item/main">전체상품</a></li>
                         </ul>
+
                     </nav>
                 </div>
             </header>
@@ -88,7 +109,18 @@
         <!--e:header-->
     </div>
 
+
     <script th:inline="javascript">
+
+        const searchQ2 = () => {
+            const searchType2 = document.getElementById("searchType2").value;
+            const searchWord2 = document.getElementById("searchWord2").value;
+            location.href = "/apis/todayFlowerList?searchType2=" + searchType2 + "&searchWord2=" + searchWord2;
+        }
+
+
+
+
         const logout = () => {
             axios({
                 method: "get",

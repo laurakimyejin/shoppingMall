@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>오늘의 꽃</h2>
+<div class="image-form">
+    <div>
+        <img th:src="${todayFlower.imgUrl1}" alt="flower" width="300" height="300" id="lgImage">
+    </div>
+</div>
+
+<div class="information">
+    <div>
+        <!--<th>상품명</th>-->
+        <h2 id="itemName" th:text="${todayFlower.flowNm}"></h2>
+    </div>
+
+
+    <div>
+        <label style="margin-right: 40px">꽃말</label>
+        <p class="text-form" th:text="${todayFlower.flowLang}"></p>
+    </div>
+
+    <div>
+        <label style="margin-right: 40px">오늘의 꽃 날짜</label>
+        <p class="text-form" th:text="${todayFlower.fMonth}+'월'+${todayFlower.fDay}+'일'"></p>
+    </div>
+
+
+    <div style="margin-top: 70px; margin-bottom: 10px ;line-height: 150%">
+        <!--                <th>설명</th>-->
+        <h3>내용</h3>
+        <div th:text="${todayFlower.FContent}"></div>
+    </div>
+</div>
+</form>
+</div>
+
+</body>
+</html>
