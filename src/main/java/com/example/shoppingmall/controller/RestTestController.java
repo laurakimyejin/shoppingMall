@@ -99,7 +99,7 @@ public class RestTestController {
 
 
     @GetMapping("/apis/todayFlowerList")
-    public String todayFlowerList(@RequestParam("searchType")String searchType,@RequestParam("searchWord")String searchWord,
+    public String todayFlowerList(@RequestParam("searchType2")String searchType,@RequestParam("searchWord2")String searchWord,
                                   @RequestParam(required = false , value = "pageNo", defaultValue = "1") String nowpageNo , Model model) throws IOException, JSONException {
         System.out.println("nowpageNo = " + nowpageNo);
 
@@ -147,59 +147,42 @@ public class RestTestController {
                 int dataNo = dataNode.path(i).path("dataNo").asInt();
                 int fDay = dataNode.path(i).path("fDay").asInt();
                 int fMonth = dataNode.path(i).path("fMonth").asInt();
-                String fileName1 = dataNode.path(i).path("fileName1").asText();
-                String fileName2 = dataNode.path(i).path("fileName2").asText();
-                String fileName3 = dataNode.path(i).path("fileName3").asText();
                 String flowLang = dataNode.path(i).path("flowLang").asText();
                 String flowNm = dataNode.path(i).path("flowNm").asText();
                 String imgUrl1 = dataNode.path(i).path("imgUrl1").asText();
-                String imgUrl2 = dataNode.path(i).path("imgUrl2").asText();
-                String imgUrl3 = dataNode.path(i).path("imgUrl3").asText();
                 TodayFlowerListDTO todayFlowerListDTO = new TodayFlowerListDTO();
                 todayFlowerListDTO.setDataNo(dataNo);
                 todayFlowerListDTO.setFDay(fDay);
                 todayFlowerListDTO.setFMonth(fMonth);
-                todayFlowerListDTO.setFileName1(fileName1);
-                todayFlowerListDTO.setFileName2(fileName2);
-                todayFlowerListDTO.setFileName3(fileName3);
                 todayFlowerListDTO.setFlowLang(flowLang);
                 todayFlowerListDTO.setFlowNm(flowNm);
                 todayFlowerListDTO.setImgUrl1(imgUrl1);
-                todayFlowerListDTO.setImgUrl2(imgUrl2);
-                todayFlowerListDTO.setImgUrl3(imgUrl3);
                 todayFlowerListDTOList.add(todayFlowerListDTO);
         }
         } else if (resultCnt == 1) {
             int dataNo = dataNode.path("dataNo").asInt();
             int fDay = dataNode.path("fDay").asInt();
             int fMonth = dataNode.path("fMonth").asInt();
-            String fileName1 = dataNode.path("fileName1").asText();
-            String fileName2 = dataNode.path("fileName2").asText();
-            String fileName3 = dataNode.path("fileName3").asText();
             String flowLang = dataNode.path("flowLang").asText();
             String flowNm = dataNode.path("flowNm").asText();
             String imgUrl1 = dataNode.path("imgUrl1").asText();
-            String imgUrl2 = dataNode.path("imgUrl2").asText();
-            String imgUrl3 = dataNode.path("imgUrl3").asText();
             TodayFlowerListDTO todayFlowerListDTO = new TodayFlowerListDTO();
             todayFlowerListDTO.setDataNo(dataNo);
             todayFlowerListDTO.setFDay(fDay);
             todayFlowerListDTO.setFMonth(fMonth);
-            todayFlowerListDTO.setFileName1(fileName1);
-            todayFlowerListDTO.setFileName2(fileName2);
-            todayFlowerListDTO.setFileName3(fileName3);
             todayFlowerListDTO.setFlowLang(flowLang);
             todayFlowerListDTO.setFlowNm(flowNm);
             todayFlowerListDTO.setImgUrl1(imgUrl1);
-            todayFlowerListDTO.setImgUrl2(imgUrl2);
-            todayFlowerListDTO.setImgUrl3(imgUrl3);
             todayFlowerListDTOList.add(todayFlowerListDTO);
+        }else {
+            model.addAttribute("list", "no");
+            return "/apiPages/todayFlowerList";
         }
 
         model.addAttribute("todayFlowerList",todayFlowerListDTOList);
         model.addAttribute("PageNo",pageNo);
-        model.addAttribute("searchType",searchType);
-        model.addAttribute("searchWord",searchWord);
+        model.addAttribute("searchType2",searchType);
+        model.addAttribute("searchWord2",searchWord);
         System.out.println("pageNo : " + pageNo);
 
 
