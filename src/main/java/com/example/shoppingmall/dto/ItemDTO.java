@@ -21,16 +21,17 @@ public class ItemDTO {
     private String itemContents;
     private LocalDateTime itemCreatedDate;
     private int itemCount;
-    private int itemSellCount;
     private String itemCategory;
-//    private List<String> itemImage;
     private int fileAttachedItem;
+    //판매순
+    private int itemSellCount;
 
 
     private List<MultipartFile> itemFile;
     private List<MultipartFile> itemFileUpdate;
     private List<String> originalFileNameItem;
     private List<String> storedFileNameItem;
+
     private String itemImage;
     private String userId;
     private int cartCount;
@@ -45,7 +46,6 @@ public class ItemDTO {
         itemDTO.setItemCreatedDate(itemEntity.getCreatedTime());
         itemDTO.setItemCount(itemEntity.getItemCount());
         itemDTO.setItemCategory(itemEntity.getItemCategory());
-//        itemDTO.setItemImage(itemEntity.getItemImage());
         if(itemEntity.getFileAttachedItem()==1){
             itemDTO.setFileAttachedItem(itemEntity.getFileAttachedItem());
             List<String> originalFileNameList = new ArrayList<>();
@@ -56,7 +56,6 @@ public class ItemDTO {
             }
             itemDTO.setOriginalFileNameItem(originalFileNameList);
             itemDTO.setStoredFileNameItem(storedFileNameList);
-//            itemDTO.setItemImage(itemDTO.getStoredFileNameItem());
         }else{
             itemDTO.setFileAttachedItem(itemEntity.getFileAttachedItem());
         }
