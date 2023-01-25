@@ -112,7 +112,7 @@
       <!-- 부드스트랩 검색창 -->
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
-          <select class="form-control" id="searchType">
+          <select class="form-control" id="category">
             <option value="itemName">상품이름</option>
           </select>
           <input type="text" class="form-control" placeholder="Search" id="searchQ" th:value="${search}"
@@ -199,7 +199,7 @@
   const searchList = () => {
     const sort = [[${sort}]];
     const size = [[${size}]];
-    const Type = document.getElementById("searchType")
+    const Type = document.getElementById("category")
     const category = Type.options[Type.selectedIndex].value;
     const search = document.getElementById("searchQ").value;
     location.href = "/item/small?category=" + category + "&search=" + search + "&sort=" + sort + "&size=" + size;
