@@ -27,6 +27,7 @@ public class MemberDTO {
     private String memberPasswordUpdate;
 
     private String accessToken;
+    private String url;
 
 
     public MemberDTO(Long id, String userId, String memberEmail, String memberName, String memberMobile, LocalDateTime memberCreatedTime) {
