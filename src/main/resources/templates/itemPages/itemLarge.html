@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--  폰트-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <head>
   <meta charset="UTF-8">
   <title>main</title>
 
   <style>
+    *{
+      font-family: 'Jua', sans-serif;
+      font-family: 'Nanum Gothic', sans-serif;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
     #sidebar {
       width: 100px;
       right: 0;
@@ -13,6 +22,13 @@
     }
     #sidebar ul {
       padding: 10px;
+    }
+    .btn-group{
+      margin-bottom: 20px;
+    }
+    .btn-group a {
+      color: #888;
+
     }
   </style>
 </head>
@@ -28,11 +44,11 @@
   <div class="container" style="position: relative">
     <div class="btn-group" style="top: 0px; left: 20px; position: relative">
       <a th:href="@{/item/large(page=${page} ,sort='id' , size=${size},search=${search},category=${category})}"
-         th:style="${sort.equals('id')} ? 'color: red' " style="color: black">최신순</a>
+         th:style="${sort.equals('id')} ? 'color: black' " style="color: black">최신순</a>
       <a th:href="@{/item/large(page=${page} ,sort='itemPrice' , size=${size},search=${search},category=${category})}"
-         th:style="${sort.equals('itemPrice')} ? 'color: red' " style="color: black">낮은가격순</a>
+         th:style="${sort.equals('itemPrice')} ? 'color: black' " style="color: black">낮은가격순</a>
       <a th:href="@{/item/large(page=${page} ,sort='itemSellCount' , size=${size},search=${search},category=${category})}"
-         th:style="${sort.equals('itemSellCount')} ? 'color: red' " style="color: black">판매순</a>
+         th:style="${sort.equals('itemSellCount')} ? 'color: black' " style="color: black">판매순</a>
       <div th:if="${!session.isEmpty()} and ${session.member.userId} == 'admin' ">
         <a href="/item/save" class="btn-success">상품등록</a>
       </div>
@@ -71,7 +87,7 @@
             <div th:if="${item.fileAttachedItem == 0}">
               이미지 미등록
             </div>
-            <p class="read"><a style=" font: italic 1em Georgia, serif ; color: green;"
+            <p class="read"><a style=" font-weight: bold ; color: #222; font-size: medium;"
                                th:href="@{/item/(itemId=${item.id})}"
                                th:text="${item.itemName}"></a></p>
 

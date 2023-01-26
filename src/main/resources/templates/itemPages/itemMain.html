@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--  폰트-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
     <title>main</title>
     <style>
+        *{
+            font-family: 'Jua', sans-serif;
+            font-family: 'Nanum Gothic', sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
         #sidebar {
             width: 100px;
             right: 0;
@@ -12,6 +21,26 @@
         }
         #sidebar ul {
             padding: 10px;
+        }
+        .btn-group{
+            margin-bottom: 20px;
+        }
+        .btn-group a {
+            color: #888;
+        }
+        #dropdown_form{
+            width: 80px;
+            padding: .8em .5em;
+            border: 1px solid #999;
+            font-family: inherit;
+            background: url('arrow.jpg') no-repeat 95% 50%;
+            border-radius: 0px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        #dropdown_form::-ms-expand {
+            display: none;
         }
     </style>
 </head>
@@ -27,11 +56,11 @@
     <div class="container" style="position: relative">
         <div class="btn-group" style="top: 0px; left: 20px; position: relative">
             <a th:href="@{/item/main(page=${page} ,sort='id' , size=${size},search=${search},category=${category})}"
-               th:style="${sort.equals('id')} ? 'color: red' " style="color: black">최신순</a>
+               th:style="${sort.equals('id')} ? 'color: black' " style="color: black">최신순</a>
             <a th:href="@{/item/main(page=${page} ,sort='itemPrice' , size=${size},search=${search},category=${category})}"
-               th:style="${sort.equals('itemPrice')} ? 'color: red' " style="color: black">낮은가격순</a>
+               th:style="${sort.equals('itemPrice')} ? 'color: black' " style="color: black">낮은가격순</a>
             <a th:href="@{/item/main(page=${page} ,sort='itemSellCount' , size=${size},search=${search},category=${category})}"
-               th:style="${sort.equals('itemSellCount')} ? 'color: red' " style="color: black">판매순</a>
+               th:style="${sort.equals('itemSellCount')} ? 'color: black' " style="color: black">판매순</a>
             <div th:if="${!session.isEmpty()} and ${session.member.userId} == 'admin' ">
                 <a href="/item/save" class="btn-success">상품등록</a>
             </div>
@@ -42,7 +71,7 @@
         <div class="btn-group dropdown" style="right:40px ;position:relative ; float: right">
             <button type="button" class="dropdown-toggle active" data-bs-toggle="dropdown"
                     aria-haspopup="true"
-                    aria-expanded="true" th:text="${size}+'개씩보기'">
+                    aria-expanded="true" th:text="${size}+'개씩보기'" id="dropdown_form">
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
@@ -70,7 +99,7 @@
                         <div th:if="${item.fileAttachedItem == 0}">
                             이미지 미등록
                         </div>
-                        <p class="read"><a style=" font: italic 1em Georgia, serif ; color: green;"
+                        <p class="read"><a style=" font-weight: bold ; color: #222; font-size: medium;"
                                            th:href="@{/item/(itemId=${item.id})}"
                                            th:text="${item.itemName}"></a></p>
 
@@ -80,7 +109,7 @@
                                     <div th:if="${item.itemCount == 0}">
                                         <p style="color: red; font-weight: bold; float: left; padding-left: 30px;">품절</p>
                                         <div style="text-decoration-color: chartreuse;padding-left: 65px;">
-                                            <em style=" font: italic bold 1.5em/1em Georgia, serif; text-align: left"
+                                            <em style=" font:  bold 1.5em/1em Georgia, serif; text-align: left"
                                                 th:text="${#numbers.formatCurrency(item.itemPrice)}"></em>
                                         </div>
                                     </div>
@@ -92,9 +121,9 @@
                                     </div>
 
                                     <div th:if="${!session.isEmpty()} and ${session.member.userId} == 'admin' ">
-                                        <button class="btn btn-warning" th:onclick="updateReq([[${item}]])">상품 수정
+                                        <button class="btn btn-outline-secondary" th:onclick="updateReq([[${item}]])">상품 수정
                                         </button>
-                                        <button class="btn btn-warning" th:onclick="deleteReq([[${item}]])">상품 삭제
+                                        <button class="btn btn-outline-secondary" th:onclick="deleteReq([[${item}]])">상품 삭제
                                         </button>
                                     </div>
                                 </div>
