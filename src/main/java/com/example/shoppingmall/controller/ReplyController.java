@@ -24,4 +24,7 @@ public class ReplyController {
         model.addAttribute("replyList",replyDTOList);
         return replyDTOList;
     }
+
+
+
 }

@@ -77,5 +77,25 @@ public class CommentService {
             return null;
         }
     }
+
+
+    public CommentDTO update(Long id) {
+        CommentEntity commentEntity = commentRepository.findById(id).get();
+        CommentDTO commentDTO = CommentDTO.toCommentDTO(commentEntity);
+        return commentDTO;
+    }
+
+    public void update2(CommentDTO commentDTO) {
+        System.out.println("코멘트 서비스 넘어옴");
+        System.out.println("commentDTO = " + commentDTO);
+        CommentEntity commentEntity = commentRepository.findById(commentDTO.getId()).get();
+        commentEntity.setCommentContents(commentDTO.getCommentContents());
+        commentEntity.setStarCount(commentDTO.getStarCount());
+        commentRepository.save(commentEntity);
+    }
+
+    public void delete(Long id) {
+        commentRepository.deleteById(id);
+    }
 }
 

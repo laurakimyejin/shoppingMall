@@ -111,6 +111,7 @@
                 <th style="width: 116px;">별점</th>
             </tr>
             <tr th:each="comment: ${commentList}">
+                <input type="hidden" th:value="${comment.id}" name="commentId">
                 <td th:text="${comment.commentContents}" style="padding-left: 30px;"></td>
                 <td th:text="${comment.commentWriter}" class="comment-font"></td>
                 <td th:text="*{#temporals.format(comment.commentCreatedDate,'yyyy-MM-dd HH:mm')}"
@@ -120,8 +121,10 @@
                         <div th:each="num : ${#numbers.sequence(1,comment.starCount)}" class="star"></div>
                     </div>
                 </td>
-
-
+                <td>
+                    <button th:if="${session.member.userId == comment.commentWriter}" class="btn btn-outline-dark" th:onclick="commentUpdate([[${comment.id}]])">수정</button>
+                    <button th:if="${session.member.userId == comment.commentWriter}" class="btn btn-outline-dark" th:onclick="commentDelete([[${comment}]])">삭제</button>
+                </td>
             </tr>
         </table>
         <div class="container text-center">
@@ -178,6 +181,28 @@
 </body>
 
 <script th:inline="javascript">
+    //코멘트 삭제
+    const commentDelete = (comment) => {
+        let id = comment.id
+        let itemId = [[${item.id}]]
+        if (confirm("정말삭제하시겠습니까?") == true){
+            location.href = "/comment/delete?commentId=" + id + "&itemId=" + itemId
+        }else {
+            return false;
+        }
+
+    }
+
+
+    //코멘트 수정
+    const commentUpdate = (commentId) => {
+        console.log("코멘트업데이트 넘어옴")
+        let popOption = "width=500, height=500, resizable=no, scrollbars=no, status=no;";
+        console.log("팝업창 호출")
+        window.open("/comment/update?commentId=" + commentId, 'popup', popOption);
+    }
+
+
     //이미지 클릭시 전환
     const imageClick = (item) => {
         console.log(item);
@@ -268,7 +293,7 @@
         }
         console.log(item);
         let recentItems = JSON.parse(localStorage.getItem("recentItems")) || [];
-        if(recentItems.find(i=> i.itemId === itemId)) return;
+        if (recentItems.find(i => i.itemId === itemId)) return;
         recentItems.unshift(item);
         recentItems = recentItems.slice(0, 3);
         localStorage.setItem("recentItems", JSON.stringify(recentItems));

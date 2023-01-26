@@ -58,6 +58,7 @@
                 </td>
                 <td th:unless="${order.review} == '리뷰작성'">
                     <input type="button" class="btn btn-secondary" disabled value="등록완료">
+                    <input type="button" class="btn btn-secondary" onclick="reviewUpdate([[${order.id}]])">
                 </td>
             </ui>
         </tr>
@@ -95,6 +96,7 @@
 </body>
 
 <script th:inline="javascript">
+
     //Close
     const closeRE = () => {
         document.querySelector('input[name=commentContents]').value = "";
@@ -128,7 +130,7 @@
 
     // 후기 등록
     const commentWrite = () => {
-        const commentWriter = [[${session.member.memberName}]];
+        const commentWriter = [[${session.member.userId}]];
         const commentContents = document.querySelector('input[name=commentContents]').value;
         const orderId = document.querySelector('input[name=orderId]').value;
         const starCount = document.querySelector('h1[name=starCount]').textContent;
