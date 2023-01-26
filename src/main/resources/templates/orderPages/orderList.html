@@ -136,6 +136,15 @@
         const result = starCount.replace(regex, "");
         const number = parseInt(result);
 
+        if (commentContents == "") {
+            alert("내용을 입력해주세요.");
+            return;
+        }
+        if (number == 0) {
+            alert("별점을 입력해주세요.");
+            return;
+        }
+
 
         $.ajax({
             type: "get",
