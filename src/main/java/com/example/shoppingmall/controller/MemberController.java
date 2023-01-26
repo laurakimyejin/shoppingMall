@@ -155,11 +155,12 @@ public class MemberController {
 
     //회원 정보 수정
     @PostMapping("/update")
-    public String update(@ModelAttribute MemberDTO memberDTO) {
+    public String update(@ModelAttribute MemberDTO memberDTO,HttpSession session) {
 //        String memberPassword = memberDTO.getMemberPasswordUpdate();
         String memberPassword = memberDTO.getMemberPassword();
         memberDTO.setMemberPassword(memberPassword);
         memberService.update(memberDTO);
+        session.invalidate();
         return "index";
     }
 

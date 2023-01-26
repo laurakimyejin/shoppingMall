@@ -43,7 +43,7 @@
     </div>
     <div class=name-container>
       <label for="uname" >이름</label>
-      <input type="text" class="width-450 form-control" name="memberName" id="uname" onblur="check_name()" placeholder="이름을 입력해주세요">
+      <input type="text" class="width-450 form-control" name="memberName" id="uname" placeholder="이름을 입력해주세요">
       <span id="nameError"></span>
     </div>
     <div class=mobile-container>
@@ -51,20 +51,18 @@
       <input type="text" class="width-450 form-control" name="memberMobile" id="memberMobile" onblur="check_mobile()" placeholder="휴대폰 번호 입력 ('-' 포함 13자리 입력)">
       <span id="mobileError"></span>
     </div>
-    </div>
     <div class=email-container>
       <label for="memberEmail" >이메일</label>
       <input type="text" class="width-450 form-control" name="memberEmail" id="memberEmail" onblur="check_email()" placeholder="이메일 주소 입력 (___@___ 형식으로 입력)">
       <input type="button" id="checkEmail" class="btn btn-outline-secondary" value="인증번호 전송" onclick="sendEmail()">
       <span id="emailError"></span>
     </div>
-
     <div class=mailconfirm-container>
       <label for="mailconfirm" >인증번호</label>
       <input type="text" class="width-450 form-control" name="mailconfirm" id="mailconfirm" placeholder="인증번호를 입력해주세요">
       <input type="button" id="mailconfirm2" class="btn btn-outline-secondary" value="인증번호 확인" onclick="mailConfirm()">
     </div>
-
+    </div>
     <div class="exform_txt"><label>표시는 필수적으로 입력해주셔야 가입이 가능합니다.</label></div>
 
     <div class="btn-container">
@@ -87,55 +85,62 @@
     const memberEmail = document.getElementById('memberEmail').value;
     const mailconfirm = document.getElementById('mailconfirm').value;
     const mailconfirmCheck = document.getElementById('mailconfirmCheck').value;
+    const exp = /^(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,12}$/;
 
     if (uid === '') {
       alert('아이디를 입력해주세요');
       return false;
     }
-    // if (pwd === '') {
-    //   alert('비밀번호를 입력해주세요');
-    //   return false;
-    // }
-    // if (rePwd === '') {
-    //   alert('비밀번호를 확인해주세요');
-    //   return false;
-    // }
-    // if (rePwd !== pwd) {
-    //   alert('비밀번호가 일치하지 않습니다.');
-    //   return false;
-    // }
-    // if (uname === '') {
-    //   alert('이름을 입력해주세요');
-    //   return false;
-    // }
-    // if (memberMobile === '') {
-    //   alert('전화번호를 입력해주세요');
-    //   return false;
-    // }
-    // if (memberMobile.length !== 13) {
-    //   alert('전화번호를 정확히 입력해주세요');
-    //   return false;
-    // }
-    // if (memberEmail === '') {
-    //   alert('이메일을 입력해주세요');
-    //   return false;
-    // }
-    // if (memberEmail.indexOf('@') === -1) {
-    //   alert('이메일을 정확히 입력해주세요');
-    //   return false;
-    // }
-    // if (mailconfirm === '') {
-    //   alert('인증번호를 입력해주세요');
-    //   return false;
-    // }
-    // if (mailconfirmCheck === '') {
-    //   alert('인증번호를 확인해주세요');
-    //   return false;
-    // }
-    // if (mailconfirm !== mailconfirmCheck) {
-    //   alert('인증번호가 일치하지 않습니다.');
-    //   return false;
-    // }
+    if (pwd === '') {
+      alert('비밀번호를 입력해주세요');
+      return false;
+    }
+    if (rePwd === '') {
+      alert('비밀번호를 확인해주세요');
+      return false;
+    }
+    if (rePwd !== pwd) {
+      alert('비밀번호가 일치하지 않습니다.');
+      return false;
+    }
+    if(!document.join.memberPassword.value.match(exp)) {
+      const passwordCheck = document.getElementById("pwdError");
+      passwordCheck.innerHTML = "영문 소문자와 숫자를 이용하여 8~12자 이내로 입력하세요";
+      passwordCheck.style.color = "red";
+      return false;
+    }
+      if (uname === '') {
+      alert('이름을 입력해주세요');
+      return false;
+    }
+    if (memberMobile === '') {
+      alert('전화번호를 입력해주세요');
+      return false;
+    }
+    if (memberMobile.length !== 13) {
+      alert('전화번호를 정확히 입력해주세요');
+      return false;
+    }
+    if (memberEmail === '') {
+      alert('이메일을 입력해주세요');
+      return false;
+    }
+    if (memberEmail.indexOf('@') === -1) {
+      alert('이메일을 정확히 입력해주세요');
+      return false;
+    }
+    if (mailconfirm === '') {
+      alert('인증번호를 입력해주세요');
+      return false;
+    }
+    if (mailconfirmCheck === '') {
+      alert('인증번호를 확인해주세요');
+      return false;
+    }
+    if (mailconfirm !== mailconfirmCheck) {
+      alert('인증번호가 일치하지 않습니다.');
+      return false;
+    }
     document.join.submit();
 
   }
@@ -213,41 +218,18 @@ const check_id = () => {
 }
 
 //정규식 체크
-const check_name = () => {
-  console.log("check_name 함수호출");
-  if(document.join.memberName.value === ""){
-    $("#joinBtn").attr("disabled", "disabled");
-    const nameCheck = document.getElementById("nameError");
-    nameCheck.innerHTML="이름을 입력해주세요";
-    nameCheck.style.color="red";
-    return false;
-  } else{
-    const nameCheck = document.getElementById("nameError");
-    nameCheck.innerHTML="";
-  }
-}
   const check_pwd = () => {
-    const pwd = document.getElementById("pwd").value;
-    const rePwd = document.getElementById("rePwd").value;
+    const pwd = document.getElementById('pwd').value;
+    const rePwd = document.getElementById('rePwd').value;
     const exp = /^(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,12}$/;
 
-    if (pwd == "") {
-      $("#joinBtn").attr("disabled", "disabled");
-      const passwordCheck = document.getElementById("pwdError");
-      passwordCheck.innerHTML="비밀번호를 입력해주세요";
-      passwordCheck.style.color="red";
-    } else if (pwd != rePwd) {
-      $("#joinBtn").attr("disabled", "disabled");
-      const passwordCheck = document.getElementById("pwdError");
-      passwordCheck.innerHTML="비밀번호가 일치하지 않습니다.";
-      passwordCheck.style.color= "red";
-    } else if(!document.join.memberPassword.value.match(exp)){
+    if(!document.join.memberPassword.value.match(exp)){
       $("#joinBtn").attr("disabled", "disabled");
         const passwordCheck =document.getElementById("pwdError");
         passwordCheck.innerHTML="영문 소문자와 숫자를 이용하여 8~12자 이내로 입력하세요";
         passwordCheck.style.color="red";
-        return false;
-      } else {
+      } else if(pwd === rePwd){
+      $("#joinBtn").removeAttr("disabled");
       document.getElementById("pwdError").innerHTML = "비밀번호가 일치합니다.";
       document.getElementById("pwdError").style.color = "blue";
     }
@@ -272,18 +254,29 @@ const check_email = () => {
   const email = document.getElementById("memberEmail").value;
   const emailCheck = document.getElementById("emailError");
   const regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
-  if(email == ""){
-    $("#joinBtn").removeAttr("disabled");
-    emailCheck.innerHTML = ""
-  } else if (!regExp.test(email)) {
+  if (!regExp.test(email)) {
     $("#joinBtn").attr("disabled", "disabled");
     document.getElementById("memberEmail").value = "";
-    emailCheck.innerHTML = "이메일은 ____@____ 형식으로 입력해주세요."
-    emailCheck.style.color = "red"
+    emailCheck.innerHTML = "이메일은 ____@____ 형식으로 입력해주세요.";
+    emailCheck.style.color = "red";
   } else {
     $("#joinBtn").removeAttr("disabled");
     emailCheck.innerHTML = ""
   }
 }
+  // const check_name = () => {
+  //   console.log("check_name 함수호출");
+  //   if(document.join.memberName.value === ""){
+  //     $("#joinBtn").attr("disabled", "disabled");
+  //     const nameCheck = document.getElementById("nameError");
+  //     nameCheck.innerHTML="이름을 입력해주세요";
+  //     nameCheck.style.color="red";
+  //     return false;
+  //   } else{
+  //     $("#joinBtn").removeAttr("disabled");
+  //     const nameCheck = document.getElementById("nameError");
+  //     nameCheck.innerHTML="";
+  //   }
+  // }
 </script>
 </html>
