@@ -128,7 +128,7 @@
     const questionUpdate = () => {
         const id = [[${question.id}]];
         const questionName = [[${question.questionName}]];
-        const memberName = [[${session.member.memberName}]];
+        const memberName = [[${session.member.userId}]];
         const userId = [[${session.member.userId}]];
 
         if (questionName == memberName || userId == 'admin') {
