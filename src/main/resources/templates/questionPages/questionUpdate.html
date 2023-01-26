@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>questionSave</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <!--  폰트-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap"
+        rel="stylesheet">
+  <style>
+    *{
+      font-family: 'Jua', sans-serif;
+      font-family: 'Nanum Gothic', sans-serif;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .main{
+      width: 600px;
+      height: 409px;
+      left: 411px;
+      top: 85px;
+      /*가운데 정렬 margin: auto*/
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    td {
+      width: 200px;
+    }
+
+    th {
+      width: 20px;
+    }
+
+    textarea {
+      width: 500px;
+      height: 200px;
+    }
+
+  </style>
+</head>
+<body style="background-color: white">
+<th:block th:replace="commonPages/header :: header"></th:block>
+
+
+<div class="main">
+  <div class="contentContainer">
+    <form action="/question/update" method="post" class="">
+      <input type="hidden" th:value="${session.member.id}" readonly name="memberId">
+      <input type="hidden" th:value="${question.id}" readonly name="id">
+      <table class="table">
+        <tr>
+          <th>작성자</th>
+          <td><input type="text" th:value="${session.member.userId}" readonly name="questionName" class="form-control">
+          </td>
+        </tr>
+        <tr>
+          <th>제목</th>
+          <td><input type="text" id="questionTitle" name="questionTitle" placeholder="제목" class="form-control" th:value="${question.questionTitle}"></td>
+        </tr>
+      </table>
+      <textarea id="questionContents" name="questionContents" cols="30" rows="10" class="form-control" th:text="${question.questionContents}"></textarea>
+      <input type="button" onclick="adj()" value="수정하기" class="btn btn-success" style="margin-top: 10px;float: right">
+    </form>
+  </div>
+</div>
+
+
+</body>
+
+<script th:inline="javascript">
+  const adj = () => {
+   if(document.getElementById("questionTitle").value === ""){
+     alert("제목을 입력해주세요");
+     return;
+   }
+   if(document.getElementById("questionContents").value === ""){
+     alert("내용을 입력해주세요");
+     return;
+   }
+   if (confirm("수정하시겠습니까?")) {
+     document.querySelector("form").submit();
+   }
+
+  }
+
+
+
+
+</script>
+
+
+</html>

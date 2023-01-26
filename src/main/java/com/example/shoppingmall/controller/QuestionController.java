@@ -1,5 +1,6 @@
 package com.example.shoppingmall.controller;
 
+import com.example.shoppingmall.dto.MemberDTO;
 import com.example.shoppingmall.dto.OrderDTO;
 import com.example.shoppingmall.dto.QuestionDTO;
 import com.example.shoppingmall.dto.ReplyDTO;
@@ -66,6 +67,22 @@ public class QuestionController {
         model.addAttribute("question", questionDTO);
         model.addAttribute("replyList", replyDTOList);
         return "/questionPages/questionDetail";
+    }
+
+//    문의글 수정하기
+
+    @GetMapping("/update/{id}")
+    public String questionUpdateForm(@PathVariable Long id, Model model){
+        System.out.println("넘오엄");
+        QuestionDTO questionDTO = questionService.findById(id);
+        model.addAttribute("question", questionDTO);
+        return "/questionPages/questionUpdate";
+    }
+
+    @PostMapping("/update")
+    public String questionUpdate(@ModelAttribute QuestionDTO questionDTO){
+        questionService.update(questionDTO);
+        return "redirect:/question/list";
     }
 
 

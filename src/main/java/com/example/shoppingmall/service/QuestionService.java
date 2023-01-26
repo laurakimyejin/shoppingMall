@@ -87,4 +87,13 @@ public class QuestionService {
         return null;
 
     }
+
+    public void update(QuestionDTO questionDTO) {
+        System.out.println("서비스 넘어옴");
+        Long id = questionDTO.getId();
+        QuestionEntity questionEntity = questionRepository.findById(id).get();
+        questionEntity.setQuestionContents(questionDTO.getQuestionContents());
+        questionEntity.setQuestionTitle(questionDTO.getQuestionTitle());
+        questionRepository.save(questionEntity);
+    }
 }

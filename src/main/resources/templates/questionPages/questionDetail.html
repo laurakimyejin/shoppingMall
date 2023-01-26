@@ -78,9 +78,12 @@
                     <input id="replyContents" type="text" value="" name="replyContents" class="form-control" style="display: inline" placeholder="답변내용">
                     <button type="button" class="btn btn-warning" style="display: inline; margin-top: 10px" onclick="reply()">답변 작성</button>
                     <button type="button" class="btn btn-default" style="float:right ; display: inline; margin-top: 10px" onclick="questionList()">목록</button>
+                        <button type="button" class="btn btn-warning" style="float:right; display: inline; margin-top: 10px" onclick="questionUpdate()">수정</button>
                 </div>
                 <div th:unless="${session.member.userId.toString().equals('admin')}">
                     <button type="button" class="btn btn-default" style="float:right; display: inline; margin-top: 10px" onclick="questionList()">목록</button>
+                    <button type="button" class="btn btn-warning" style="float:right; display: inline; margin-top: 10px" onclick="questionUpdate()">수정</button>
+                    <button type="button" class="btn btn-danger" style="float:right; display: inline; margin-top: 10px" onclick="questionDelete()">삭제</button>
                 </div>
 
             </div>
@@ -111,6 +114,20 @@
 
 </body>
 <script th:inline="javascript">
+    const questionUpdate = () => {
+        const id = [[${question.id}]];
+        const questionName = [[${question.questionName}]];
+        const memberName = [[${session.member.memberName}]];
+        const userId = [[${session.member.userId}]];
+
+        if (questionName == memberName || userId == 'admin') {
+            location.href = '/question/update/' + id;
+        } else {
+            alert('작성자만 수정할 수 있습니다.');
+        }
+    }
+
+
     const questionList = () => {
       location.href = "/question/list";
     }
