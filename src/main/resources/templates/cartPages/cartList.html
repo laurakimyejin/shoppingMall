@@ -137,6 +137,11 @@
         const length = document.getElementById("cartList").value;
         console.log("주문하기");
         const cartList = [[${cartList}]];
+        if (itemPriceTotal == 0) {
+            alert("주문할 상품을 선택해주세요");
+            return;
+        }
+
         if (cartList.length == 0) {
             alert("장바구니에 담긴 상품이 없습니다.");
         } else {
