@@ -1,6 +1,7 @@
 package com.example.shoppingmall.controller;
 
 import com.example.shoppingmall.dto.CommentDTO;
+import com.example.shoppingmall.dto.MemberDTO;
 import com.example.shoppingmall.dto.PageDTO;
 import com.example.shoppingmall.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +9,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +27,37 @@ public class CommentController {
         Long id = commentService.save(commentDTO);
         return "성공";
     }
+
+    //리뷰 수정 (팝업창)
+    @GetMapping("/comment/update")
+    public String commentUpdateForm(@RequestParam("commentId")Long id, Model model){
+        CommentDTO commentDTO = commentService.update(id);
+        model.addAttribute("commentDTO", commentDTO);
+        return "popup/popup";
+    }
+
+    @PostMapping("/comment/update")
+    public String commentUpdate(@ModelAttribute CommentDTO commentDTO,Model model){
+        System.out.println("코멘트 컨트롤러 넘오옴");
+        model.addAttribute("commentDTO", commentDTO);
+        commentService.update2(commentDTO);
+        return "/popup/popupClose";
+    }
+
+
+    @GetMapping("/comment/delete")
+    public String commentDelete(@RequestParam("commentId")Long id,@RequestParam("itemId")Long itemId){
+        commentService.delete(id);
+        return "redirect:/item/?itemId="+itemId;
+    }
+
+
+
+
+
+
+
+
 
     //리뷰 작성 화면
 //    @GetMapping("/comment/save")
