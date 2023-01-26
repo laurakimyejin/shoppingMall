@@ -54,7 +54,7 @@
     </div>
     <div>
     <label for="memberName" >이름</label>
-    <input type="text" name="memberName" id="memberName" th:value="${session.member.memberName}" onblur="updateCheck_name()" class="form-control">
+    <input type="text" name="memberName" id="memberName" th:value="${session.member.memberName}" class="form-control">
     <span id="nameUpdateError"></span>
     </div>
     <div>
@@ -64,54 +64,71 @@
     </div>
     <div>
     <label for="memberEmail">이메일</label>
-    <input type="text" name="memberEmail" id="memberEmail" th:value="${session.member.memberEmail}" onblur="updateCheck_email()" class="form-control">
-    <span id="emailUpdateError"></span>
+    <input type="text" name="memberEmail" id="memberEmail" th:value="${session.member.memberEmail}" class="form-control" readonly>
+      <span id="emailUpdateError"></span>
     </div>
-    <button type="submit" id="updateBtn" class="btn btn-success" name="updateCheck"  style="width: 385px; margin-top: 20px; text-align: center">정보 수정</button>
+    <input type="button" id="updateBtn" class="btn btn-success" name="updateCheck" onclick="updateUs()" style="width: 385px; margin-top: 20px; text-align: center" value="정보수정">
   </form>
 </div>
 </body>
 <script th:inline="javascript">
+const updateUs = () => {
+  const pwdUpdate = document.getElementById('pwdUpdate').value;
+  const rePwdUpdate = document.getElementById('rePwdUpdate').value;
+  const memberName = document.getElementById('memberName').value;
+  const memberMobile = document.getElementById('memberMobile').value;
+  const memberEmail = document.getElementById('memberEmail').value;
+  const exp = /^(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,12}$/;
+
+
+  if (pwdUpdate === '') {
+    alert('비밀번호를 입력해주세요');
+    return false;
+  }
+  if (rePwdUpdate === '') {
+    alert('비밀번호를 확인해주세요');
+    return false;
+  }
+  if (rePwdUpdate !== pwdUpdate) {
+    alert('비밀번호가 일치하지 않습니다.');
+    return false;
+  }
+  if(!document.updateCheck.memberPassword.value.match(exp)) {
+    const passwordCheck = document.getElementById("pwdUpdateError");
+    passwordCheck.innerHTML = "영문 소문자와 숫자를 이용하여 8~12자 이내로 입력하세요";
+    passwordCheck.style.color = "red";
+    return false;
+  }
+  if (memberName === '') {
+    alert('이름을 입력해주세요');
+    return false;
+  }
+  if (memberMobile === '') {
+    alert('전화번호를 입력해주세요');
+    return false;
+  }
+  if (memberMobile.length !== 13) {
+    alert('전화번호를 정확히 입력해주세요');
+    return false;
+  }
+  document.updateCheck.submit();
+}
 
   const updateCheck_pwd = () => {
-    const pwdUpdate = document.getElementById("pwdUpdate").value;
-    const rePwdUpdate = document.getElementById("rePwdUpdate").value;
+    const pwdUpdate = document.getElementById('pwdUpdate').value;
+    const rePwdUpdate = document.getElementById('rePwdUpdate').value;
     const exp = /^(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,12}$/;
-
-    if (pwdUpdate == "") {
-      $("#updateBtn").attr("disabled", "disabled");
-      const passwordCheck2 = document.getElementById("pwdUpdateError");
-      passwordCheck2.innerHTML="비밀번호를 입력해주세요";
-      passwordCheck2.style.color="red";
-    } else if (pwdUpdate != rePwdUpdate) {
-      $("#updateBtn").attr("disabled", "disabled");
-      const passwordCheck2 = document.getElementById("pwdUpdateError");
-      passwordCheck2.innerHTML="비밀번호가 일치하지 않습니다.";
-      passwordCheck2.style.color= "red";
-    } else if(!document.updateCheck.memberPassword.value.match(exp)){
+    if(!document.updateCheck.memberPassword.value.match(exp)){
       $("#updateBtn").attr("disabled", "disabled");
       const passwordCheck2 =document.getElementById("pwdUpdateError");
       passwordCheck2.innerHTML="영문 소문자와 숫자를 이용하여 8~12자 이내로 입력하세요";
       passwordCheck2.style.color="red";
-      return false;
-    } else {
+    } else if(pwdUpdate === rePwdUpdate) {
+      $("#updateBtn").removeAttr("disabled");
       document.getElementById("pwdUpdateError").innerHTML = "비밀번호가 일치합니다.";
       document.getElementById("pwdUpdateError").style.color = "blue";
     }
   }
-  const updateCheck_name = () => {
-    const name = document.getElementById("memberName").value;
-    const nameCheck = document.getElementById("nameUpdateError");
-    if(document.updateCheck.memberName.value === ""){
-      $("#updateBtn").attr("disabled", "disabled");
-      nameCheck.innerHTML="이름을 입력해주세요";
-      nameCheck.style.color="red";
-      return false;
-    } else{
-      nameCheck.innerHTML="";
-    }
-  }
-
   const updateCheck_mobile = () => {
     const mobile = document.getElementById("memberMobile").value;
     const mobileCheck = document.getElementById("mobileUpdateError");
@@ -126,28 +143,9 @@
       mobileCheck.innerHTML = ""
     }
   }
-
-  const updateCheck_email = () => {
-    const email = document.getElementById("memberEmail").value;
-    const emailCheck = document.getElementById("emailUpdateError");
-    const regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
-    if(email == ""){
-      $("#updateBtn").removeAttr("disabled");
-      emailCheck.innerHTML = ""
-    } else if (!regExp.test(email)) {
-      $("#updateBtn").attr("disabled", "disabled");
-      document.getElementById("memberEmail").value = "";
-      emailCheck.innerHTML = "이메일은 ____@____ 형식으로 입력해주세요."
-      emailCheck.style.color = "red"
-    } else {
-      $("#updateBtn").removeAttr("disabled");
-      emailCheck.innerHTML = ""
-    }
-  }
   // const update = () => {
   //  document.updateForm.submit();
   // }
 
 </script>
-</body>
 </html>
