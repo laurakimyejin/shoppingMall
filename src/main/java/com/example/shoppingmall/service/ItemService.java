@@ -94,8 +94,16 @@ public class ItemService {
     public Long update(ItemDTO itemDTO) throws IOException {
         if (itemDTO.getItemFileUpdate().get(0).isEmpty()) {
             System.out.println("파일 없음");
-            ItemEntity itemEntity = ItemEntity.toItemSaveEntity(itemDTO);
-            return itemRepository.save(itemEntity).getId();
+            ItemEntity itemEntity = itemRepository.findById(itemDTO.getId()).get();
+            itemEntity.setItemCount(itemDTO.getItemCount());
+            itemEntity.setItemCategory(itemDTO.getItemCategory());
+            itemEntity.setItemPrice(itemDTO.getItemPrice());
+            itemEntity.setItemName(itemDTO.getItemName());
+            itemEntity.setItemContents(itemDTO.getItemContents());
+            Long id = itemEntity.getId();
+            itemRepository.save(itemEntity);
+            return id;
+
         } else {
             System.out.println("itemDTO = " + itemDTO);
             ItemEntity itemEntity2 = itemRepository.findById(itemDTO.getId()).get();
