@@ -166,14 +166,20 @@ public class MemberController {
 
     //카카오 로그인
     @PostMapping("/kakao")
-    public String Home(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
+    public String Home(@ModelAttribute MemberDTO memberDTO, HttpSession session , Model model) {
         System.out.println("memberDTO = " + memberDTO + ", session = " + session);
         MemberDTO member = memberService.saveKakao(memberDTO);
         member.setAccessToken(memberDTO.getAccessToken());
         session.setAttribute("member", member);
         session.setAttribute("access_token", memberDTO.getAccessToken());
-        return "redirect:/";
+        String redirectURL = memberDTO.getUrl();
+        model.addAttribute("redirectURL", redirectURL);
+        return "redirect:" + redirectURL;
     }
+
+
+
+
 
     //일반 로그아웃
     @GetMapping(value = "/logout")
