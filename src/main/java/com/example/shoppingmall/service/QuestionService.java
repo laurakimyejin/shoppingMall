@@ -96,4 +96,8 @@ public class QuestionService {
         questionEntity.setQuestionTitle(questionDTO.getQuestionTitle());
         questionRepository.save(questionEntity);
     }
+
+    public void delete(Long id) {
+        questionRepository.deleteById(id);
+    }
 }

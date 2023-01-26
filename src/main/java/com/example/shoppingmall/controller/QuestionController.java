@@ -85,5 +85,11 @@ public class QuestionController {
         return "redirect:/question/list";
     }
 
+    @GetMapping("/delete/{id}")
+    public String questionDelete(@PathVariable Long id){
+        questionService.delete(id);
+        return "redirect:/question/list";
+    }
+
 
 }

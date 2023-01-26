@@ -79,6 +79,7 @@
                     <button type="button" class="btn btn-warning" style="display: inline; margin-top: 10px" onclick="reply()">답변 작성</button>
                     <button type="button" class="btn btn-default" style="float:right ; display: inline; margin-top: 10px" onclick="questionList()">목록</button>
                         <button type="button" class="btn btn-warning" style="float:right; display: inline; margin-top: 10px" onclick="questionUpdate()">수정</button>
+                        <button type="button" class="btn btn-danger" style="float:right; display: inline; margin-top: 10px" onclick="questionDelete()">삭제</button>
                 </div>
                 <div th:unless="${session.member.userId.toString().equals('admin')}">
                     <button type="button" class="btn btn-default" style="float:right; display: inline; margin-top: 10px" onclick="questionList()">목록</button>
@@ -114,6 +115,16 @@
 
 </body>
 <script th:inline="javascript">
+    const questionDelete = () => {
+        const id = [[${question.id}]];
+        if (confirm('정말 삭제하시겠습니까?')) {
+
+            location.href = "/question/delete/" + id;
+        }
+
+    }
+
+
     const questionUpdate = () => {
         const id = [[${question.id}]];
         const questionName = [[${question.questionName}]];
