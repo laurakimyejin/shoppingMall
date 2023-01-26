@@ -20,7 +20,7 @@ public class OrderDTO extends BaseEntity {
     private String extraAddress;
     private String postcode;
     private String memberMobile;
-    private String orderStatus = "배송준비";
+    private String orderStatus = "주문완료";
     private int orderPrice;
     private LocalDateTime orderCreatedTime;
 
