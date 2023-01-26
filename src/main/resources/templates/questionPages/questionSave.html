@@ -60,11 +60,26 @@
                     </tr>
                 </table>
                 <textarea name="questionContents" cols="30" rows="10" placeholder="내용을 입력하세요." class="form-control"></textarea>
-                <input type="submit" value="저장" class="btn btn-success" style="margin-top: 10px;float: right">
+                <input type="button" onclick="saveQ()" value="저장" class="btn btn-success" style="margin-top: 10px;float: right">
             </form>
         </div>
 </div>
 
 
 </body>
+
+<script th:inline="javascript">
+  const saveQ = () => {
+    const questionTitle = document.querySelector('input[name=questionTitle]').value;
+    const questionContents = document.querySelector('textarea[name=questionContents]').value;
+    if (questionTitle === '' || questionContents === '') {
+      alert('제목과 내용을 입력해주세요.');
+      return;
+    }
+    document.querySelector('form').submit();
+
+  }
+
+</script>
+
 </html>
