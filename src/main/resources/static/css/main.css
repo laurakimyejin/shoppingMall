@@ -1,0 +1,98 @@
+*{
+    font-family: 'Jua', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+#sidebar {
+    width: 100px;
+    right: 0;
+    border: 1px solid #DCDCDC;
+    border-radius: 6px;
+}
+#sidebar ul {
+    padding: 10px;
+}
+/*최신순, 낮은가격순, 판매순*/
+.btn-group{
+    margin-bottom: 20px;
+}
+.btn-group a {
+    color: #888;
+}
+/*dropdown 화살표*/
+#dropdown_form{
+    width: 100px;
+    text-align: left;
+    padding: .8em .5em;
+    border: none;
+    font-family: inherit;
+    background: url("../img/arrow.jpg") no-repeat 95% 50%;
+    border-radius: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+#dropdown_form::-ms-expand {
+    display: none;
+}
+/*페이징 버튼 색상*/
+span{
+    color: #eae1d8;
+}
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    /*css 우선순위 강제적용*/
+    background-color: #eae1d8 !important;
+    border-color: #eae1d8 !important;
+    text-decoration-color: #eae1d8 !important;
+}
+.pagination>li>a{
+    color: #666 !important;
+    border: none !important;
+}
+/*상품등록 폼*/
+#productSaveForm{
+    position: relative;
+    margin-bottom: 10px;
+}
+#productSaveForm a{
+    width: 150px;
+    height: 50px;
+    text-decoration-line: none;
+
+    /* 상자 디자인 큰틀*/
+    margin-bottom: 30px;
+    border: 0px;
+    background-color: #E4EBF5;
+
+    /* 그림자 */
+    border-radius: 10px;
+    box-shadow:.6rem .3rem 1.4rem  #BEC5D0, -.1rem -.2rem .6rem #FBFBFB;
+
+    /* 글씨 */
+    color: #5f5f5f;
+    font-size: 1em;
+    font-weight: bold;
+
+    animation-duration: .2s;
+}
+#productSaveForm a:active{
+    box-shadow: inset -.3rem -.1rem 1.4rem  #FBFBFB, inset .3rem .4rem .8rem #BEC5D0;
+    cursor: pointer;
+}
+/*최근본상품 폼*/
+.sidebar-form ul li img{
+    margin-left: 15px;
+    margin-top: 5px;
+}
+.sidebar-form ul li a{
+    text-decoration-line: none;
+    color: #5f5f5f;
+    font-weight: bold;
+    font-size: small;
+    margin-left: 15px;
+}

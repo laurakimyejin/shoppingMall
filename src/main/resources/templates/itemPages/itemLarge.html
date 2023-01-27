@@ -1,46 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<!--  폰트-->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <head>
   <meta charset="UTF-8">
   <title>main</title>
-
-  <style>
-    *{
-      font-family: 'Jua', sans-serif;
-      font-family: 'Nanum Gothic', sans-serif;
-      font-family: 'Noto Sans KR', sans-serif;
-    }
-    #sidebar {
-      width: 100px;
-      right: 0;
-      border: 1px solid #DCDCDC;
-      border-radius: 6px;
-    }
-    #sidebar ul {
-      padding: 10px;
-    }
-    .btn-group{
-      margin-bottom: 20px;
-    }
-    .btn-group a {
-      color: #888;
-
-    }
-  </style>
+  <!--bootstrap cdn-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <!--  폰트-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
-<body>
+<body style="background-color: white">
 <th:block th:replace="commonPages/header :: header"></th:block>
-<!--bootstrap cdn-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
-
 <nav>
-
-
   <div class="container" style="position: relative">
     <div class="btn-group" style="top: 0px; left: 20px; position: relative">
       <a th:href="@{/item/large(page=${page} ,sort='id' , size=${size},search=${search},category=${category})}"
@@ -49,9 +22,6 @@
          th:style="${sort.equals('itemPrice')} ? 'color: black' " style="color: black">낮은가격순</a>
       <a th:href="@{/item/large(page=${page} ,sort='itemSellCount' , size=${size},search=${search},category=${category})}"
          th:style="${sort.equals('itemSellCount')} ? 'color: black' " style="color: black">판매순</a>
-      <div th:if="${!session.isEmpty()} and ${session.member.userId} == 'admin' ">
-        <a href="/item/save" class="btn-success">상품등록</a>
-      </div>
     </div>
 
 
@@ -59,7 +29,7 @@
     <div class="btn-group dropdown" style="right:40px ;position:relative ; float: right">
       <button type="button" class="dropdown-toggle active" data-bs-toggle="dropdown"
               aria-haspopup="true"
-              aria-expanded="true" th:text="${size}+'개씩보기'">
+              aria-expanded="true" th:text="${size}+'개씩보기'" id="dropdown_form">
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
@@ -73,45 +43,45 @@
     </div>
   </div>
 </nav>
-
+<div class="container" id="productSaveForm">
+  <div th:if="${!session.isEmpty()} and ${session.member.userId} == 'admin' ">
+    <a href="/item/save">상품등록</a>
+  </div>
+</div>
 
 <div class="container">
   <table class="table table-striped table-hover text-center mt-5" th:if="${message} != 'null'">
-    <div style="text-align: center">
+    <div style="text-align: left">
       <div th:each="item: ${itemList}">
-        <div class="item  col-xs-3 col-md-4" style="width: 280px ; height: 300px">
-          <div class="thumbnail">
+        <div class="item  col-xs-3 col-md-4" style="width: 280px ; height: 350px">
+          <div class="thumbnail" style="border: none">
             <div th:if="${item.fileAttachedItem == 1}">
-              <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="200" height="150">
+              <img th:src="@{|/upload/${item.storedFileNameItem.get(0)}}" alt="" width="250" height="200">
             </div>
             <div th:if="${item.fileAttachedItem == 0}">
               이미지 미등록
             </div>
-            <p class="read"><a style=" font-weight: bold ; color: #222; font-size: medium;"
+            <p class="read"><a style=" font-weight: bold ; color: #222;"
                                th:href="@{/item/(itemId=${item.id})}"
                                th:text="${item.itemName}"></a></p>
 
-            <div class="caption">
+            <div class="caption" style="padding-left: 0px; padding-top: 0px">
               <div class="row">
-                <div class="col-xs-12 col-md-8" style="text-align: center" >
+                <div class="col-xs-12 col-md-8" style="text-align: left" >
                   <div th:if="${item.itemCount == 0}">
                     <p style="color: red; font-weight: bold; float: left; padding-left: 30px;">품절</p>
-                    <div style="text-decoration-color: chartreuse;padding-left: 65px;">
-                      <em style=" font: italic bold 1.5em/1em Georgia, serif; text-align: left"
-                          th:text="${#numbers.formatCurrency(item.itemPrice)}"></em>
+                    <div style="font-weight: bold">
+                      <p style=" text-align: left" th:text="${#numbers.formatInteger(item.itemPrice,0,'COMMA')}"></p>
                     </div>
                   </div>
                   <div th:unless="${item.itemCount == 0}">
-                    <div style="text-decoration-color: chartreuse;padding-left: 65px;text-align: center">
-                      <em style=" font: italic bold 1.5em/1em Georgia, serif ;"
-                          th:text="${#numbers.formatCurrency(item.itemPrice)}"></em>
+                    <div style="font-weight: bold">
+                      <p th:text="${#numbers.formatInteger(item.itemPrice,0,'COMMA')}+'원'"></p>
                     </div>
                   </div>
                   <div th:if="${!session.isEmpty()} and ${session.member.userId} == 'admin' ">
-                    <button class="btn btn-warning" th:onclick="updateReq([[${item}]])">상품 수정
-                    </button>
-                    <button class="btn btn-warning" th:onclick="deleteReq([[${item}]])">상품 삭제
-                    </button>
+                    <button th:onclick="updateReq([[${item}]])" class="btn btn-outline-secondary btn-sm">상품 수정</button>
+                    <button  th:onclick="deleteReq([[${item}]])" class="btn btn-outline-secondary btn-sm">상품 삭제</button>
                   </div>
                 </div>
               </div>
@@ -140,21 +110,21 @@
 
     <div style="position: relative ;  right: 260px ; bottom: -40px">
       <ul th:if="${message} != 'null'" class="pagination justify-content-center">
-        <li class="page-item">
-          <!--첫페이지 요청 링크-->
-          <a class="page-link" th:href="@{/item/large(page=1 ,sort=${sort} , size=${size},search=${search},category=${category})}">
-            <span>First</span>
-          </a>
-        </li>
+<!--        <li class="page-item">-->
+<!--          &lt;!&ndash;첫페이지 요청 링크&ndash;&gt;-->
+<!--          <a class="page-link" th:href="@{/item/large(page=1 ,sort=${sort} , size=${size},search=${search},category=${category})}">-->
+<!--            <span>First</span>-->
+<!--          </a>-->
+<!--        </li>-->
 
-        <li th:class="${itemList.first} ? 'disabled'" class="page-item">
-          <!--boardList.first: isFirst()
-              boardList.number: getNumber()-->
-          <a class="page-link"
-             th:href="${itemList.first} ? '#' : @{/item/large(page=${itemList.number},sort=${sort},size=${size},search=${search},category=${category})}">
-            <span><</span> <!-- < -->
-          </a>
-        </li>
+<!--        <li th:class="${itemList.first} ? 'disabled'" class="page-item">-->
+<!--          &lt;!&ndash;boardList.first: isFirst()-->
+<!--              boardList.number: getNumber()&ndash;&gt;-->
+<!--          <a class="page-link"-->
+<!--             th:href="${itemList.first} ? '#' : @{/item/large(page=${itemList.number},sort=${sort},size=${size},search=${search},category=${category})}">-->
+<!--            <span><</span> &lt;!&ndash; < &ndash;&gt;-->
+<!--          </a>-->
+<!--        </li>-->
 
         <!-- startPage ~ endPage 까지 숫자를 만들어주는 역할 -->
         <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
@@ -167,25 +137,25 @@
             현재 3페이지를 보고 있다면 다음 페이지는 4페이지임.
             getNumber() 값은 2임.
             따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
-        <li th:class="${itemList.last} ? 'disabled'">
-          <a class="page-link"
-             th:href="${itemList.last} ? '#' : @{/item/large(page=${itemList.number + 2},sort=${sort},size=${size},search=${search},category=${category})}">
-            <span>&gt;</span>
-          </a>
-        </li>
+<!--        <li th:class="${itemList.last} ? 'disabled'">-->
+<!--          <a class="page-link"-->
+<!--             th:href="${itemList.last} ? '#' : @{/item/large(page=${itemList.number + 2},sort=${sort},size=${size},search=${search},category=${category})}">-->
+<!--            <span>&gt;</span>-->
+<!--          </a>-->
+<!--        </li>-->
 
-        <li class="page-item">
-          <a class="page-link" th:href="@{/item/large(page=${itemList.totalPages},sort=${sort},size=${size},search=${search},category=${category})}">
-            <span>Last</span>
-          </a>
-        </li>
+<!--        <li class="page-item">-->
+<!--          <a class="page-link" th:href="@{/item/large(page=${itemList.totalPages},sort=${sort},size=${size},search=${search},category=${category})}">-->
+<!--            <span>Last</span>-->
+<!--          </a>-->
+<!--        </li>-->
       </ul>
     </div>
   </div>
 </div>
 
 <!--최근상품-->
-<div id="sidebar" style="position: absolute; top: 100px ; right: 50px">
+<div id="sidebar" class="sidebar-form" style="position: absolute; top: 200px ; right: 50px">
   <ul>
     <li align="center" >
       최근본상품
