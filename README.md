@@ -10,11 +10,19 @@ ___
 
 ## ✔ 주요기능
 ___
+![index](https://user-images.githubusercontent.com/115771656/215362358-2ae2f83e-6c7c-474b-9028-efa3e4f1c787.png)
+
 ***회원 관련 기능***
 - 회원가입: 아이디(중복확인, 이메일인증), 비밀번호, 비밀번호 확인, 이메일, 이름, 휴대전화
 - 로그인: 아이디, 카카오계정 로그인, 비밀번호 찾기
 - 로그아웃
 - 상품 주문·조회·검색·취소, 장바구니 담기·조회·삭제, 리뷰 작성·수정·삭제, Q&A 작성
+<table outline:"none">
+
+<figure class="half">
+<img width="45%" src="https://user-images.githubusercontent.com/115771656/215362639-ae4be96b-562e-4965-9238-63d0793db1c6.png"/>
+<img width="55%" src="https://user-images.githubusercontent.com/115771656/215362712-731996d8-87aa-45cf-981b-150b97b5dd47.png"/>
+</figure>
 
 ***상품 관련 기능***
 - 상품 등록: 이미지, 상품명, 가격, 수량, 카테고리, 상품설명
