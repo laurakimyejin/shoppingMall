@@ -103,11 +103,15 @@
                 <th>작성자</th>
                 <th>내용</th>
                 <th>작성시간</th>
+                <th>삭제</th>
             </tr>
             <tr th:each="reply: ${replyList}">
                 <td th:text="${reply.replyName}"></td>
                 <td th:text="${reply.replyContents}"></td>
                 <td th:text="*{#temporals.format(reply.replyDate,'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td>
+                    <button th:if="${session.member.userId.toString().equals('admin')}" class="btn btn-outline-dark" th:onclick="replyDelete([[${reply}]])">삭제</button>
+                </td>
             </tr>
         </table>
     </div>
@@ -115,6 +119,19 @@
 
 </body>
 <script th:inline="javascript">
+    //답변 삭제
+    const replyDelete = (reply) => {
+        let id = reply.id;
+        let questionId = [[${question.id}]];
+        if (confirm("정말삭제하시겠습니까?") == true){
+            location.href = "/reply/delete?replyId=" + id + "&questionId=" + questionId;
+        }else {
+            return false;
+        }
+
+    }
+
+    //문의글 삭제
     const questionDelete = () => {
         const id = [[${question.id}]];
         if (confirm('정말 삭제하시겠습니까?')) {
@@ -146,7 +163,7 @@
     const reply = () => {
         console.log("reply");
         const memberId = [[${session.member.id}]];
-        const writer = [[${session.member.memberName}]];
+        const writer = [[${session.member.userId}]];
         const contents = document.getElementById("replyContents").value;
         let questionId = [[${question.id}]];
         $.ajax({
