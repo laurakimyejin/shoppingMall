@@ -1,6 +1,8 @@
 package com.example.shoppingmall.service;
 
+import com.example.shoppingmall.dto.CommentDTO;
 import com.example.shoppingmall.dto.ReplyDTO;
+import com.example.shoppingmall.entity.CommentEntity;
 import com.example.shoppingmall.entity.MemberEntity;
 import com.example.shoppingmall.entity.QuestionEntity;
 import com.example.shoppingmall.entity.ReplyEntity;
@@ -43,5 +45,9 @@ public class ReplyService {
         }
         return replyDTOList;
 
+    }
+
+    public void delete(Long id) {
+        replyRepository.deleteById(id);
     }
 }

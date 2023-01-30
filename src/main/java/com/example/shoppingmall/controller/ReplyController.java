@@ -1,13 +1,12 @@
 package com.example.shoppingmall.controller;
 
+import com.example.shoppingmall.dto.CommentDTO;
 import com.example.shoppingmall.dto.ReplyDTO;
 import com.example.shoppingmall.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +24,14 @@ public class ReplyController {
         return replyDTOList;
     }
 
+    //답변 삭제
+    //questionController questionDetail이 @PathVariable이므로
+    //redirect:/question/?questionId="+questionId X
+    @GetMapping("/reply/delete")
+    public String replyDelete(@RequestParam("replyId")Long id,@RequestParam("questionId")Long questionId){
+        replyService.delete(id);
+        return "redirect:/question/"+questionId;
+    }
 
 
 }
