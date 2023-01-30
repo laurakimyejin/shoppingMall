@@ -1,6 +1,10 @@
 # 🌵홈가드닝 쇼핑몰 프로젝트
 
 
+## 프로젝트 PPT
+___
+[Gardening 프로젝트 -초안-.pptx](https://github.com/angpang2/Gardening/files/10531446/Gardening.-.-.pptx)
+
 
 ## 💭 기획의도
 ___
