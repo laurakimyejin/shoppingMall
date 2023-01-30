@@ -33,7 +33,7 @@ ___
 - 최근 본 상품
 
 <div align="center">
-<img src="https://user-images.githubusercontent.com/115771656/215363815-43d46b04-5331-407a-94dc-a6d3a7fda6b9.png"/>
+<img src="https://user-images.githubusercontent.com/115771656/215395250-4d27d86f-8f58-4887-bc33-ee4006bf2e8b.png"/>
 <img src="https://user-images.githubusercontent.com/115771656/215365427-23ad1289-d1b6-4148-8d43-97c31884323c.png"/>
 </div>
 
