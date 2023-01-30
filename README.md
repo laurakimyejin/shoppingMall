@@ -35,7 +35,6 @@ ___
 <div align="center">
 <img src="https://user-images.githubusercontent.com/115771656/215363815-43d46b04-5331-407a-94dc-a6d3a7fda6b9.png"/>
 <img src="https://user-images.githubusercontent.com/115771656/215365427-23ad1289-d1b6-4148-8d43-97c31884323c.png"/>
-<img src="https://user-images.githubusercontent.com/115771656/215363642-0b71d1ea-53b5-4f2e-87e7-0630e7700a9f.png"/>
 </div>
 
 ***주문 관련 기능***
@@ -63,23 +62,41 @@ ___
 - 주문 확인/배송조회: 주문번호, 상품명, 배송상태(주문완료/배송준비/배송완료), 리뷰작성(배송완료시)
 - 내정보: 비밀번호 확인, 비밀번호·이름·전화번호·이메일 변경
 
+>주문확인/배송조회
 <div align="center">
 <img src="https://user-images.githubusercontent.com/115771656/215365348-10d6ae3b-4bff-4012-8b88-c064571283eb.png"/>
+<img src="https://user-images.githubusercontent.com/115771656/215370424-a395c87c-040f-4552-9e1b-ef17b3729768.png"/>
+</div>
+
+>내정보
+<div align="center">
 <img src="https://user-images.githubusercontent.com/115771656/215365777-84209559-2f4b-4c96-8a49-d1769d62c1f2.png"/>
 <img src="https://user-images.githubusercontent.com/115771656/215365817-6b513aa6-a6f0-40c3-ae77-14e3c7269487.png"/>
 </div>
-
 
 ***관리자 페이지 관련 기능***
 - 상품 관리 (페이징)
 - 주문 관리 (페이징): 주문번호, 상품명, 주문날짜, 배송상태(주문완료/배송준비/배송완료), 구매자
 - 회원 관리 (페이징): 회원 리스트, 회원 상세 정보
 - 고객센터 관리 (페이징)
-
+>상품 관리
 <div align="center">
 <img src="https://user-images.githubusercontent.com/115771656/215370086-b9be4255-98f9-41dc-9928-20f6fa6c74c6.png"/>
-<img src="https://user-images.githubusercontent.com/115771656/215369975-061d3702-6b32-444c-bbdf-98787fc5fe9c.png"/>
+<img src="https://user-images.githubusercontent.com/115771656/215363642-0b71d1ea-53b5-4f2e-87e7-0630e7700a9f.png"/>
+</div>
+
+>주문 관리
+<div align="center">
+<img src="https://user-images.githubusercontent.com/115771656/215370963-fd9802a6-7420-42e4-a62f-7c0c34ba5c6a.png"/>
+</div>
+
+>회원 관리
+<div align="center">
 <img src="https://user-images.githubusercontent.com/115771656/215370137-4b080b07-4874-414c-96dc-82ab9933c972.png"/>
+</div>
+
+>고객센터 관리
+<div align="center">
 <img src="https://user-images.githubusercontent.com/115771656/215370190-1a47be9b-a80a-4863-9ff6-73ea92957ddc.png"/>
 </div>
 
@@ -91,7 +108,7 @@ ___
 - Q&A 삭제
 
 <div align="center">
-<img src="https://user-images.githubusercontent.com/115771656/215370557-f4f1ca58-b06c-4dc7-a597-7455b804ef0a.png"/>
+<img width="70%" src="https://user-images.githubusercontent.com/115771656/215372235-1f12a938-a30a-4d66-b7de-7bf3af7e0bd4.png"/>
 </div>
 
 ***header***
@@ -101,6 +118,9 @@ ___
 ***etc.***
 - 오픈API를 통해 꽃이름, 꽃말 검색
 - 매일 바뀌는 오늘의 꽃 모달창 
+<div align="center">
+<img width="60%" src="https://user-images.githubusercontent.com/115771656/215372069-f20fb124-3fe3-4cb5-90ee-9b6b4704c49f.png"/>
+</div>
 
 ## 💻프로젝트 기간
 ___
