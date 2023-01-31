@@ -3,9 +3,9 @@
 
 ## 프로젝트 PPT
 ___
-[홈가드닝 쇼핑몰 프로젝트.pdf](https://github.com/alswjd094/shoppingMall/files/10543676/default.pdf)
+[홈가드닝 쇼핑몰 프로젝트.pdf](https://github.com/alswjd094/shoppingMall/files/10543789/default.pdf)
 
-[Gardening 프로젝트 -초안-.pptx](https://github.com/angpang2/Gardening/files/10531446/Gardening.-.-.pptx)
+[홈가드닝 쇼핑몰 프로젝트 -초안-.pptx](https://github.com/angpang2/Gardening/files/10531446/Gardening.-.-.pptx)
 
 
 ## 💭 기획의도
