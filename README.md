@@ -1,13 +1,5 @@
 # 🌵홈가드닝 쇼핑몰 프로젝트
 
-
-## 프로젝트 PPT
-___
-[홈가드닝 쇼핑몰 프로젝트.pdf](https://github.com/alswjd094/shoppingMall/files/10543789/default.pdf)
-
-[홈가드닝 쇼핑몰 프로젝트 -초안-.pptx](https://github.com/angpang2/Gardening/files/10531446/Gardening.-.-.pptx)
-
-
 ## 💭 기획의도
 ___
 - Spring Boot를 기반으로 한 식물 판매 쇼핑몰 웹사이트 구축
@@ -142,3 +134,10 @@ ___
 - Thymeleaf
 - MySQL 
 - OS: Window 10
+
+## ✨ 프로젝트 PPT
+___
+[홈가드닝 쇼핑몰 프로젝트.pdf](https://github.com/alswjd094/shoppingMall/files/10543789/default.pdf)
+
+[홈가드닝 쇼핑몰 프로젝트 -초안-.pptx](https://github.com/angpang2/Gardening/files/10531446/Gardening.-.-.pptx)
+
