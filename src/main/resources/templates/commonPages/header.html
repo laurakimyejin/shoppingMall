@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="header">
     <meta charset="UTF-8">
-    <title>index</title>
+    <title>Find your Base :)</title>
     <script th:src="@{/js/axios.min.js}"></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script src="/static/js/bootstrap.bundle.js"></script>
@@ -80,8 +80,8 @@
                                 <div class="navbar-form navbar-left" role="search">
                                     <div class="form-group">
                                         <select class="form-control" id="searchType">
-                                            <option value="1" >꽃이름</option>
-                                            <option value="4">꽃말</option>
+                                            <option value="1" >상품이름</option>
+                                            <option value="4">판매자</option>
                                             <option value="9">전체</option>
                                         </select>
                                         <input type="text" class="form-control" placeholder="Search" id="searchWord" th:value="${searchWord}" name="searchWord">
@@ -93,13 +93,11 @@
                         </div>
 
 
-
-
-                        <ul style="margin-left: 10px;">
-                            <li style="width: 80px ; height: 100px"><a class="aa" href="/item/small">소형 식물</a></li>
-                            <li style="width: 80px ; height: 100px"><a class="aa" href="/item/medium">중형 식물</a></li>
-                            <li style="width: 80px ; height: 100px"><a class="aa" href="/item/large">대형 식물</a></li>
-                            <li style="width: 80px ; height: 100px"><a class="aa" href="/item/main">전체상품</a></li>
+                        <ul style="margin-left: 20px;">
+                            <li style="width: 100px ; height: 100px"><a class="aa" href="/item/category1">PC 데스크탑🖥️</a></li>
+                            <li style="width: 100px ; height: 100px"><a class="aa" href="/item/category2">컴퓨터 부품🔌</a></li>
+                            <li style="width: 100px ; height: 100px"><a class="aa" href="/item/category3">주변기기🖱️</a></li>
+                            <li style="width: 100px ; height: 100px"><a class="aa" href="/item/main">전체상품</a></li>
                         </ul>
 
                     </nav>

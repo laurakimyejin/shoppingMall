@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<title>Find your Base :)</title>
 <head>
     <!-- Swiper -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
@@ -62,7 +63,7 @@
     <div id="visual_bg">
         <div id="visual_txt">
             <p></p>
-            <p>감성 플랜테리어 <br> <em>GARDENING SHOP</em></p>
+            <p>감성 개발자를 위한 <br> <em>ZEROBASE MALL</em></p>
         </div>
     </div>
     <!--        e:visual-->
@@ -72,11 +73,11 @@
         <article style="width: 1000px ; height: 450px;">
             <div id="what">
                 <h2>WHAT WE DO</h2>
-                <p>식물, 자연을 이해하고 아끼는 사람이 키웁니다. <br>
-                    언제 어디서나 식물을 사랑하는 우리 회원님들을 위해 건강한 식물을 판매하는 “Gardening”입니다. <br>
-                    그늘에서도, 겨울에도 잘 자라는 식물!
-                    <br>  인테리어화분, 공기정화식물, 반려식물, 희귀식물, 행잉식물<br>
-                    Gardening 은 협력업체에서 직접보고 셀렉한 최상급 식물만을 판매합니다
+                <p>개발자, 빠르고 쾌적한 환경이 우선입니다. <br>
+                    불철주야 야근하시는 우리 개발자님들을 위해 IT기기 및 부품을 판매하는 “ZeroBaseMall”입니다. <br>
+                    일터에서도, 집에서도, 전쟁터에서도 걱정없이 개발하세요!
+                    <br>  데스크탑, 노트북, 각종 부품들 <br>
+                    ZeroBase 는 협력업체에서 직접보고 셀렉한 최상급 부품만을 판매합니다
                 </p>
                 <div class="profile-user-img" style="position: relative ; left: 500px ; top: -240px" ;>
                     <img th:src="@{/img/main2.jpg}" class="profile-user-img-img">
@@ -143,8 +144,8 @@
 
                 <div id="right2">
                     <p><em>은행계좌</em> <br>
-                        <b>국민000000-01-123456</b> <br>
-                        예금주 : 홍길동</p>
+                        <b>기업 225-02407601-011</b> <br>
+                        예금주 : 김예진</p>
                 </div>
             </div>
 
@@ -160,107 +161,107 @@
 </div>
 
 
-<div class="modal" id="myModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="today" class="modal-title">오늘의 꽃</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closer2">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <img src="#" alt="flower" width="100%" height="100%" id="imgUrl1"><br>
-                <h3 style=" font: italic 1.5em Georgia, serif ; color: green; font-weight: bolder" id="flowNm"></h3><br>
-                <p style="font-size: 1.5em" id="flowLang"></p>
-                <p id="fcontent"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="modal-today-close">오늘그만보기</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closer">닫기</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!--<div class="modal" id="myModal" tabindex="-1" role="dialog">-->
+<!--    <div class="modal-dialog" role="document">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h2 id="today" class="modal-title">오늘의 꽃</h2>-->
+<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closer2">-->
+<!--                    <span aria-hidden="true">&times;</span>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <img src="#" alt="flower" width="100%" height="100%" id="imgUrl1"><br>-->
+<!--                <h3 style=" font: italic 1.5em Georgia, serif ; color: green; font-weight: bolder" id="flowNm"></h3><br>-->
+<!--                <p style="font-size: 1.5em" id="flowLang"></p>-->
+<!--                <p id="fcontent"></p>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-primary" id="modal-today-close">오늘그만보기</button>-->
+<!--                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closer">닫기</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 
 </body>
 <script th:inline="javascript">
 
 <!--    쿠키 설정-->
-    function setCookie(name, value, expiredays) {
-        var today = new Date();
-        today.setSeconds(today.getSeconds() + expiredays);
-        document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + today.toGMTString();
-    }
-
-    //쿠키 불러오기
-    function getCookie(name) {
-        var cookie = document.cookie;
-        if (document.cookie != "") {
-            var cookie_array = cookie.split("; ");
-            for (var index in cookie_array) {
-                var cookie_name = cookie_array[index].split("=");
-                if (cookie_name[0] == "mycookie") {
-                    return cookie_name[1];
-                }
-            }
-        }
-        return;
-    }
+    // function setCookie(name, value, expiredays) {
+    //     var today = new Date();
+    //     today.setSeconds(today.getSeconds() + expiredays);
+    //     document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + today.toGMTString();
+    // }
+    //
+    // //쿠키 불러오기
+    // function getCookie(name) {
+    //     var cookie = document.cookie;
+    //     if (document.cookie != "") {
+    //         var cookie_array = cookie.split("; ");
+    //         for (var index in cookie_array) {
+    //             var cookie_name = cookie_array[index].split("=");
+    //             if (cookie_name[0] == "mycookie") {
+    //                 return cookie_name[1];
+    //             }
+    //         }
+    //     }
+    //     return;
+    // }
 
     //오늘은 그만보기
-    $("#modal-today-close").click(function () {
-        $("#myModal").modal("hide");
-        setCookie("mycookie", 'popupEnd', 10);
-    })
-
-    var checkCookie = getCookie("mycookie");
-
-    //쿠키에 따라 모달창 띄우기
-    if (checkCookie == 'popupEnd') {
-        console.log(document.cookie);
-        $("#myModal").modal("hide");
-    } else {
-        console.log(document.cookie);
-        $.ajax({
-            type: "get",
-            url: "/apis/todayFlower",
-            dataType: "json",
-            success: function (res) {
-                console.log(res);
-                const flowNm = res.flowNm;
-                const imgUrl1 = res.imgUrl1;
-                const fmonth = res.fmonth;
-                const fday = res.fday;
-                const flowLang = res.flowLang;
-                const fcontent = res.fcontent;
-
-                document.getElementById("imgUrl1").src = imgUrl1;
-                document.getElementById("flowNm").innerText = flowNm;
-                document.getElementById("flowLang").innerText = flowLang;
-                document.getElementById("fcontent").innerText = fcontent;
-                document.getElementById("today").innerText = fmonth + "월 " + fday + "일의 꽃";
-
-                $('#myModal').modal("show");
-
-            },
-            error: function (err) {
-                console.log("실패");
-            }
-        });
-
-    }
-
-
-    //모달창 닫기 1 , 2
-    $("#closer").click(function () {
-        $("#myModal").modal("hide");
-    });
-
-    $("#closer2").click(function () {
-        $("#myModal").modal("hide");
-    });
+    // $("#modal-today-close").click(function () {
+    //     $("#myModal").modal("hide");
+    //     setCookie("mycookie", 'popupEnd', 10);
+    // })
+    //
+    // var checkCookie = getCookie("mycookie");
+    //
+    // //쿠키에 따라 모달창 띄우기
+    // if (checkCookie == 'popupEnd') {
+    //     console.log(document.cookie);
+    //     $("#myModal").modal("hide");
+    // } else {
+    //     console.log(document.cookie);
+    //     $.ajax({
+    //         type: "get",
+    //         url: "/apis/todayFlower",
+    //         dataType: "json",
+    //         success: function (res) {
+    //             console.log(res);
+    //             const flowNm = res.flowNm;
+    //             const imgUrl1 = res.imgUrl1;
+    //             const fmonth = res.fmonth;
+    //             const fday = res.fday;
+    //             const flowLang = res.flowLang;
+    //             const fcontent = res.fcontent;
+    //
+    //             document.getElementById("imgUrl1").src = imgUrl1;
+    //             document.getElementById("flowNm").innerText = flowNm;
+    //             document.getElementById("flowLang").innerText = flowLang;
+    //             document.getElementById("fcontent").innerText = fcontent;
+    //             document.getElementById("today").innerText = fmonth + "월 " + fday + "일의 꽃";
+    //
+    //             $('#myModal').modal("show");
+    //
+    //         },
+    //         error: function (err) {
+    //             console.log("실패");
+    //         }
+    //     });
+    //
+    // }
+    //
+    //
+    // //모달창 닫기 1 , 2
+    // $("#closer").click(function () {
+    //     $("#myModal").modal("hide");
+    // });
+    //
+    // $("#closer2").click(function () {
+    //     $("#myModal").modal("hide");
+    // });
 
 
     //장바구니

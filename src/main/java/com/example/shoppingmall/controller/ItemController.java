@@ -126,7 +126,7 @@ public class ItemController {
         return "itemPages/itemDetail";
     }
 
-    @GetMapping("/item/small")
+    @GetMapping("/item/category1")
     public String findSmall(@PageableDefault(page = 1,size = 5)Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort
             , @RequestParam(required = false , value = "search", defaultValue = "") String search,
                           @RequestParam(required = false , value = "category", defaultValue = "") String category){
@@ -145,10 +145,10 @@ public class ItemController {
         model.addAttribute("page", pageable.getPageNumber());
         model.addAttribute("search", search);
         model.addAttribute("category", category);
-        return "itemPages/itemSmall";
+        return "itemPages/itemCtry1";
     }
 
-    @GetMapping("/item/medium")
+    @GetMapping("/item/category2")
     public String findMedium(@PageableDefault(page = 1,size = 5)Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort
             , @RequestParam(required = false , value = "search", defaultValue = "") String search,
                             @RequestParam(required = false , value = "category", defaultValue = "") String category) {
@@ -168,10 +168,10 @@ public class ItemController {
         model.addAttribute("page", pageable.getPageNumber());
         model.addAttribute("search", search);
         model.addAttribute("category", category);
-        return "itemPages/itemMedium";
+        return "itemPages/itemCtry2";
     }
 
-        @GetMapping("/item/large")
+        @GetMapping("/item/category3")
         public String findLarge(@PageableDefault(page = 1,size = 5)Pageable pageable, Model model , @RequestParam(required = false , value = "sort", defaultValue = "id") String sort
                 , @RequestParam(required = false , value = "search", defaultValue = "") String search,
                 @RequestParam(required = false , value = "category", defaultValue = "") String category){
@@ -190,7 +190,7 @@ public class ItemController {
             model.addAttribute("page", pageable.getPageNumber());
             model.addAttribute("search", search);
             model.addAttribute("category", category);
-            return "itemPages/itemLarge";
+            return "itemPages/itemCtry3";
         }
     }
 

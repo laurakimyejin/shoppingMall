@@ -29,12 +29,12 @@ public class RegisterMail implements MailserviceInter {
         MimeMessage message = emailsender.createMimeMessage();
 
         message.addRecipients(Message.RecipientType.TO, to); // 받는 사람
-        message.setSubject("Gardening 회원가입 이메일 인증");// 제목
+        message.setSubject("ZeroBaseMall 회원가입 이메일 인증");// 제목
 
         String msgg = "";
         msgg += "<div style='margin:100px;'>";
         msgg += "<h1> 안녕하세요</h1>";
-        msgg += "<h1> 식물을 사랑하는 Gardening 입니다</h1>";
+        msgg += "<h1> 여러분의 IT 라이프를 책임지는 ZeroBaseMall 입니다</h1>";
         msgg += "<br>";
         msgg += "<p>아래 코드를 회원가입 창으로 돌아가 입력해주세요<p>";
         msgg += "<br>";
