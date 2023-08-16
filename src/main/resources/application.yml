@@ -2,14 +2,10 @@
 server:
   port: 8989
 
-# data base 연동 설정
+# 별도 yml 설정
 spring:
-  datasource:
-    #mariadb는 자신이 사용하고자 하는 스키마를 입력해야지 들어가짐.
-    url: jdbc:mariadb://localhost:3306/sample3
-    username: root
-    password: 1234
-    driver-class-name: org.mariadb.jdbc.Driver
+  profiles:
+    include: private
 
   # thymeleaf 캐시 설정
   thymeleaf:
@@ -17,10 +13,16 @@ spring:
 
   # spring data jpa 설정
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MariaDB106Dialect
+    properties:
+      hibernate:
+        hibernate:
+        "[format_sql]": true
+        "[user_sql_comments]": true
+        "[highlight_sql]": true
+        "[hbm2ddl.auto]": update
     open-in-view: false
-    hibernate:
-      ddl-auto: update
+    show-sql: true
 
 # db query log 관련 설정
 logging:

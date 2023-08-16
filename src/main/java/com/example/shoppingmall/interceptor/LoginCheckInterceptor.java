@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class LoginCheckInterceptor implements HandlerInterceptor {
+    //인터셉터를 이용한 로그인 처리
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         //요청 객체                //응답 객체

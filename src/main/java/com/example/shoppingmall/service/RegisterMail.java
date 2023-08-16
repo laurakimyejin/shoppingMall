@@ -1,6 +1,7 @@
 package com.example.shoppingmall.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -14,16 +15,23 @@ import java.util.Random;
 
 @Service
 public class RegisterMail implements MailserviceInter {
+
     @Autowired
     JavaMailSender emailsender; // Bean 등록해둔 MailConfig 를 emailsender 라는 이름으로 autowired
 
     private String ePw; // 인증번호
+
+    @Value("${mail.username}")
+    private String username;
+    public final String NAVER_EMAIL = "@naver.com" ;
 
     // 메일 내용 작성
     @Override
     public MimeMessage createMessage(String to) throws MessagingException, UnsupportedEncodingException {
 //		System.out.println("보내는 대상 : " + to);
 //		System.out.println("인증 번호 : " + ePw);
+
+
 
 
         MimeMessage message = emailsender.createMimeMessage();
@@ -48,7 +56,7 @@ public class RegisterMail implements MailserviceInter {
         msgg += "</div>";
         message.setText(msgg, "utf-8", "html");// 내용, charset 타입, subtype
         // 보내는 사람의 이메일 주소, 보내는 사람 이름
-        message.setFrom(new InternetAddress("gardening2023@naver.com", "gardening2023"));// 보내는 사람
+        message.setFrom(new InternetAddress(username + NAVER_EMAIL, username));// 보내는 사람
 
         return message;
     }
